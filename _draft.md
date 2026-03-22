@@ -1,7 +1,9 @@
 # ЧЕРНОВА — Naval Academy Varna
-## Последна актуализация: 2026-03-23 02:00
+## Последна актуализация: 2026-03-23 03:00
 
-**Статус:** Нощната работа е ЗАВЪРШЕНА. Всички 8 агента приключиха успешно.
+**Статус:** Нощната работа е ЗАВЪРШЕНА. Всичко е пушнато в GitHub.
+
+### GitHub: https://github.com/mrstoianov/NavalAcademyVarna
 
 ### Пълен списък готови документи:
 
@@ -15,7 +17,7 @@
 | expert-frontend.html | Frontend Architect: 3.5/10 |
 | expert-seo.html | SEO & Content: 3.5/10 |
 | expert-business.html | Business Analyst: 5/10 |
-| consolidated-report-v1.html | Обобщен доклад от 4 експерта |
+| consolidated-report-v1.html | Обобщен доклад (средна 4.3/10) |
 | information-architecture.html | Информационна архитектура + съпоставка |
 | forms-and-workflows.html | 22 формуляра и работни процеси |
 | extracted-content.md | Извлечено съдържание (26+ страници) |
@@ -23,25 +25,29 @@
 #### Мокъпи (mockups/)
 | Файл | Описание |
 |------|----------|
-| variant1-classic-naval.html | Вариант 1: Класическа морска академия (navy+gold) |
-| variant2-modern-teal.html | Вариант 2: Модерен Черноморски (teal+coral) |
-| variant3-minimalist.html | Вариант 3: Скандинавски минимализъм (monochrome) |
-| admin-panel.html | Административен панел (CMS + форми + документи) |
+| variant1-classic-naval.html | Класическа морска (navy+gold, serif) |
+| variant2-modern-teal.html | Модерен Черноморски (teal+coral, sans) |
+| variant3-minimalist.html | Скандинавски минимализъм (monochrome) |
+| admin-panel.html | Административен панел (CMS+форми+документи) |
 
 #### Документи (docs/)
 | Файл | Описание |
 |------|----------|
-| proposal-letter-v1.html | Писмо до ректора + кратко предложение |
-| roadmap-v1.html | Пътна карта на проекта (5 milestone-а) |
+| proposal-letter-v1.html | Писмо до ректора |
+| roadmap-v1.html | Пътна карта (5 milestone-а) |
+
+#### Next.js проект (site/)
+| Компонент | Брой |
+|-----------|------|
+| Layout компоненти | 4 (Header, Footer, Navigation, Breadcrumbs) |
+| UI компоненти | 5 (Button, Card, Badge, SearchOverlay, StatCard) |
+| Section компоненти | 6 (Hero, QuickAccess, FeaturedPrograms, LatestNews, Stats, Partners) |
+| Form компоненти | 3 (ContactForm, CourseEnrollment, InquiryForm) |
+| Страници | 8 маршрута x 2 локала = 16 страници |
+| Build | УСПЕШЕН, 0 грешки |
 
 ### Чакащи решения от Деян:
-1. Избор на дизайн вариант (1, 2 или 3 — или микс)
-2. Преглед и одобрение на писмото до ректора
-3. Преглед на формулярите — коя от 22-те форми е приоритетна
-4. Стартиране на Next.js проекта
-
-### Следващи стъпки:
-- Next.js инициализация
-- Компонентна библиотека
-- Миграция на съдържание
-- Изграждане на реалния сайт
+1. Избор на дизайн вариант (1, 2 или 3)
+2. Преглед на писмото до ректора
+3. Приоритизация на 22-те форми
+4. Content scrape pass 2 (повторен опит)
