@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "title": "Nikola Vaptsarov Naval Academy",
+    "description": "Nikola Vaptsarov Naval Academy \u2014 Bulgaria's oldest technical educational institution, founded in 1881."
+  },
+  "nav": {
+    "university": "University",
+    "about": "About Us",
+    "structure": "Structure",
+    "traditions": "Traditions & Mission",
+    "facilities": "Training Facilities",
+    "accreditation": "Accreditation",
+    "pressCenter": "Press Center",
+    "training": "Training",
+    "specialties": "Specialties & Specializations",
+    "doctoral": "Doctoral Programs",
+    "handbook": "Candidate Handbook",
+    "admissions": "Admissions",
+    "courses": "Courses",
+    "maritimeCourses": "Maritime Courses",
+    "itCourses": "IT Courses",
+    "languageCourses": "Language Courses LangMar",
+    "radiationCourse": "Ionizing Radiation",
+    "science": "Science",
+    "scientificActivities": "Scientific Activities",
+    "conferences": "Conferences",
+    "publishingCenter": "Publishing Center",
+    "international": "International Activities",
+    "partnerships": "International Partnerships",
+    "erasmus": "Erasmus+",
+    "students": "Students",
+    "studentCouncil": "Student Council",
+    "careerCenter": "Career Center",
+    "alumni": "Alumni Club",
+    "sportsClub": "Sports Club",
+    "news": "News",
+    "contact": "Contact"
+  },
+  "utility": {
+    "eTeacher": "e-Teacher",
+    "webStudent": "WebStudent",
+    "schedule": "Schedule",
+    "distanceLearning": "Distance Learning",
+    "infoCenter": "Info Center"
+  },
+  "hero": {
+    "badge": "Founded 1881",
+    "line1": "CENTURIES-OLD TRADITIONS",
+    "line2": "MODERN HORIZON",
+    "subtitle": "Nikola Vaptsarov Naval Academy \u2014 Varna",
+    "ctaPrimary": "Apply Now",
+    "ctaSecondary": "Explore Programs"
+  },
+  "quickAccess": {
+    "apply": "Apply",
+    "applyDesc": "Online admissions for bachelor's, master's and cadet programs",
+    "specialties": "Programs",
+    "specialtiesDesc": "45+ bachelor's, master's and military programs",
+    "courses": "Courses",
+    "coursesDesc": "60+ maritime, IT and language qualification courses",
+    "erasmus": "Erasmus+",
+    "erasmusDesc": "Student mobility and international projects"
+  },
+  "about": {
+    "label": "About the Academy",
+    "title": "Bulgaria's Oldest Technical Educational Institution",
+    "description": "Nikola Vaptsarov Naval Academy traces maritime education traditions to 1881, when the Naval School opened as the country's first technical institution for training engineers and sailors.",
+    "description2": "The academy prepares highly qualified specialists and leaders for the Armed Forces, national security, and the economy. Curricula comply with international requirements for preparing naval officers and maritime industry specialists.",
+    "simulators": "11 Simulators",
+    "simulatorsDesc": "Next-generation training equipment",
+    "accreditation": "Accreditation 9.07",
+    "accreditationDesc": "Institutional rating valid until 2030",
+    "iamu": "IAMU Member",
+    "iamuDesc": "International Association of Maritime Universities",
+    "planetarium": "Planetarium",
+    "planetariumDesc": "Carl Zeiss, 120 seats, 6 languages"
+  },
+  "programs": {
+    "label": "Training",
+    "title": "Programs & Specialties",
+    "subtitle": "Find your path \u2014 from navigation and marine engineering to cybersecurity and artificial intelligence.",
+    "viewAll": "All Programs",
+    "bachelor": "Bachelor's",
+    "master": "Master's",
+    "cadet": "Cadet",
+    "years": "years",
+    "regular": "Full-time",
+    "partTime": "Part-time",
+    "navFaculty": "Navigation Faculty",
+    "engFaculty": "Engineering Faculty",
+    "military": "Military Training"
+  },
+  "news": {
+    "label": "Latest",
+    "title": "News & Events",
+    "upcomingEvents": "Upcoming Events"
+  },
+  "stats": {
+    "label": "NVNA in Numbers",
+    "title": "Numbers That Speak",
+    "yearsHistory": "years of history",
+    "faculties": "faculties",
+    "departments": "departments",
+    "specialtiesCount": "specialties",
+    "simulators": "simulators",
+    "doctoralPrograms": "doctoral programs",
+    "maritimeCourses": "maritime courses",
+    "partnerCountries": "partner countries"
+  },
+  "international": {
+    "label": "International Activities",
+    "title": "Global Partnerships",
+    "description": "NVNA maintains active bilateral cooperation with naval academies across multiple continents \u2014 Poland, Turkey, Romania, Italy, Greece, USA and others. The Academy is a member of the International Consortium of Military Academies with over 200 organizations from 40 countries.",
+    "erasmusDesc": "The Erasmus+ program supports student and faculty mobility, virtual and blended learning, as well as international projects for digital and ecological transformation.",
+    "learnMore": "Learn more about international activities"
+  },
+  "footer": {
+    "brandDescription": "Naval Academy \u2014 Bulgaria's oldest technical educational institution, founded in 1881. We prepare highly qualified maritime specialists and leaders.",
+    "quickLinks": "Quick Links",
+    "resources": "Resources",
+    "contactTitle": "Contact",
+    "address": "73 Vasil Drumev St.",
+    "city": "9026 Varna, Bulgaria",
+    "copyright": "Nikola Vaptsarov Naval Academy. All rights reserved.",
+    "accessibility": "Accessibility",
+    "privacy": "Privacy",
+    "publicProcurement": "Public Procurement"
+  },
+  "common": {
+    "search": "Search",
+    "readMore": "Read More",
+    "viewAll": "View All",
+    "phone": "Phone",
+    "email": "Email",
+    "loading": "Loading...",
+    "comingSoon": "Coming Soon"
+  },
+  "pages": {
+    "aboutTitle": "About Us \u2014 NVNA",
+    "organizationTitle": "Organization Structure",
+    "programsTitle": "Specialties & Specializations",
+    "coursesTitle": "Courses",
+    "newsTitle": "News",
+    "contactTitle": "Contact"
+  }
+}
