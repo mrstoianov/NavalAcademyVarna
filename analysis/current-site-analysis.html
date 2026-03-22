@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ — ВВМУ "Н. Й. Вапцаров"</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #fafafa;
+            color: #2d2d2d;
+            line-height: 1.7;
+            padding: 2rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: #1a3a5c;
+            border-bottom: 3px solid #1a3a5c;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.3rem;
+            color: #1a3a5c;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2980b9;
+            padding-left: 0.75rem;
+        }
+        h3 {
+            font-size: 1.05rem;
+            color: #444;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th {
+            background: #1a3a5c;
+            color: white;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            font-weight: 500;
+        }
+        td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:nth-child(even) { background: #f5f7fa; }
+        tr:hover { background: #eef2f7; }
+        code {
+            background: #e8eef4;
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            color: #c0392b;
+        }
+        .score-card {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .score-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .score-item .label { font-size: 0.85rem; color: #666; }
+        .score-item .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a3a5c;
+            margin: 0.3rem 0;
+        }
+        .score-item .comment { font-size: 0.75rem; color: #888; }
+        .overall-score {
+            background: #1a3a5c;
+            color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .overall-score .value { font-size: 3rem; font-weight: 700; }
+        .overall-score .label { font-size: 1.1rem; opacity: 0.9; }
+        .issue-critical {
+            background: #fdf0f0;
+            border-left: 4px solid #e74c3c;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .issue-medium {
+            background: #fef9e7;
+            border-left: 4px solid #f39c12;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .issue-positive {
+            background: #eafaf1;
+            border-left: 4px solid #27ae60;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .tech-badge {
+            display: inline-block;
+            background: #e8eef4;
+            color: #1a3a5c;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 0.2rem;
+        }
+        ul { padding-left: 1.5rem; margin: 0.5rem 0; }
+        li { margin-bottom: 0.3rem; }
+    </style>
+</head>
+<body>
+
+<h1>Анализ на уебсайта на ВВМУ "Н. Й. Вапцаров"</h1>
+<p class="subtitle">https://www.naval-acad.bg/ &mdash; Дата на анализ: 22 март 2026</p>
+
+<h2>1. Технологична платформа</h2>
+<p>
+    <span class="tech-badge">WordPress 6.9.4</span>
+    <span class="tech-badge">Avada Theme</span>
+    <span class="tech-badge">WPML</span>
+    <span class="tech-badge">LayerSlider 7.14.0</span>
+    <span class="tech-badge">jQuery</span>
+    <span class="tech-badge">Workbox v7.3.0</span>
+    <span class="tech-badge">Google Analytics</span>
+</p>
+
+<h2>2. Навигация</h2>
+
+<h3>Главно меню (български)</h3>
+<table>
+    <tr><th>Елемент</th><th>URL</th></tr>
+    <tr><td>За нас</td><td><code>/university/about-us/</code></td></tr>
+    <tr><td>Структура</td><td><code>/university/organization</code></td></tr>
+    <tr><td>Традиция и мисия</td><td><code>/university/traditions-and-mission</code></td></tr>
+    <tr><td>Учебна база</td><td><code>/university/training-facilities</code></td></tr>
+    <tr><td>Акредитация</td><td><code>/university/accreditation</code></td></tr>
+    <tr><td>Пресцентър</td><td><code>/university/presscenter</code></td></tr>
+    <tr><td>Специалности</td><td><code>/specialties</code></td></tr>
+    <tr><td>Кандидатстудентски справочник</td><td><code>/candidate_student_handbook</code></td></tr>
+    <tr><td>Докторски програми</td><td><code>/application/phd</code></td></tr>
+    <tr><td>Прием</td><td><code>https://fees.nvna.eu/</code></td></tr>
+    <tr><td>Научна дейност</td><td><code>/activities/scientific-activities</code></td></tr>
+    <tr><td>Еразъм+</td><td><code>/activities/erasmus1</code></td></tr>
+    <tr><td>Курсове</td><td><code>/courses</code></td></tr>
+    <tr><td>Кариерен център</td><td><code>https://career.nvna.eu/</code></td></tr>
+    <tr><td>Кибероперации</td><td><code>/cyber-ops-center</code></td></tr>
+</table>
+
+<h3>Външни портали</h3>
+<table>
+    <tr><th>Система</th><th>URL</th><th>Протокол</th></tr>
+    <tr><td>е-Преподавател</td><td><code>teacher.naval-acad.bg</code></td><td>HTTPS</td></tr>
+    <tr><td>УебСтудент</td><td><code>ws.naval-acad.bg</code></td><td style="color:#e74c3c;font-weight:bold">HTTP</td></tr>
+    <tr><td>Информационен център</td><td><code>nvna.eu</code></td><td>HTTPS</td></tr>
+    <tr><td>Дистанционно обучение</td><td><code>dlc.naval-acad.bg</code></td><td>HTTPS</td></tr>
+    <tr><td>Разписание</td><td><code>nvna.eu/wp/</code></td><td>HTTPS</td></tr>
+    <tr><td>Проекти</td><td><code>projects.nvna.eu</code></td><td style="color:#e74c3c;font-weight:bold">HTTP</td></tr>
+    <tr><td>Издателски център</td><td><code>scholar.nvna.eu</code></td><td>HTTPS</td></tr>
+    <tr><td>Студентски съвет</td><td><code>studentcouncil.naval-acad.bg</code></td><td style="color:#e74c3c;font-weight:bold">HTTP</td></tr>
+    <tr><td>Спортен клуб</td><td><code>uvsk.nvna.eu</code></td><td>HTTPS</td></tr>
+</table>
+
+<h2>3. Организационна структура</h2>
+<table>
+    <tr><th>Звено</th><th>Детайли</th></tr>
+    <tr><td><strong>Ректор</strong></td><td>Флотилен адмирал проф. д-р Калин Калинов</td></tr>
+    <tr><td><strong>Навигационен факултет</strong></td><td>Морска тактика, Навигация, Национална сигурност, Експлоатация на морски транспорт, Езикова подготовка</td></tr>
+    <tr><td><strong>Инженерен факултет</strong></td><td>Корабни машини, Електротехника, Мехатроника, Електроника, Информационни технологии</td></tr>
+    <tr><td><strong>Допълнителни</strong></td><td>Сержантски колеж, Център за кибероперации, Дистанционно обучение, Научна секция</td></tr>
+</table>
+
+<h2>4. Съдържателни категории</h2>
+<ul>
+    <li>Образование и специалности (бакалавър, магистър, курсанти)</li>
+    <li>Прием и кандидатстване</li>
+    <li>Докторски програми</li>
+    <li>Научна дейност (4 направления)</li>
+    <li>Международна дейност (Еразъм+, НАТО DEEP)</li>
+    <li>Новини и пресцентър</li>
+    <li>Курсове и квалификация</li>
+    <li>Кариерен център</li>
+    <li>Студентски живот</li>
+    <li>Институционална информация</li>
+</ul>
+
+<h2>5. Оценка</h2>
+
+<div class="overall-score">
+    <div class="label">Обща оценка</div>
+    <div class="value">3.5 / 5</div>
+</div>
+
+<div class="score-card">
+    <div class="score-item">
+        <div class="label">Технологична база</div>
+        <div class="value">4</div>
+        <div class="comment">WordPress + Avada, Service Worker</div>
+    </div>
+    <div class="score-item">
+        <div class="label">Мобилна адаптивност</div>
+        <div class="value">4</div>
+        <div class="comment">Responsive с breakpoints</div>
+    </div>
+    <div class="score-item">
+        <div class="label">Съдържание</div>
+        <div class="value">4</div>
+        <div class="comment">Богато и разнообразно</div>
+    </div>
+    <div class="score-item">
+        <div class="label">Английска версия</div>
+        <div class="value">2</div>
+        <div class="comment">Изоставаща по актуалност</div>
+    </div>
+    <div class="score-item">
+        <div class="label">Достъпност</div>
+        <div class="value">3</div>
+        <div class="comment">Базови мерки, без WCAG 2.1</div>
+    </div>
+    <div class="score-item">
+        <div class="label">Сигурност</div>
+        <div class="value">3</div>
+        <div class="comment">HTTP линкове към поддомейни</div>
+    </div>
+    <div class="score-item">
+        <div class="label">Навигация и UX</div>
+        <div class="value">3.5</div>
+        <div class="comment">Разпръсната инфраструктура</div>
+    </div>
+    <div class="score-item">
+        <div class="label">Визуален дизайн</div>
+        <div class="value">3.5</div>
+        <div class="comment">Шаблонен (Avada)</div>
+    </div>
+</div>
+
+<h2>6. Идентифицирани проблеми</h2>
+
+<h3>Критични</h3>
+<div class="issue-critical">
+    <strong>HTTP линкове:</strong> ws.naval-acad.bg, projects.nvna.eu, studentcouncil.naval-acad.bg — сериозен проблем за сигурността
+</div>
+<div class="issue-critical">
+    <strong>Неактуална английска версия:</strong> Новините на английски изостават с години спрямо българските
+</div>
+
+<h3>Средни</h3>
+<div class="issue-medium">
+    <strong>Разпръсната инфраструктура:</strong> 9+ отделни портала с различен дизайн и UX
+</div>
+<div class="issue-medium">
+    <strong>Достъпност:</strong> Непълна ARIA имплементация, липса на WCAG 2.1 съответствие
+</div>
+<div class="issue-medium">
+    <strong>Производителност:</strong> LayerSlider забавя зареждането; inline CSS за конкретни page ID-та
+</div>
+
+<h3>Положителни практики</h3>
+<div class="issue-positive">
+    Декларация за достъпност, банкова информация за студенти, филтри за специалности, социални мрежи
+</div>
+
+</body>
+</html>
