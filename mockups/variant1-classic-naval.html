@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ВВМУ "Н. Й. Вапцаров" — Висше Военноморско Училище</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+  background: #fff;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ===== TYPOGRAPHY ===== */
+h1, h2, h3, h4, h5 {
+  font-family: Georgia, 'Times New Roman', 'Noto Serif', serif;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* ===== UTILITY BAR ===== */
+.utility-bar {
+  background: #061630;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.8rem;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.utility-bar .container {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.utility-links {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.utility-links a {
+  color: rgba(255,255,255,0.7);
+  transition: color 0.2s;
+  font-size: 0.78rem;
+  letter-spacing: 0.2px;
+}
+.utility-links a:hover { color: #B8860B; }
+.utility-links .sep { color: rgba(255,255,255,0.2); }
+.lang-switcher {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.lang-switcher a {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.2s;
+}
+.lang-switcher a.active {
+  background: #B8860B;
+  color: #fff;
+  border-color: #B8860B;
+}
+.lang-switcher a:hover { border-color: #B8860B; color: #B8860B; }
+
+/* ===== HEADER ===== */
+.site-header {
+  background: #092147;
+  padding: 1rem 0;
+  border-bottom: 3px solid #B8860B;
+}
+.header-inner {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.header-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1a488e 0%, #092147 100%);
+  border: 2px solid #B8860B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.header-logo::after {
+  content: '';
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgba(184,134,11,0.6);
+  border-radius: 50%;
+}
+.header-logo-anchor {
+  position: absolute;
+  color: #B8860B;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+}
+.header-text { flex: 1; }
+.header-text h1 {
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+}
+.header-text h1 span { color: #B8860B; }
+.header-motto {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.82rem;
+  font-style: italic;
+  font-family: Georgia, serif;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+
+/* ===== MAIN NAVIGATION ===== */
+.main-nav {
+  background: #0d2d5e;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.main-nav .container {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.8rem 0;
+  width: 100%;
+  text-align: left;
+}
+.nav-toggle-bar {
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  position: relative;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.nav-toggle-bar::before, .nav-toggle-bar::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  left: 0;
+}
+.nav-toggle-bar::before { top: -7px; }
+.nav-toggle-bar::after { top: 7px; }
+.nav-list {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+.nav-item {
+  position: relative;
+}
+.nav-item > a {
+  display: block;
+  padding: 0.9rem 1.1rem;
+  color: rgba(255,255,255,0.88);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.nav-item > a:hover, .nav-item > a:focus {
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+  border-bottom-color: #B8860B;
+}
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 260px;
+  background: #092147;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-top: 2px solid #B8860B;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  display: none;
+  z-index: 100;
+}
+.nav-item:hover .nav-dropdown { display: block; }
+.nav-dropdown a {
+  display: block;
+  padding: 0.7rem 1.2rem;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.84rem;
+  transition: all 0.15s;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.nav-dropdown a:hover {
+  background: rgba(184,134,11,0.15);
+  color: #B8860B;
+  padding-left: 1.5rem;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  position: relative;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background:
+    linear-gradient(170deg,
+      rgba(9,33,71,0.92) 0%,
+      rgba(26,72,142,0.85) 35%,
+      rgba(9,33,71,0.88) 70%,
+      rgba(6,22,48,0.95) 100%
+    ),
+    linear-gradient(to bottom,
+      #061630 0%,
+      #0a2a5e 25%,
+      #0f3d7a 45%,
+      #1a488e 55%,
+      #0d2d5e 75%,
+      #092147 100%
+    );
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(26,72,142,0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(184,134,11,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(26,72,142,0.2) 0%, transparent 40%);
+  animation: heroShimmer 8s ease-in-out infinite alternate;
+}
+@keyframes heroShimmer {
+  0% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, #fff 0%, transparent 100%);
+  z-index: 1;
+}
+/* Decorative wave */
+.hero-wave {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 800px;
+  padding: 3rem 2rem 5rem;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(184,134,11,0.2);
+  border: 1px solid rgba(184,134,11,0.4);
+  color: #B8860B;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+}
+.hero h2 {
+  color: #fff;
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  letter-spacing: -0.5px;
+}
+.hero h2 em {
+  font-style: normal;
+  color: #B8860B;
+}
+.hero-sub {
+  color: rgba(255,255,255,0.75);
+  font-size: 1.15rem;
+  max-width: 620px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s;
+  letter-spacing: 0.3px;
+}
+.btn-primary {
+  background: #B8860B;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(184,134,11,0.35);
+}
+.btn-primary:hover {
+  background: #9a7209;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(184,134,11,0.45);
+}
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.4);
+}
+.btn-outline:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ===== QUICK STATS ===== */
+.stats-section {
+  padding: 4rem 0 3rem;
+  background: #fff;
+  margin-top: -2rem;
+  position: relative;
+  z-index: 5;
+}
+.stats-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.stat-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(9,33,71,0.08);
+  border: 1px solid rgba(9,33,71,0.06);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(9,33,71,0.12);
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background: #B8860B;
+  border-radius: 0 0 3px 3px;
+}
+.stat-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.stat-number {
+  font-family: Georgia, serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #092147;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.stat-label {
+  color: #666;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+/* ===== SECTION COMMON ===== */
+.section-padding {
+  padding: 4.5rem 0;
+}
+.section-container {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.section-header-group {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.section-label {
+  display: inline-block;
+  color: #B8860B;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+.section-title {
+  font-size: 2rem;
+  color: #092147;
+  margin-bottom: 0.8rem;
+}
+.section-subtitle {
+  color: #666;
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.gold-line {
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #B8860B;
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+/* ===== FEATURED PROGRAMS ===== */
+.programs-section {
+  background: #f5f7fa;
+}
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+.program-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(9,33,71,0.06);
+  border: 1px solid rgba(9,33,71,0.05);
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.program-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(9,33,71,0.12);
+}
+.program-card-img {
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+}
+.program-card-img .overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+.program-card-body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.program-card-tag {
+  display: inline-block;
+  background: rgba(26,72,142,0.08);
+  color: #1a488e;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 3px;
+  margin-bottom: 0.7rem;
+  width: fit-content;
+}
+.program-card h3 {
+  font-size: 1.05rem;
+  color: #092147;
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+.program-card p {
+  color: #666;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  flex: 1;
+}
+.program-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #1a488e;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  transition: color 0.2s;
+}
+.program-card-link:hover { color: #B8860B; }
+.program-card-link::after { content: '\2192'; }
+
+/* ===== NEWS ===== */
+.news-section {
+  background: #fff;
+}
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.news-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(9,33,71,0.06);
+  border: 1px solid rgba(9,33,71,0.06);
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(9,33,71,0.1);
+}
+.news-card-img {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+.news-card-date {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: #092147;
+  color: #fff;
+  text-align: center;
+  padding: 6px 12px;
+  border-radius: 4px;
+  line-height: 1.1;
+  z-index: 2;
+}
+.news-card-date .day {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+}
+.news-card-date .month {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #B8860B;
+  margin-top: 2px;
+}
+.news-card-body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.news-card h3 {
+  font-size: 1rem;
+  color: #092147;
+  margin-bottom: 0.6rem;
+  line-height: 1.35;
+}
+.news-card p {
+  color: #666;
+  font-size: 0.87rem;
+  line-height: 1.55;
+  flex: 1;
+}
+.news-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #eee;
+  color: #999;
+  font-size: 0.78rem;
+}
+.all-news-link {
+  text-align: center;
+  margin-top: 2.5rem;
+}
+
+/* ===== WHY VVMU ===== */
+.why-section {
+  background: #092147;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.why-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 0% 100%, rgba(26,72,142,0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(184,134,11,0.1) 0%, transparent 50%);
+}
+.why-section .section-container { position: relative; z-index: 2; }
+.why-section .section-label { color: #B8860B; }
+.why-section .section-title { color: #fff; }
+.why-section .section-subtitle { color: rgba(255,255,255,0.6); }
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.why-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+.why-card:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-4px);
+  border-color: rgba(184,134,11,0.3);
+}
+.why-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.2rem;
+  border-radius: 50%;
+  background: rgba(184,134,11,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+.why-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.7rem;
+  color: #fff;
+}
+.why-card p {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* ===== PARTNERS ===== */
+.partners-section {
+  background: #f5f7fa;
+  border-top: 1px solid #e8ecf1;
+  border-bottom: 1px solid #e8ecf1;
+}
+.partners-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+.partner-logo {
+  width: 140px;
+  height: 70px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0e5ec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.72rem;
+  text-align: center;
+  padding: 0.5rem;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+.partner-logo:hover {
+  border-color: #B8860B;
+  box-shadow: 0 4px 15px rgba(9,33,71,0.08);
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  background: #061630;
+  color: rgba(255,255,255,0.7);
+  padding: 3.5rem 0 0;
+}
+.footer-grid {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1.3fr;
+  gap: 2.5rem;
+}
+.footer-col h4 {
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid #B8860B;
+  display: inline-block;
+}
+.footer-col ul li {
+  margin-bottom: 0.5rem;
+}
+.footer-col ul a {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.85rem;
+  transition: color 0.2s;
+}
+.footer-col ul a:hover { color: #B8860B; }
+.footer-col p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 0.5rem;
+}
+.footer-contact-item {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  align-items: flex-start;
+}
+.footer-contact-icon {
+  color: #B8860B;
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+  margin-top: 2px;
+}
+.footer-social {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+.footer-social a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.footer-social a:hover {
+  background: #B8860B;
+  border-color: #B8860B;
+  color: #fff;
+}
+.footer-bottom {
+  margin-top: 2.5rem;
+  padding: 1.2rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+}
+.footer-bottom .container {
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+/* ===== DESIGN NOTE ===== */
+.design-note {
+  background: #f5f7fa;
+  text-align: center;
+  padding: 1rem 2rem;
+  font-size: 0.75rem;
+  color: #999;
+  border-top: 1px solid #e8ecf1;
+  font-style: italic;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-in {
+  animation: fadeInUp 0.7s ease forwards;
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+/* Counter animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stat-card {
+  animation: countUp 0.6s ease forwards;
+  opacity: 0;
+}
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.25s; }
+.stat-card:nth-child(3) { animation-delay: 0.4s; }
+.stat-card:nth-child(4) { animation-delay: 0.55s; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .programs-grid { grid-template-columns: repeat(2, 1fr); }
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero h2 { font-size: 2.2rem; }
+  .nav-item > a { padding: 0.9rem 0.8rem; font-size: 0.82rem; }
+}
+
+@media (max-width: 768px) {
+  .utility-bar .container { justify-content: center; text-align: center; }
+  .header-inner { flex-direction: column; text-align: center; padding: 1rem 1.5rem; }
+  .header-logo { width: 60px; height: 60px; }
+  .header-text h1 { font-size: 1.15rem; }
+
+  /* Mobile nav */
+  .nav-toggle { display: block; }
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    padding-bottom: 1rem;
+  }
+  .nav-list.open { display: flex; }
+  .nav-item > a { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .nav-dropdown {
+    position: static;
+    border: none;
+    box-shadow: none;
+    border-top: none;
+    background: rgba(255,255,255,0.03);
+  }
+  .nav-item:hover .nav-dropdown { display: none; }
+  .nav-item.mobile-open .nav-dropdown { display: block; }
+
+  .hero { min-height: 420px; }
+  .hero h2 { font-size: 1.7rem; }
+  .hero-sub { font-size: 1rem; }
+  .hero-content { padding: 2rem 1.5rem 4rem; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .stat-number { font-size: 1.8rem; }
+
+  .programs-grid { grid-template-columns: 1fr; }
+  .news-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+  .section-title { font-size: 1.6rem; }
+  .section-padding { padding: 3rem 0; }
+
+  .partners-logos { gap: 1.5rem; }
+  .partner-logo { width: 120px; height: 60px; }
+}
+
+@media (max-width: 480px) {
+  html { font-size: 15px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .stat-card { padding: 1.2rem 1rem; }
+  .hero h2 { font-size: 1.5rem; }
+  .btn { padding: 0.75rem 1.4rem; font-size: 0.88rem; }
+  .hero-cta { flex-direction: column; align-items: center; }
+  .utility-links { gap: 0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== UTILITY BAR ===== -->
+<div class="utility-bar">
+  <div class="container">
+    <div class="utility-links">
+      <a href="https://teacher.naval-acad.bg/">e-Преподавател</a>
+      <span class="sep">|</span>
+      <a href="http://ws.naval-acad.bg">УебСтудент</a>
+      <span class="sep">|</span>
+      <a href="https://nvna.eu/wp/">Разписание</a>
+      <span class="sep">|</span>
+      <a href="https://dlc.naval-acad.bg">Дистанционно обучение</a>
+      <span class="sep">|</span>
+      <a href="https://nvna.eu">Информационен център</a>
+    </div>
+    <div class="lang-switcher">
+      <a href="#" class="active">BG</a>
+      <a href="#">EN</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="header-logo">
+      <span class="header-logo-anchor" aria-hidden="true">&#9875;</span>
+    </a>
+    <div class="header-text">
+      <h1>Висше Военноморско Училище <span>"Н. Й. Вапцаров"</span></h1>
+      <div class="header-motto">Вековни традиции &mdash; Модерен хоризонт</div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="main-nav">
+  <div class="container">
+    <button class="nav-toggle" onclick="document.querySelector('.nav-list').classList.toggle('open')" aria-label="Меню">
+      <span class="nav-toggle-bar"></span> Меню
+    </button>
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="#">Университет</a>
+        <div class="nav-dropdown">
+          <a href="#">За нас</a>
+          <a href="#">Структура</a>
+          <a href="#">Традиция и мисия</a>
+          <a href="#">Учебна база</a>
+          <a href="#">Симулатори</a>
+          <a href="#">Планетариум</a>
+          <a href="#">Акредитация</a>
+          <a href="#">Пресцентър</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="#">Обучение</a>
+        <div class="nav-dropdown">
+          <a href="#">Специалности и специализации</a>
+          <a href="#">Бакалавър</a>
+          <a href="#">Магистър</a>
+          <a href="#">Курсанти</a>
+          <a href="#">Докторанти</a>
+          <a href="#">Кандидатстудентски справочник</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="#">Прием</a>
+      </li>
+      <li class="nav-item">
+        <a href="#">Курсове</a>
+        <div class="nav-dropdown">
+          <a href="#">Курсове за морски лица</a>
+          <a href="#">ИТ курсове</a>
+          <a href="#">Езикови курсове LangMar</a>
+          <a href="#">Курс йонизиращи лъчения</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="#">Наука</a>
+        <div class="nav-dropdown">
+          <a href="#">Научна дейност</a>
+          <a href="#">Конференции</a>
+          <a href="#">Издателски център</a>
+          <a href="#">Научна секция</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="#">Международна дейност</a>
+        <div class="nav-dropdown">
+          <a href="#">Партньорства</a>
+          <a href="#">Еразъм+</a>
+          <a href="#">Международни проекти</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="#">Студенти</a>
+        <div class="nav-dropdown">
+          <a href="#">Студентски съвет</a>
+          <a href="#">Кариерен център</a>
+          <a href="#">Стажове и практика</a>
+          <a href="#">Клуб Алумни</a>
+          <a href="#">Спортен клуб</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="#">Новини</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Най-старото техническо училище в България</div>
+    <h2>Формираме <em>лидери</em> за морето и технологиите</h2>
+    <p class="hero-sub">
+      Висше Военноморско Училище &bdquo;Н. Й. Вапцаров&ldquo; &mdash; център за морски науки и
+      технологии с над 145 години традиция в подготовката на висококвалифицирани специалисти
+      за Военноморските сили и морската индустрия.
+    </p>
+    <div class="hero-cta">
+      <a href="#" class="btn btn-primary">&#9998; Кандидатствай</a>
+      <a href="#" class="btn btn-outline">&#9741; Специалности</a>
+    </div>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:60px;">
+    <path d="M0 40 C 360 80, 720 0, 1080 40 S 1440 60, 1440 40 L1440 80 L0 80Z" fill="#ffffff"/>
+  </svg>
+</section>
+
+<!-- ===== QUICK STATS ===== -->
+<section class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">&#9875;</div>
+      <div class="stat-number">1881</div>
+      <div class="stat-label">Година на основаване</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#127979;</div>
+      <div class="stat-number">2</div>
+      <div class="stat-label">Факултета</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#128218;</div>
+      <div class="stat-number">45+</div>
+      <div class="stat-label">Специалности</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">&#127891;</div>
+      <div class="stat-number">60+</div>
+      <div class="stat-label">Професионални курса</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURED PROGRAMS ===== -->
+<section class="section-padding programs-section">
+  <div class="section-container">
+    <div class="section-header-group">
+      <div class="section-label">Обучение</div>
+      <h2 class="section-title">Водещи специалности</h2>
+      <p class="section-subtitle">Бакалавърски, магистърски и курсантски програми в областта на морските науки, инженерството и информационните технологии</p>
+      <span class="gold-line"></span>
+    </div>
+    <div class="programs-grid">
+      <!-- Card 1 -->
+      <div class="program-card">
+        <div class="program-card-img" style="background: linear-gradient(135deg, #092147, #1a488e);">
+          <div class="overlay">&#9875;</div>
+        </div>
+        <div class="program-card-body">
+          <span class="program-card-tag">Бакалавър</span>
+          <h3>Навигация</h3>
+          <p>Подготовка на помощник-капитани за търговския флот &mdash; корабоводене, безопасност, морско право и международни конвенции.</p>
+          <a href="#" class="program-card-link">Научи повече</a>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="program-card">
+        <div class="program-card-img" style="background: linear-gradient(135deg, #1a488e, #2a6ac4);">
+          <div class="overlay" style="font-size:2rem;">&#128187;</div>
+        </div>
+        <div class="program-card-body">
+          <span class="program-card-tag">Бакалавър</span>
+          <h3>Киберсигурност</h3>
+          <p>Защита на данни, мрежи и информационни системи в публичния и частния сектор. Съвременни технологии за цифрова защита.</p>
+          <a href="#" class="program-card-link">Научи повече</a>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="program-card">
+        <div class="program-card-img" style="background: linear-gradient(135deg, #0d2d5e, #1a488e);">
+          <div class="overlay">&#9881;</div>
+        </div>
+        <div class="program-card-body">
+          <span class="program-card-tag">Бакалавър</span>
+          <h3>Корабни машини и механизми</h3>
+          <p>Подготовка на помощник-механици за корабоплаването &mdash; двигатели, механизми, навигация и морска безопасност.</p>
+          <a href="#" class="program-card-link">Научи повече</a>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="program-card">
+        <div class="program-card-img" style="background: linear-gradient(135deg, #092147, #0d2d5e);">
+          <div class="overlay" style="font-size:2rem;">&#129302;</div>
+        </div>
+        <div class="program-card-body">
+          <span class="program-card-tag">Бакалавър</span>
+          <h3>Изкуствен интелект и смарт технологии</h3>
+          <p>Интелигентни системи, машинно обучение и автоматизация &mdash; бъдещето на технологичното развитие.</p>
+          <a href="#" class="program-card-link">Научи повече</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LATEST NEWS ===== -->
+<section class="section-padding news-section">
+  <div class="section-container">
+    <div class="section-header-group">
+      <div class="section-label">Пресцентър</div>
+      <h2 class="section-title">Последни новини</h2>
+      <p class="section-subtitle">Актуални събития, тържества и международни проекти</p>
+      <span class="gold-line"></span>
+    </div>
+    <div class="news-grid">
+      <!-- News 1 -->
+      <article class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #1a488e, #092147);">
+          <span class="news-card-date">
+            <span class="day">19</span>
+            <span class="month">Мар</span>
+          </span>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15);font-size:4rem;">&#127758;</div>
+        </div>
+        <div class="news-card-body">
+          <h3>Пристигна втората група за обучение по програма BIP във ВВМУ &bdquo;Н. Й. Вапцаров&ldquo;</h3>
+          <p>Студенти и курсанти от Гърция, Румъния, Италия, Нидерландия и Украйна пристигнаха за обучение по международната програма BIP.</p>
+          <div class="news-card-meta">
+            <span>Яница Минкова</span>
+            <span>&bull;</span>
+            <span>19 март 2026</span>
+          </div>
+        </div>
+      </article>
+      <!-- News 2 -->
+      <article class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #0d2d5e, #1a488e);">
+          <span class="news-card-date">
+            <span class="day">17</span>
+            <span class="month">Мар</span>
+          </span>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15);font-size:4rem;">&#127942;</div>
+        </div>
+        <div class="news-card-body">
+          <h3>Тържествено честване на 145 години от създаването на ВВМУ &bdquo;Н. Й. Вапцаров&ldquo;</h3>
+          <p>На 17 март 2026 г. се навършиха 145 години от създаването на Военноморското училище в Русе &mdash; тържественото честване събра преподаватели, курсанти и гости.</p>
+          <div class="news-card-meta">
+            <span>Георги Николов</span>
+            <span>&bull;</span>
+            <span>17 март 2026</span>
+          </div>
+        </div>
+      </article>
+      <!-- News 3 -->
+      <article class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #092147, #0d2d5e);">
+          <span class="news-card-date">
+            <span class="day">14</span>
+            <span class="month">Мар</span>
+          </span>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15);font-size:4rem;">&#9881;</div>
+        </div>
+        <div class="news-card-body">
+          <h3>Участие на академичен състав от ВВМУ в специализиран симулаторен лагер</h3>
+          <p>Преподаватели от ВВМУ взеха участие в специализиран симулаторен лагер в морски институт в Нидерландия за повишаване на квалификацията.</p>
+          <div class="news-card-meta">
+            <span>Яница Минкова</span>
+            <span>&bull;</span>
+            <span>14 март 2026</span>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="all-news-link">
+      <a href="#" class="btn btn-outline" style="color:#092147;border-color:#092147;">Всички новини &#8594;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY VVMU ===== -->
+<section class="section-padding why-section">
+  <div class="section-container">
+    <div class="section-header-group">
+      <div class="section-label">Защо ВВМУ</div>
+      <h2 class="section-title">Традиции. Иновации. Бъдеще.</h2>
+      <p class="section-subtitle">Над 145 години в служба на морското образование и науката в България</p>
+      <span class="gold-line"></span>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">&#9875;</div>
+        <h3>Вековни традиции</h3>
+        <p>Най-старото техническо учебно заведение в България, основано през 1881 г. като Морско училище за подготовка на инженери и моряци.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">&#128300;</div>
+        <h3>Модерна база</h3>
+        <p>11 уникални симулатора, 35 лаборатории, 17 лекционни зали, планетариум &bdquo;Карл Цайс&ldquo; и съвременни компютърни класове.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">&#127760;</div>
+        <h3>Международно признание</h3>
+        <p>Член на IAMU и IMLA, партньорства с морски академии от над 40 държави, програма Еразъм+ и международни конференции.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">&#128188;</div>
+        <h3>Кариерно развитие</h3>
+        <p>Кариерен център, стажове и практика, клуб Алумни. Висококвалифицирани специалисти за ВМС, националната сигурност и икономиката.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARTNERS / ACCREDITATION ===== -->
+<section class="section-padding partners-section" style="padding:3rem 0;">
+  <div class="section-container">
+    <div class="section-header-group" style="margin-bottom:2rem;">
+      <div class="section-label">Акредитация и партньори</div>
+      <h2 class="section-title" style="font-size:1.5rem;">Институционална акредитация: оценка 9.07 / 10</h2>
+      <span class="gold-line"></span>
+    </div>
+    <div class="partners-logos">
+      <div class="partner-logo">НАОА<br><small>Акредитация</small></div>
+      <div class="partner-logo">IAMU<br><small>International Association</small></div>
+      <div class="partner-logo">IMLA<br><small>Maritime Lecturers</small></div>
+      <div class="partner-logo">Erasmus+<br><small>EU Programme</small></div>
+      <div class="partner-logo">МО<br><small>Министерство на отбраната</small></div>
+      <div class="partner-logo">UNESCO<br><small>Океанографска комисия</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <!-- Column 1: University -->
+    <div class="footer-col">
+      <h4>Университет</h4>
+      <ul>
+        <li><a href="#">За нас</a></li>
+        <li><a href="#">Структура</a></li>
+        <li><a href="#">Традиция и мисия</a></li>
+        <li><a href="#">Учебна база</a></li>
+        <li><a href="#">Симулатори</a></li>
+        <li><a href="#">Планетариум</a></li>
+        <li><a href="#">Акредитация</a></li>
+        <li><a href="#">Пресцентър</a></li>
+      </ul>
+    </div>
+    <!-- Column 2: Training -->
+    <div class="footer-col">
+      <h4>Обучение</h4>
+      <ul>
+        <li><a href="#">Бакалавър</a></li>
+        <li><a href="#">Магистър</a></li>
+        <li><a href="#">Курсанти</a></li>
+        <li><a href="#">Докторанти</a></li>
+        <li><a href="#">Морски курсове</a></li>
+        <li><a href="#">ИТ курсове</a></li>
+        <li><a href="#">Езикови курсове</a></li>
+        <li><a href="#">Кандидатстване</a></li>
+      </ul>
+    </div>
+    <!-- Column 3: Resources -->
+    <div class="footer-col">
+      <h4>Ресурси</h4>
+      <ul>
+        <li><a href="https://teacher.naval-acad.bg/">е-Преподавател</a></li>
+        <li><a href="http://ws.naval-acad.bg">УебСтудент</a></li>
+        <li><a href="https://nvna.eu/wp/">Разписание</a></li>
+        <li><a href="https://dlc.naval-acad.bg">Дистанционно обучение</a></li>
+        <li><a href="#">Библиотека</a></li>
+        <li><a href="https://scholar.nvna.eu/">Издателски център</a></li>
+        <li><a href="https://career.nvna.eu/career/">Кариерен център</a></li>
+        <li><a href="#">Обществени поръчки</a></li>
+      </ul>
+    </div>
+    <!-- Column 4: Contact -->
+    <div class="footer-col">
+      <h4>Контакти</h4>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">&#128205;</span>
+        <span>гр. Варна 9026<br>ул. &bdquo;Васил Друмев&ldquo; 73</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">&#9742;</span>
+        <span>+359 52 552-377</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">&#9993;</span>
+        <span>info@naval-acad.bg</span>
+      </div>
+      <div class="footer-social">
+        <a href="#" title="Facebook">f</a>
+        <a href="#" title="Instagram">in</a>
+        <a href="#" title="YouTube">&#9654;</a>
+        <a href="#" title="LinkedIn">Li</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      &copy; 2026 ВВМУ &bdquo;Н. Й. Вапцаров&ldquo; &mdash; Висше Военноморско Училище, Варна. Всички права запазени.
+    </div>
+  </div>
+</footer>
+
+<!-- ===== DESIGN NOTE ===== -->
+<div class="design-note">
+  Вариант 1: Класическа морска академия | Дизайн концепция | Деян Стоянов Стоянов | Факултетен № 001114 | Март 2026
+</div>
+
+<!-- ===== MOBILE NAV SCRIPT ===== -->
+<script>
+document.querySelectorAll('.nav-item > a').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    if (window.innerWidth <= 768) {
+      var parent = this.parentElement;
+      var dropdown = parent.querySelector('.nav-dropdown');
+      if (dropdown) {
+        e.preventDefault();
+        parent.classList.toggle('mobile-open');
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>

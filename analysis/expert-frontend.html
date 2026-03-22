@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Архитектурен анализ — ВВМУ „Н. Й. Вапцаров"</title>
+    <style>
+        :root {
+            --navy: #1a3a5c;
+            --navy-light: #2c5a8a;
+            --navy-dark: #0f2440;
+            --accent: #3498db;
+            --bg: #ffffff;
+            --bg-alt: #f4f6f9;
+            --bg-card: #ffffff;
+            --text: #2c3e50;
+            --text-light: #5a6c7e;
+            --border: #dce3eb;
+            --critical: #e74c3c;
+            --critical-bg: #fdf0ef;
+            --warning: #f39c12;
+            --warning-bg: #fef9ed;
+            --good: #27ae60;
+            --good-bg: #eefbf3;
+            --info: #3498db;
+            --info-bg: #edf5fd;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-alt);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            color: white;
+            padding: 48px 40px;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            margin-bottom: 16px;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            opacity: 0.75;
+        }
+
+        .overall-score {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 32px 40px;
+            margin: -32px 40px 32px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(var(--critical) 0% 35%, var(--border) 35% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .score-circle .inner {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--critical);
+        }
+
+        .score-summary h2 {
+            color: var(--navy);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .score-summary p {
+            color: var(--text-light);
+            max-width: 700px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 60px;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border-radius: 10px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--navy);
+            color: white;
+            padding: 16px 24px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .section-body {
+            padding: 24px;
+        }
+
+        .sub-section {
+            margin-bottom: 28px;
+        }
+
+        .sub-section:last-child { margin-bottom: 0; }
+
+        .sub-section h3 {
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--bg-alt);
+        }
+
+        .sub-rating {
+            display: inline-block;
+            background: var(--navy);
+            color: white;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: var(--navy);
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) td {
+            background: var(--bg-alt);
+        }
+
+        tr:hover td {
+            background: #e8eef5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge-critical {
+            background: var(--critical-bg);
+            color: var(--critical);
+            border: 1px solid var(--critical);
+        }
+
+        .badge-warning {
+            background: var(--warning-bg);
+            color: #c27d0e;
+            border: 1px solid var(--warning);
+        }
+
+        .badge-good {
+            background: var(--good-bg);
+            color: var(--good);
+            border: 1px solid var(--good);
+        }
+
+        .badge-info {
+            background: var(--info-bg);
+            color: var(--info);
+            border: 1px solid var(--info);
+        }
+
+        .indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .ind-red { background: var(--critical); }
+        .ind-orange { background: var(--warning); }
+        .ind-green { background: var(--good); }
+        .ind-blue { background: var(--info); }
+
+        .issue-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .issue-list li {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border-left: 4px solid;
+        }
+
+        .issue-critical {
+            background: var(--critical-bg);
+            border-color: var(--critical);
+        }
+
+        .issue-warning {
+            background: var(--warning-bg);
+            border-color: var(--warning);
+        }
+
+        .issue-good {
+            background: var(--good-bg);
+            border-color: var(--good);
+        }
+
+        .issue-list li strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .issue-list li .solution {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .file-ref {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background: #eef2f7;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 0.88rem;
+            color: var(--navy);
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: var(--bg-alt);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .metric-card .value {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .metric-card .label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .val-critical { color: var(--critical); }
+        .val-warning { color: var(--warning); }
+        .val-good { color: var(--good); }
+
+        .comparison-table td:nth-child(2) {
+            color: var(--critical);
+            font-weight: 600;
+        }
+
+        .comparison-table td:nth-child(3) {
+            color: var(--good);
+            font-weight: 600;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .tech-tag {
+            background: var(--navy);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+        }
+
+        .progress-bar {
+            background: var(--border);
+            border-radius: 8px;
+            height: 10px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        .waterfall {
+            margin: 16px 0;
+        }
+
+        .waterfall-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+        }
+
+        .waterfall-label {
+            width: 240px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-family: 'Consolas', monospace;
+            font-size: 0.82rem;
+        }
+
+        .waterfall-bar {
+            flex: 1;
+            height: 18px;
+            background: var(--bg-alt);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .waterfall-fill {
+            height: 100%;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding-left: 6px;
+            font-size: 0.72rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .size-note {
+            width: 80px;
+            text-align: right;
+            font-size: 0.82rem;
+            color: var(--text-light);
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .two-col { grid-template-columns: 1fr; }
+            .overall-score { margin: -24px 16px 24px; padding: 24px; }
+            .container { padding: 0 16px 40px; }
+            .header { padding: 32px 16px; }
+        }
+
+        .footer {
+            background: var(--navy-dark);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 24px 40px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .toc {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+        }
+
+        .toc h3 {
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .toc ol {
+            padding-left: 20px;
+        }
+
+        .toc li {
+            margin-bottom: 4px;
+        }
+
+        .toc a {
+            color: var(--navy-light);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+
+        .highlight-box.danger {
+            background: #f8d7da;
+            border-color: #f5c2c7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Frontend Архитектурен анализ</h1>
+    <div class="subtitle">ВВМУ „Н. Й. Вапцаров" &mdash; https://www.naval-acad.bg/</div>
+    <div class="meta">
+        <span>Дата: 23 март 2026</span>
+        <span>Анализирани страници: 3 (Начална, Специалности, Пресцентър)</span>
+        <span>Роля: Frontend Architect</span>
+    </div>
+</div>
+
+<div class="overall-score">
+    <div class="score-circle">
+        <div class="inner">3.5</div>
+    </div>
+    <div class="score-summary">
+        <h2>Обща оценка: 3.5 / 10</h2>
+        <p>Сайтът страда от критични проблеми с производителността: 36 MB неоптимизирано изображение, 1.1 MB CSS бъндъл, 1.7 MB+ JavaScript без defer/async, липса на Cache-Control хедъри и пълно отсъствие на security headers. Общото тегло на началната страница надвишава 38 MB, при препоръчителни &lt;2 MB. Core Web Vitals категорично не се покриват.</p>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="toc">
+        <h3>Съдържание</h3>
+        <ol>
+            <li><a href="#cwv">Core Web Vitals &mdash; оценка и прогноза</a></li>
+            <li><a href="#tech-stack">Технологичен стек</a></li>
+            <li><a href="#critical">Критични проблеми (по тежест)</a></li>
+            <li><a href="#page-weight">Page Weight анализ (2/10)</a></li>
+            <li><a href="#js">JavaScript анализ (3/10)</a></li>
+            <li><a href="#css">CSS анализ (3/10)</a></li>
+            <li><a href="#images">Изображения (2/10)</a></li>
+            <li><a href="#caching">Кеширане (2/10)</a></li>
+            <li><a href="#security">Сигурност (2/10)</a></li>
+            <li><a href="#dom">DOM Complexity</a></li>
+            <li><a href="#animations">Анимации и рендериране</a></li>
+            <li><a href="#comparison">Сравнителна таблица: текущо vs цел</a></li>
+            <li><a href="#recommendations">Конкретни препоръки с очаквано подобрение</a></li>
+        </ol>
+    </div>
+
+    <!-- ==================== CWV ==================== -->
+    <div class="section" id="cwv">
+        <div class="section-header">1. Core Web Vitals &mdash; оценка и прогноза</div>
+        <div class="section-body">
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="value val-critical">~6.5s</div>
+                    <div class="label">LCP (Largest Contentful Paint)</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--critical)"></div></div>
+                    <small>Цел: &lt;2.5s</small>
+                </div>
+                <div class="metric-card">
+                    <div class="value val-critical">~4.2s</div>
+                    <div class="label">FCP (First Contentful Paint)</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--critical)"></div></div>
+                    <small>Цел: &lt;1.8s</small>
+                </div>
+                <div class="metric-card">
+                    <div class="value val-critical">~850ms</div>
+                    <div class="label">TBT (Total Blocking Time)</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:85%;background:var(--critical)"></div></div>
+                    <small>Цел: &lt;200ms</small>
+                </div>
+                <div class="metric-card">
+                    <div class="value val-warning">~0.18</div>
+                    <div class="label">CLS (Cumulative Layout Shift)</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:70%;background:var(--warning)"></div></div>
+                    <small>Цел: &lt;0.1</small>
+                </div>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Метрика</th>
+                    <th>Оценка (прогноза)</th>
+                    <th>Цел (Google „Добро")</th>
+                    <th>Статус</th>
+                    <th>Основна причина</th>
+                </tr>
+                <tr>
+                    <td><strong>LCP</strong></td>
+                    <td>~6.5s</td>
+                    <td>&lt;2.5s</td>
+                    <td><span class="badge badge-critical">Лошо</span></td>
+                    <td>36 MB изображение + render-blocking JS (1.7 MB)</td>
+                </tr>
+                <tr>
+                    <td><strong>FCP</strong></td>
+                    <td>~4.2s</td>
+                    <td>&lt;1.8s</td>
+                    <td><span class="badge badge-critical">Лошо</span></td>
+                    <td>1.1 MB CSS бъндъл + render-blocking ресурси</td>
+                </tr>
+                <tr>
+                    <td><strong>TBT</strong></td>
+                    <td>~850ms</td>
+                    <td>&lt;200ms</td>
+                    <td><span class="badge badge-critical">Лошо</span></td>
+                    <td>jQuery + LayerSlider + RevSlider + Fusion JS парсиране</td>
+                </tr>
+                <tr>
+                    <td><strong>CLS</strong></td>
+                    <td>~0.18</td>
+                    <td>&lt;0.1</td>
+                    <td><span class="badge badge-warning">Нужно подобрение</span></td>
+                    <td>LayerSlider без запазени размери, WPML флагове</td>
+                </tr>
+                <tr>
+                    <td><strong>Speed Index</strong></td>
+                    <td>~7.8s</td>
+                    <td>&lt;3.4s</td>
+                    <td><span class="badge badge-critical">Лошо</span></td>
+                    <td>Комбиниран ефект от всички ресурси</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box danger" style="margin-top:16px;">
+                <strong>Прогнозна оценка в Google PageSpeed Insights: 15-25/100 (Mobile), 30-40/100 (Desktop)</strong><br>
+                Базирано на: 244 KB HTML, 1.1 MB CSS, 1.7 MB JS, 36 MB изображения, липса на lazy loading, 7 render-blocking скрипта.
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Tech Stack ==================== -->
+    <div class="section" id="tech-stack">
+        <div class="section-header">2. Технологичен стек</div>
+        <div class="section-body">
+            <div class="sub-section">
+                <h3>Текущ стек</h3>
+                <div class="tech-stack">
+                    <span class="tech-tag">WordPress 6.9.4</span>
+                    <span class="tech-tag">Avada 3.11.13</span>
+                    <span class="tech-tag">jQuery 3.7.1</span>
+                    <span class="tech-tag">LayerSlider 7.14.0</span>
+                    <span class="tech-tag">RevSlider 6.7.25</span>
+                    <span class="tech-tag">LightSlider 1.1.6</span>
+                    <span class="tech-tag">Workbox 7.3.0</span>
+                    <span class="tech-tag">WPML</span>
+                    <span class="tech-tag">Google Site Kit</span>
+                    <span class="tech-tag">TablePress 3.0.4</span>
+                    <span class="tech-tag">WPForms</span>
+                    <span class="tech-tag">Font Awesome 4.7</span>
+                    <span class="tech-tag">Icomoon (AWB Icons)</span>
+                </div>
+                <p style="color:var(--text-light); font-size:0.9rem;">Сървър: sh-cache (споделен хостинг). Gzip компресия: активирана. CDN: jsdelivr.net (само за LightSlider).</p>
+            </div>
+            <div class="sub-section">
+                <h3>Проблеми на стека</h3>
+                <ul class="issue-list">
+                    <li class="issue-critical">
+                        <strong><span class="indicator ind-red"></span>3 различни слайдер плъгина едновременно</strong>
+                        <span class="solution">LayerSlider (432 KB JS) + RevSlider (581 KB JS) + LightSlider (16 KB JS) = 1,029 KB JavaScript само за слайдери. Необходим е само един.</span>
+                    </li>
+                    <li class="issue-critical">
+                        <strong><span class="indicator ind-red"></span>2 различни icon font библиотеки</strong>
+                        <span class="solution">Font Awesome 4.7 (31 KB CSS + шрифтове ~155 KB) + Icomoon AWB Icons (21 KB). Дублирана функционалност.</span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong><span class="indicator ind-orange"></span>jQuery зависимост</strong>
+                        <span class="solution">jQuery 3.7.1 (88 KB) + jquery-migrate (14 KB) = 102 KB. Модерен vanilla JS подход или Alpine.js биха елиминирали тази зависимост.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="sub-section">
+                <h3>Препоръчан стек</h3>
+                <div class="tech-stack">
+                    <span class="tech-tag" style="background:var(--good)">WordPress 6.x + Lightweight тема</span>
+                    <span class="tech-tag" style="background:var(--good)">Vanilla JS / Alpine.js</span>
+                    <span class="tech-tag" style="background:var(--good)">Swiper.js (единствен слайдер)</span>
+                    <span class="tech-tag" style="background:var(--good)">Героически CSS иконки (SVG sprite)</span>
+                    <span class="tech-tag" style="background:var(--good)">Cloudflare CDN</span>
+                    <span class="tech-tag" style="background:var(--good)">WebP/AVIF изображения</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Critical Issues ==================== -->
+    <div class="section" id="critical">
+        <div class="section-header">3. Критични проблеми (подредени по тежест)</div>
+        <div class="section-body">
+            <ul class="issue-list">
+                <li class="issue-critical">
+                    <strong><span class="indicator ind-red"></span>#1: Неоптимизирано изображение от 36 MB</strong>
+                    <span class="solution">
+                        Файл: <span class="file-ref">IMG_20260317_130800.jpg</span> &mdash; 36,640,293 байта (34.9 MB).
+                        Директно от камера, без resize. Върху 3G връзка това са ~5 минути за зареждане.
+                        <br><strong>Решение:</strong> Resize до 1200px ширина + WebP формат = ~80-120 KB. Спестяване: ~36.5 MB.
+                    </span>
+                </li>
+                <li class="issue-critical">
+                    <strong><span class="indicator ind-red"></span>#2: Fusion CSS бъндъл от 1.1 MB</strong>
+                    <span class="solution">
+                        Файл: <span class="file-ref">f5f57a7ea19e6305a89ba244190ad9e9.min.css</span> &mdash; 1,131,516 байта (1.08 MB).
+                        Render-blocking CSS, парсира се преди първото рендериране.
+                        <br><strong>Решение:</strong> Critical CSS inline (~15 KB) + async зареждане на останалото. Purge неизползвани стилове (очаквано ~70% неизползвани). Спестяване: ~800 KB.
+                    </span>
+                </li>
+                <li class="issue-critical">
+                    <strong><span class="indicator ind-red"></span>#3: 7 render-blocking JavaScript файла (1.71 MB общо)</strong>
+                    <span class="solution">
+                        jquery.min.js (88 KB) + jquery-migrate (14 KB) + LayerSlider utils (123 KB) + LayerSlider core (277 KB) + LayerSlider transitions (33 KB) + LightSlider (16 KB) + Fusion scripts (596 KB) = 1,147 KB.
+                        Нито един няма <code>async</code> или <code>defer</code> атрибут. RevSlider добавя още 581 KB.
+                        <br><strong>Решение:</strong> defer на всички скриптове + елиминиране на 2 от 3 слайдера. Спестяване: ~800-1000 KB + 2-3s TBT.
+                    </span>
+                </li>
+                <li class="issue-critical">
+                    <strong><span class="indicator ind-red"></span>#4: Пълна липса на Security Headers</strong>
+                    <span class="solution">
+                        Липсват: Content-Security-Policy, Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy.
+                        <br><strong>Решение:</strong> Конфигуриране в .htaccess или nginx. Нулев performance cost.
+                    </span>
+                </li>
+                <li class="issue-critical">
+                    <strong><span class="indicator ind-red"></span>#5: Липса на Cache-Control хедъри</strong>
+                    <span class="solution">
+                        Нито HTML, нито статичните ресурси имат Cache-Control хедъри. Само Last-Modified присъства за изображенията.
+                        Браузърът не може ефективно да кешира нищо.
+                        <br><strong>Решение:</strong> Cache-Control: max-age=31536000 за статични assets, max-age=3600 за HTML.
+                    </span>
+                </li>
+                <li class="issue-critical">
+                    <strong><span class="indicator ind-red"></span>#6: Mixed Content &mdash; HTTP линкове</strong>
+                    <span class="solution">
+                        4 незащитени HTTP URL-а: <span class="file-ref">ws.naval-acad.bg</span>, <span class="file-ref">projects.nvna.eu</span>, <span class="file-ref">studentcouncil.naval-acad.bg</span>, <span class="file-ref">pp.naval-acad.bg</span>.
+                        Adwise tracking pixel също е protocol-relative (<code>//as.adwise.bg</code>).
+                        <br><strong>Решение:</strong> Мигриране на всички линкове към HTTPS.
+                    </span>
+                </li>
+                <li class="issue-warning">
+                    <strong><span class="indicator ind-orange"></span>#7: Липса на lazy loading за изображения</strong>
+                    <span class="solution">
+                        Нито едно изображение на началната страница няма <code>loading="lazy"</code>. Всички 33+ изображения се зареждат едновременно.
+                        <br><strong>Решение:</strong> Добавяне на loading="lazy" за below-the-fold изображения. WordPress 6.x го поддържа нативно.
+                    </span>
+                </li>
+                <li class="issue-warning">
+                    <strong><span class="indicator ind-orange"></span>#8: HTML документ от 245 KB</strong>
+                    <span class="solution">
+                        Началната страница е 244,738 байта (239 KB) некомпресирана, 33 KB gzip. Съдържа 8 inline &lt;style&gt; блока с page-specific CSS за 29+ различни page ID-та.
+                        <br><strong>Решение:</strong> Преместване на inline CSS във файлове, елиминиране на page-specific стилове.
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ==================== Page Weight ==================== -->
+    <div class="section" id="page-weight">
+        <div class="section-header">4. Page Weight анализ <span class="sub-rating">2/10</span></div>
+        <div class="section-body">
+            <h3>Размер на ресурсите &mdash; Начална страница</h3>
+
+            <div class="waterfall">
+                <div class="waterfall-item">
+                    <span class="waterfall-label">IMG_20260317_130800.jpg</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:100%;background:var(--critical)">34.9 MB</div>
+                    </div>
+                    <span class="size-note">34,944 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">fusion-styles...min.css</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:3%;background:var(--critical)">1.08 MB</div>
+                    </div>
+                    <span class="size-note">1,105 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">fusion-scripts...min.js</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:1.6%;background:var(--warning)">582 KB</div>
+                    </div>
+                    <span class="size-note">582 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">rs6.min.js (RevSlider)</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:1.1%;background:var(--warning)">406 KB</div>
+                    </div>
+                    <span class="size-note">406 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">layerslider.kreatura...js</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:0.7%;background:var(--warning)">270 KB</div>
+                    </div>
+                    <span class="size-note">270 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">vecteezy_...education.jpg</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:0.6%;background:var(--warning)">223 KB</div>
+                    </div>
+                    <span class="size-note">223 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">Planetarium_menu...jpg</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:0.6%;background:var(--warning)">209 KB</div>
+                    </div>
+                    <span class="size-note">209 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">rbtools.min.js (RevSlider)</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:0.4%;background:var(--warning)">161 KB</div>
+                    </div>
+                    <span class="size-note">161 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">ls-project-1-slide-6.jpg</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:0.4%;background:var(--info)">149 KB</div>
+                    </div>
+                    <span class="size-note">149 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">logo_NVNA.png</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:0.4%;background:var(--info)">136 KB</div>
+                    </div>
+                    <span class="size-note">136 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">layerslider.utils.js</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:0.3%;background:var(--info)">120 KB</div>
+                    </div>
+                    <span class="size-note">120 KB</span>
+                </div>
+                <div class="waterfall-item">
+                    <span class="waterfall-label">block-library/style.min.css</span>
+                    <div class="waterfall-bar">
+                        <div class="waterfall-fill" style="width:0.3%;background:var(--info)">117 KB</div>
+                    </div>
+                    <span class="size-note">117 KB</span>
+                </div>
+            </div>
+
+            <table style="margin-top:20px;">
+                <tr>
+                    <th>Категория</th>
+                    <th>Брой файлове</th>
+                    <th>Общ размер (некомпресиран)</th>
+                    <th>Статус</th>
+                </tr>
+                <tr>
+                    <td>HTML</td>
+                    <td>1</td>
+                    <td>245 KB (33 KB gzip)</td>
+                    <td><span class="badge badge-warning">Голям</span></td>
+                </tr>
+                <tr>
+                    <td>CSS (external)</td>
+                    <td>9+</td>
+                    <td>~1,375 KB</td>
+                    <td><span class="badge badge-critical">Критичен</span></td>
+                </tr>
+                <tr>
+                    <td>CSS (inline)</td>
+                    <td>8 блока</td>
+                    <td>~12 KB</td>
+                    <td><span class="badge badge-warning">Високо</span></td>
+                </tr>
+                <tr>
+                    <td>JavaScript</td>
+                    <td>11+</td>
+                    <td>~1,730 KB</td>
+                    <td><span class="badge badge-critical">Критичен</span></td>
+                </tr>
+                <tr>
+                    <td>Изображения</td>
+                    <td>33+</td>
+                    <td>~37,500 KB</td>
+                    <td><span class="badge badge-critical">Критичен</span></td>
+                </tr>
+                <tr>
+                    <td>Шрифтове</td>
+                    <td>5 (preload)</td>
+                    <td>~183 KB</td>
+                    <td><span class="badge badge-warning">Високо</span></td>
+                </tr>
+                <tr>
+                    <td><strong>ОБЩО</strong></td>
+                    <td><strong>67+</strong></td>
+                    <td><strong>~41,045 KB (~40 MB)</strong></td>
+                    <td><span class="badge badge-critical">Катастрофално</span></td>
+                </tr>
+            </table>
+
+            <div class="highlight-box danger" style="margin-top:16px;">
+                <strong>Бюджет на страницата:</strong> Google препоръчва &lt;1.6 MB за мобилни устройства. Текущият обем от ~40 MB превишава бюджета 25 пъти.
+            </div>
+
+            <h3 style="margin-top:24px;">Размер на HTML по страница</h3>
+            <table>
+                <tr>
+                    <th>Страница</th>
+                    <th>HTML размер (некомпресиран)</th>
+                    <th>Статус</th>
+                </tr>
+                <tr>
+                    <td>Начална страница <span class="file-ref">/</span></td>
+                    <td>244,738 байта (239 KB)</td>
+                    <td><span class="badge badge-warning">Голям</span></td>
+                </tr>
+                <tr>
+                    <td>Специалности <span class="file-ref">/specialties</span></td>
+                    <td>261,635 байта (255 KB)</td>
+                    <td><span class="badge badge-critical">Много голям</span></td>
+                </tr>
+                <tr>
+                    <td>Пресцентър <span class="file-ref">/university/presscenter</span></td>
+                    <td>237,116 байта (232 KB)</td>
+                    <td><span class="badge badge-warning">Голям</span></td>
+                </tr>
+            </table>
+            <p style="margin-top:8px;color:var(--text-light);font-size:0.9rem;">Типичен размер на HTML за добре оптимизирана страница: 30-80 KB. Тук средно 242 KB &mdash; 3-8 пъти повече от нормалното.</p>
+        </div>
+    </div>
+
+    <!-- ==================== JavaScript ==================== -->
+    <div class="section" id="js">
+        <div class="section-header">5. JavaScript анализ <span class="sub-rating">3/10</span></div>
+        <div class="section-body">
+            <div class="sub-section">
+                <h3>Файлове и размери</h3>
+                <table>
+                    <tr>
+                        <th>Файл</th>
+                        <th>Размер</th>
+                        <th>Render-blocking?</th>
+                        <th>Необходим?</th>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">fusion-scripts...min.js</span></td>
+                        <td>582 KB</td>
+                        <td><span class="badge badge-critical">ДА</span></td>
+                        <td><span class="badge badge-warning">Частично</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">rs6.min.js</span> (RevSlider)</td>
+                        <td>406 KB</td>
+                        <td><span class="badge badge-info">НЕ</span></td>
+                        <td><span class="badge badge-critical">Дубликат</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">layerslider.kreatura...js</span></td>
+                        <td>270 KB</td>
+                        <td><span class="badge badge-critical">ДА</span></td>
+                        <td><span class="badge badge-critical">Дубликат</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">rbtools.min.js</span> (RevSlider)</td>
+                        <td>161 KB</td>
+                        <td><span class="badge badge-info">НЕ</span></td>
+                        <td><span class="badge badge-critical">Дубликат</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">layerslider.utils.js</span></td>
+                        <td>120 KB</td>
+                        <td><span class="badge badge-critical">ДА</span></td>
+                        <td><span class="badge badge-critical">Дубликат</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">jquery.min.js</span></td>
+                        <td>88 KB</td>
+                        <td><span class="badge badge-critical">ДА</span></td>
+                        <td><span class="badge badge-warning">Частично</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">layerslider.transitions.js</span></td>
+                        <td>32 KB</td>
+                        <td><span class="badge badge-critical">ДА</span></td>
+                        <td><span class="badge badge-critical">Дубликат</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">lightslider.min.js</span> (CDN)</td>
+                        <td>16 KB</td>
+                        <td><span class="badge badge-critical">ДА</span></td>
+                        <td><span class="badge badge-warning">Частично</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">jquery-migrate.min.js</span></td>
+                        <td>14 KB</td>
+                        <td><span class="badge badge-critical">ДА</span></td>
+                        <td><span class="badge badge-critical">Ненужен</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">workbox-window.prod.js</span></td>
+                        <td>3 KB</td>
+                        <td><span class="badge badge-info">НЕ</span></td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">wp-emoji-loader.min.js</span></td>
+                        <td>~2 KB</td>
+                        <td><span class="badge badge-info">deferred</span></td>
+                        <td><span class="badge badge-critical">Ненужен</span></td>
+                    </tr>
+                    <tr style="font-weight:700; background:#fdf0ef;">
+                        <td><strong>ОБЩО</strong></td>
+                        <td><strong>~1,694 KB</strong></td>
+                        <td><span class="badge badge-critical">7 от 11 блокират</span></td>
+                        <td>&mdash;</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="sub-section">
+                <h3>Критични проблеми</h3>
+                <ul class="issue-list">
+                    <li class="issue-critical">
+                        <strong>7 render-blocking скрипта общо 1,122 KB</strong>
+                        <span class="solution">Нито един от основните скриптове няма defer или async атрибут. Браузърът спира рендирането докато не ги свали и изпълни всичките.</span>
+                    </li>
+                    <li class="issue-critical">
+                        <strong>3 слайдер библиотеки (LayerSlider + RevSlider + LightSlider)</strong>
+                        <span class="solution">Общо 1,005 KB JavaScript само за слайдери. Един модерен слайдер (напр. Swiper.js) = ~40 KB minified+gzip.</span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong>jquery-migrate.min.js е ненужен</strong>
+                        <span class="solution">Осигурява обратна съвместимост за jQuery &lt;3.0 код. Ако плъгините са актуални, може да се премахне (14 KB).</span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong>wp-emoji-loader.min.js</strong>
+                        <span class="solution">Зарежда поддръжка за WordPress емотикони. Ненужен за академичен сайт. Може да се деактивира с 3 реда PHP код.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sub-section">
+                <h3>Положителни практики</h3>
+                <ul class="issue-list">
+                    <li class="issue-good">
+                        <strong>Service Worker (Workbox 7.3.0)</strong>
+                        <span class="solution">PWA поддръжка с prefetch стратегия за документи. Добра практика за повторни посещения.</span>
+                    </li>
+                    <li class="issue-good">
+                        <strong>Google Analytics 4 (gtag)</strong>
+                        <span class="solution">Модерна имплементация, зарежда се асинхронно.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CSS ==================== -->
+    <div class="section" id="css">
+        <div class="section-header">6. CSS анализ <span class="sub-rating">3/10</span></div>
+        <div class="section-body">
+            <div class="sub-section">
+                <h3>Външни CSS файлове</h3>
+                <table>
+                    <tr>
+                        <th>Файл</th>
+                        <th>Размер</th>
+                        <th>Статус</th>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">fusion-styles/f5f57...min.css</span> (Avada)</td>
+                        <td>1,105 KB</td>
+                        <td><span class="badge badge-critical">Критичен</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">block-library/style.min.css</span> (WP)</td>
+                        <td>117 KB</td>
+                        <td><span class="badge badge-warning">Голям</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">rs6.css</span> (RevSlider)</td>
+                        <td>57 KB</td>
+                        <td><span class="badge badge-warning">Среден</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">layerslider.css</span></td>
+                        <td>31 KB</td>
+                        <td><span class="badge badge-info">Нормален</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">font-awesome.min.css</span> (v4.7)</td>
+                        <td>30 KB</td>
+                        <td><span class="badge badge-info">Нормален</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">lightslider.min.css</span> (CDN)</td>
+                        <td>5 KB</td>
+                        <td><span class="badge badge-good">OK</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">search-filter/style.css</span></td>
+                        <td>~3 KB</td>
+                        <td><span class="badge badge-good">OK</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">wpml/style.min.css</span></td>
+                        <td>~2 KB</td>
+                        <td><span class="badge badge-good">OK</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">wpforms/frontend.min.css</span></td>
+                        <td>~2 KB</td>
+                        <td><span class="badge badge-good">OK</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">tablepress/default.css</span></td>
+                        <td>~3 KB</td>
+                        <td><span class="badge badge-good">OK</span></td>
+                    </tr>
+                    <tr style="font-weight:700; background:#fdf0ef;">
+                        <td><strong>ОБЩО External CSS</strong></td>
+                        <td><strong>~1,355 KB</strong></td>
+                        <td><span class="badge badge-critical">Критичен</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="sub-section">
+                <h3>Inline CSS анализ</h3>
+                <ul class="issue-list">
+                    <li class="issue-warning">
+                        <strong>8 inline &lt;style&gt; блока в &lt;head&gt;</strong>
+                        <span class="solution">
+                            Съдържат page-specific CSS за 29+ различни page ID-та (8257, 8464, 8325, 8722, 8833, 8846, ...).
+                            Тези стилове се зареждат на ВСЯКА страница, дори когато са нужни само за една конкретна.
+                        </span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong>CSS Variables дефинирани правилно</strong>
+                        <span class="solution">WordPress 6.x global styles (цветове, разстояния, сенки) са добре организирани. Но custom properties за Avada са дублирани.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sub-section">
+                <h3>CSS Стратегия &mdash; проблеми</h3>
+                <ul class="issue-list">
+                    <li class="issue-critical">
+                        <strong>Липса на Critical CSS</strong>
+                        <span class="solution">Целият 1.1 MB CSS файл се зарежда синхронно в &lt;head&gt;. Трябва да се извлечат ~10-15 KB критични стилове за above-the-fold съдържание и да се inline-нат, а останалото да се зареди асинхронно.</span>
+                    </li>
+                    <li class="issue-critical">
+                        <strong>Дублирани CSS ресурси за слайдери</strong>
+                        <span class="solution">LayerSlider CSS (31 KB) + RevSlider CSS (57 KB) + LightSlider CSS (5 KB) = 93 KB за слайдери.</span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong>Font Awesome 4.7 (остаряла версия)</strong>
+                        <span class="solution">Версия 4.7 е от 2017 г. Актуалната е 6.x. Алтернатива: SVG sprite с използваните икони (~2-5 KB вместо 30 KB CSS + 155 KB шрифтове).</span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong>Липса на CSS tree-shaking/purging</strong>
+                        <span class="solution">Оценка: ~60-70% от стиловете в fusion CSS бъндъла са неизползвани на дадена страница. PurgeCSS/UnCSS може да свали размера до ~300-400 KB.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Images ==================== -->
+    <div class="section" id="images">
+        <div class="section-header">7. Изображения <span class="sub-rating">2/10</span></div>
+        <div class="section-body">
+            <div class="sub-section">
+                <h3>Критични находки</h3>
+                <table>
+                    <tr>
+                        <th>Изображение</th>
+                        <th>Текущ размер</th>
+                        <th>Формат</th>
+                        <th>Оптимален размер</th>
+                        <th>Спестяване</th>
+                    </tr>
+                    <tr style="background:#fdf0ef;">
+                        <td><span class="file-ref">IMG_20260317_130800.jpg</span></td>
+                        <td><strong>34,944 KB</strong></td>
+                        <td>JPEG (оригинал)</td>
+                        <td>~100 KB (WebP)</td>
+                        <td><span class="badge badge-critical">34,844 KB (99.7%)</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">Erasmus_logo_1-scaled.jpg</span></td>
+                        <td>92 KB</td>
+                        <td>JPEG (scaled)</td>
+                        <td>~25 KB (WebP)</td>
+                        <td><span class="badge badge-warning">67 KB (73%)</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">vecteezy_...education.jpg</span></td>
+                        <td>223 KB</td>
+                        <td>JPEG</td>
+                        <td>~50 KB (WebP)</td>
+                        <td><span class="badge badge-warning">173 KB (78%)</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">Planetarium_menu-868x1024.jpg</span></td>
+                        <td>209 KB</td>
+                        <td>JPEG</td>
+                        <td>~40 KB (WebP, 300px)</td>
+                        <td><span class="badge badge-warning">169 KB (81%)</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">ls-project-1-slide-6.jpg</span></td>
+                        <td>149 KB</td>
+                        <td>JPEG</td>
+                        <td>~40 KB (WebP)</td>
+                        <td><span class="badge badge-warning">109 KB (73%)</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">logo_NVNA.png</span></td>
+                        <td>136 KB</td>
+                        <td>PNG</td>
+                        <td>~15 KB (SVG) или ~30 KB (WebP)</td>
+                        <td><span class="badge badge-warning">106 KB (78%)</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">rsz_slider1_3.jpg</span></td>
+                        <td>97 KB</td>
+                        <td>JPEG</td>
+                        <td>~30 KB (WebP)</td>
+                        <td><span class="badge badge-info">67 KB (69%)</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">rsz_slider1_1.jpg</span></td>
+                        <td>85 KB</td>
+                        <td>JPEG</td>
+                        <td>~25 KB (WebP)</td>
+                        <td><span class="badge badge-info">60 KB (71%)</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="sub-section">
+                <h3>Системни проблеми</h3>
+                <ul class="issue-list">
+                    <li class="issue-critical">
+                        <strong>Липса на автоматична оптимизация при качване</strong>
+                        <span class="solution">WordPress качва оригиналните файлове без компресия. Файл от 36 MB директно от камера показва, че няма плъгин за оптимизация (Imagify, ShortPixel, EWWW).</span>
+                    </li>
+                    <li class="issue-critical">
+                        <strong>Липса на loading="lazy"</strong>
+                        <span class="solution">Нито едно от 33+ изображения на началната страница няма lazy loading атрибут. WordPress от v5.5 поддържа нативен lazy loading.</span>
+                    </li>
+                    <li class="issue-critical">
+                        <strong>Липса на WebP/AVIF формат</strong>
+                        <span class="solution">Всички изображения са в JPEG или PNG. WebP спестява 25-35%, AVIF до 50% спрямо JPEG.</span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong>Липса на srcset/sizes</strong>
+                        <span class="solution">Изображенията нямат responsive variants. Мобилни устройства свалят full-size версиите.</span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong>Logo в PNG формат (136 KB)</strong>
+                        <span class="solution">Логото е растерно PNG. Като SVG би било ~5-15 KB и би изглеждало перфектно на всяка резолюция.</span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong>Двойно зареждане на логото</strong>
+                        <span class="solution">Логото се зарежда от два различни домейна: <span class="file-ref">naval-acad.nvna.eu</span> и <span class="file-ref">www.naval-acad.bg</span>, което значи допълнителен DNS lookup + TLS handshake.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sub-section">
+                <h3>Шрифтове</h3>
+                <table>
+                    <tr>
+                        <th>Шрифт</th>
+                        <th>Размер</th>
+                        <th>Preload?</th>
+                        <th>font-display?</th>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">fa-solid-900.woff2</span></td>
+                        <td>76 KB</td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                        <td><span class="badge badge-warning">Неизвестно</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">fa-brands-400.woff2</span></td>
+                        <td>75 KB</td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                        <td><span class="badge badge-warning">Неизвестно</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">awb-icons.woff</span></td>
+                        <td>21 KB</td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                        <td><span class="badge badge-warning">Неизвестно</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">fa-regular-400.woff2</span></td>
+                        <td>~10 KB</td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                        <td><span class="badge badge-warning">Неизвестно</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">Accountant-Pro.ttf</span></td>
+                        <td>8 KB</td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                        <td><span class="badge badge-warning">Неизвестно</span></td>
+                    </tr>
+                </table>
+                <p style="margin-top:8px;color:var(--text-light);font-size:0.9rem;">
+                    Положително: 5 шрифта са preload-нати. Проблем: <span class="file-ref">Accountant-Pro.ttf</span> е TTF (некомпресиран), не WOFF2.
+                    Също: „Russo One" и „Poiret One" са декларирани в CSS, но източникът им не е ясен (липсва Google Fonts link или @font-face).
+                    Препоръка: добавяне на <code>font-display: swap</code> за избягване на FOIT.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Caching ==================== -->
+    <div class="section" id="caching">
+        <div class="section-header">8. Кеширане <span class="sub-rating">2/10</span></div>
+        <div class="section-body">
+            <div class="sub-section">
+                <h3>HTTP кеширане</h3>
+                <table>
+                    <tr>
+                        <th>Хедър</th>
+                        <th>Стойност</th>
+                        <th>Статус</th>
+                    </tr>
+                    <tr>
+                        <td>Cache-Control</td>
+                        <td><em>Липсва</em></td>
+                        <td><span class="badge badge-critical">Критичен</span></td>
+                    </tr>
+                    <tr>
+                        <td>Expires</td>
+                        <td><em>Липсва</em></td>
+                        <td><span class="badge badge-critical">Критичен</span></td>
+                    </tr>
+                    <tr>
+                        <td>ETag</td>
+                        <td><em>Липсва</em></td>
+                        <td><span class="badge badge-critical">Критичен</span></td>
+                    </tr>
+                    <tr>
+                        <td>Last-Modified</td>
+                        <td>Присъства (само за изображения)</td>
+                        <td><span class="badge badge-warning">Частично</span></td>
+                    </tr>
+                    <tr>
+                        <td>Vary</td>
+                        <td>Accept-Encoding,User-Agent</td>
+                        <td><span class="badge badge-good">OK</span></td>
+                    </tr>
+                    <tr>
+                        <td>X-SH-Cache-Status</td>
+                        <td>HIT</td>
+                        <td><span class="badge badge-good">Server кеш активен</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="sub-section">
+                <h3>Препоръчана кеш стратегия</h3>
+                <table>
+                    <tr>
+                        <th>Тип ресурс</th>
+                        <th>Текущо</th>
+                        <th>Препоръка</th>
+                    </tr>
+                    <tr>
+                        <td>HTML документи</td>
+                        <td>Без Cache-Control</td>
+                        <td><code>Cache-Control: public, max-age=3600, stale-while-revalidate=86400</code></td>
+                    </tr>
+                    <tr>
+                        <td>CSS/JS (с hash)</td>
+                        <td>Без Cache-Control</td>
+                        <td><code>Cache-Control: public, max-age=31536000, immutable</code></td>
+                    </tr>
+                    <tr>
+                        <td>Изображения</td>
+                        <td>Само Last-Modified</td>
+                        <td><code>Cache-Control: public, max-age=2592000</code></td>
+                    </tr>
+                    <tr>
+                        <td>Шрифтове</td>
+                        <td>Без Cache-Control</td>
+                        <td><code>Cache-Control: public, max-age=31536000, immutable</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="sub-section">
+                <h3>Service Worker (Workbox)</h3>
+                <ul class="issue-list">
+                    <li class="issue-good">
+                        <strong>Workbox 7.3.0 е инсталиран</strong>
+                        <span class="solution">PWA plugin регистрира Service Worker с conservative prefetch стратегия. Добра основа за offline caching.</span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong>Стратегията е твърде конservативна</strong>
+                        <span class="solution">Само навигационни заявки се prefetch-ват. CSS/JS/шрифтове не се кешират от SW. Препоръка: CacheFirst за статични ресурси, StaleWhileRevalidate за API заявки.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sub-section">
+                <h3>CDN използване</h3>
+                <ul class="issue-list">
+                    <li class="issue-warning">
+                        <strong>Минимално CDN използване</strong>
+                        <span class="solution">
+                            Само LightSlider се зарежда от CDN (jsdelivr.net). Всички останали ресурси идват от origin сървъра (sh-cache).
+                            Изображения се зареждат от 2 различни домейна: <span class="file-ref">www.naval-acad.bg</span> и <span class="file-ref">naval-acad.nvna.eu</span>, без preconnect hints.
+                            <br>Препоръка: Cloudflare CDN за всички статични ресурси.
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Security ==================== -->
+    <div class="section" id="security">
+        <div class="section-header">9. Сигурност <span class="sub-rating">2/10</span></div>
+        <div class="section-body">
+            <div class="sub-section">
+                <h3>Security Headers</h3>
+                <table>
+                    <tr>
+                        <th>Хедър</th>
+                        <th>Наличен?</th>
+                        <th>Препоръчана стойност</th>
+                        <th>Риск</th>
+                    </tr>
+                    <tr>
+                        <td>Strict-Transport-Security (HSTS)</td>
+                        <td><span class="badge badge-critical">ЛИПСВА</span></td>
+                        <td><code>max-age=31536000; includeSubDomains; preload</code></td>
+                        <td><span class="badge badge-critical">Висок</span></td>
+                    </tr>
+                    <tr>
+                        <td>Content-Security-Policy</td>
+                        <td><span class="badge badge-critical">ЛИПСВА</span></td>
+                        <td><code>default-src 'self'; script-src 'self' cdn.jsdelivr.net *.google-analytics.com</code></td>
+                        <td><span class="badge badge-critical">Висок</span></td>
+                    </tr>
+                    <tr>
+                        <td>X-Content-Type-Options</td>
+                        <td><span class="badge badge-critical">ЛИПСВА</span></td>
+                        <td><code>nosniff</code></td>
+                        <td><span class="badge badge-warning">Среден</span></td>
+                    </tr>
+                    <tr>
+                        <td>X-Frame-Options</td>
+                        <td><span class="badge badge-critical">ЛИПСВА</span></td>
+                        <td><code>SAMEORIGIN</code></td>
+                        <td><span class="badge badge-warning">Среден</span></td>
+                    </tr>
+                    <tr>
+                        <td>X-XSS-Protection</td>
+                        <td><span class="badge badge-critical">ЛИПСВА</span></td>
+                        <td><code>1; mode=block</code></td>
+                        <td><span class="badge badge-warning">Среден</span></td>
+                    </tr>
+                    <tr>
+                        <td>Referrer-Policy</td>
+                        <td><span class="badge badge-critical">ЛИПСВА</span></td>
+                        <td><code>strict-origin-when-cross-origin</code></td>
+                        <td><span class="badge badge-info">Нисък</span></td>
+                    </tr>
+                    <tr>
+                        <td>Permissions-Policy</td>
+                        <td><span class="badge badge-critical">ЛИПСВА</span></td>
+                        <td><code>camera=(), microphone=(), geolocation=()</code></td>
+                        <td><span class="badge badge-info">Нисък</span></td>
+                    </tr>
+                </table>
+                <div class="highlight-box danger" style="margin-top:12px;">
+                    <strong>Резултат в SecurityHeaders.com: вероятна оценка F</strong><br>
+                    Нито един от препоръчителните security headers не е конфигуриран. Сайтът е уязвим към clickjacking, MIME-type sniffing, протокол downgrade атаки.
+                </div>
+            </div>
+
+            <div class="sub-section">
+                <h3>Mixed Content</h3>
+                <table>
+                    <tr>
+                        <th>HTTP URL</th>
+                        <th>Тип</th>
+                        <th>Риск</th>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">http://ws.naval-acad.bg</span> (УебСтудент)</td>
+                        <td>Навигационен линк</td>
+                        <td><span class="badge badge-critical">Висок</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">http://projects.nvna.eu/</span></td>
+                        <td>Навигационен линк</td>
+                        <td><span class="badge badge-critical">Висок</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">http://studentcouncil.naval-acad.bg/</span></td>
+                        <td>Навигационен линк</td>
+                        <td><span class="badge badge-critical">Висок</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">http://pp.naval-acad.bg/</span></td>
+                        <td>Навигационен линк</td>
+                        <td><span class="badge badge-warning">Среден</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">//as.adwise.bg/servlet/tp.gif</span> (tracking pixel)</td>
+                        <td>Protocol-relative ресурс</td>
+                        <td><span class="badge badge-warning">Среден</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="sub-section">
+                <h3>Допълнителни забележки</h3>
+                <ul class="issue-list">
+                    <li class="issue-warning">
+                        <strong>Server header разкрива „sh-cache"</strong>
+                        <span class="solution">Не е критично, но разкрива информация за инфраструктурата. Препоръка: скриване или промяна на Server header.</span>
+                    </li>
+                    <li class="issue-warning">
+                        <strong>WordPress REST API е публично достъпен</strong>
+                        <span class="solution">Link header разкрива <code>/wp-json/</code> endpoint. Трябва да се ограничи достъпът до нужните endpoints.</span>
+                    </li>
+                    <li class="issue-good">
+                        <strong>HTTPS е активен на основния домейн</strong>
+                        <span class="solution">Основният сайт www.naval-acad.bg работи с валиден TLS сертификат.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== DOM Complexity ==================== -->
+    <div class="section" id="dom">
+        <div class="section-header">10. DOM Complexity</div>
+        <div class="section-body">
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="value val-warning">~800+</div>
+                    <div class="label">Оценка DOM елементи (начална)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value val-critical">~1200+</div>
+                    <div class="label">Оценка DOM елементи (специалности)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value val-warning">25</div>
+                    <div class="label">Inline &lt;script&gt; блока</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value val-warning">8</div>
+                    <div class="label">Inline &lt;style&gt; блока</div>
+                </div>
+            </div>
+
+            <ul class="issue-list">
+                <li class="issue-warning">
+                    <strong>Avada Fusion Builder генерира дълбоко вложен DOM</strong>
+                    <span class="solution">
+                        Типичната DOM дълбочина на Avada е 15-20 нива. Google препоръчва максимум 32 нива, но производителността се влошава над 12-14 нива.
+                        Fusion builder wrapper елементите (fusion_builder_container, fusion_builder_row, fusion_builder_column) добавят минимум 3 допълнителни нива DOM за всяка секция.
+                    </span>
+                </li>
+                <li class="issue-warning">
+                    <strong>Страницата „Специалности" има 50+ program карти</strong>
+                    <span class="solution">
+                        Всяка карта съдържа ~10 DOM елемента = 500+ елемента само за програмната решетка.
+                        При липсата на виртуализация или lazy rendering, всички се рендират при зареждане.
+                    </span>
+                </li>
+                <li class="issue-warning">
+                    <strong>Mega-menu структура е винаги в DOM</strong>
+                    <span class="solution">
+                        Навигационното меню с всички подменюта, изображения и линкове е permanently в DOM, дори когато е скрито.
+                        Препоръка: динамично зареждане или display:none с съдържание при interaction.
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ==================== Animations ==================== -->
+    <div class="section" id="animations">
+        <div class="section-header">11. Анимации и рендериране</div>
+        <div class="section-body">
+            <div class="sub-section">
+                <h3>Използвани анимационни техники</h3>
+                <table>
+                    <tr>
+                        <th>Техника</th>
+                        <th>Реализация</th>
+                        <th>GPU-ускорена?</th>
+                        <th>Оценка</th>
+                    </tr>
+                    <tr>
+                        <td>LayerSlider анимации</td>
+                        <td>CSS transitions + JS контрол</td>
+                        <td><span class="badge badge-warning">Частично</span></td>
+                        <td>Тежък JS overhead</td>
+                    </tr>
+                    <tr>
+                        <td>RevSlider анимации</td>
+                        <td>CSS transforms + JS timelines</td>
+                        <td><span class="badge badge-warning">Частично</span></td>
+                        <td>Дубликат на LayerSlider</td>
+                    </tr>
+                    <tr>
+                        <td>Program card hover</td>
+                        <td><code>transform: scale(1.05)</code></td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                        <td>Добра практика</td>
+                    </tr>
+                    <tr>
+                        <td>Filter accordion</td>
+                        <td><code>fadeIn 0.3s ease-in-out</code></td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                        <td>Добра практика</td>
+                    </tr>
+                    <tr>
+                        <td>Scroll button hover</td>
+                        <td><code>transform: scale(1.2)</code></td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                        <td>Добра практика</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile filter overlay</td>
+                        <td><code>backdrop-filter: blur(6px)</code></td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                        <td>Добра, но тежка на слаби устройства</td>
+                    </tr>
+                    <tr>
+                        <td>Fade/hide transitions</td>
+                        <td><code>opacity + transform</code></td>
+                        <td><span class="badge badge-good">ДА</span></td>
+                        <td>Добра практика</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="sub-section">
+                <h3>Проблеми</h3>
+                <ul class="issue-list">
+                    <li class="issue-warning">
+                        <strong>Два слайдера работят едновременно с тежки JS анимационни системи</strong>
+                        <span class="solution">LayerSlider и RevSlider имат собствени JS-базирани анимационни engines. Дори когато само един е видим, и двата се инициализират и консумират CPU/памет.</span>
+                    </li>
+                    <li class="issue-good">
+                        <strong>Custom CSS анимациите използват GPU-ускорени свойства</strong>
+                        <span class="solution">transform и opacity са правилно използвани за hover и transition ефекти. Няма анимации на layout свойства (width, height, top, left).</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Comparison Table ==================== -->
+    <div class="section" id="comparison">
+        <div class="section-header">12. Сравнителна таблица: Текущо състояние vs Цел</div>
+        <div class="section-body">
+            <table class="comparison-table">
+                <tr>
+                    <th>Метрика</th>
+                    <th>Текущо</th>
+                    <th>Цел</th>
+                    <th>Подобрение</th>
+                </tr>
+                <tr>
+                    <td><strong>Общо тегло на страницата</strong></td>
+                    <td>~40 MB</td>
+                    <td>&lt;1.5 MB</td>
+                    <td>-96%</td>
+                </tr>
+                <tr>
+                    <td><strong>HTML размер</strong></td>
+                    <td>245 KB</td>
+                    <td>&lt;50 KB</td>
+                    <td>-80%</td>
+                </tr>
+                <tr>
+                    <td><strong>CSS (external)</strong></td>
+                    <td>1,355 KB</td>
+                    <td>&lt;80 KB (critical) + &lt;200 KB (async)</td>
+                    <td>-80%</td>
+                </tr>
+                <tr>
+                    <td><strong>JavaScript</strong></td>
+                    <td>1,694 KB</td>
+                    <td>&lt;200 KB (deferred)</td>
+                    <td>-88%</td>
+                </tr>
+                <tr>
+                    <td><strong>Изображения (начална)</strong></td>
+                    <td>~37,500 KB</td>
+                    <td>&lt;800 KB (WebP + lazy)</td>
+                    <td>-98%</td>
+                </tr>
+                <tr>
+                    <td><strong>HTTP заявки</strong></td>
+                    <td>67+</td>
+                    <td>&lt;25</td>
+                    <td>-63%</td>
+                </tr>
+                <tr>
+                    <td><strong>Render-blocking ресурси</strong></td>
+                    <td>7 скрипта + 9 CSS</td>
+                    <td>0 скрипта + 1 inline CSS</td>
+                    <td>-100% blocking</td>
+                </tr>
+                <tr>
+                    <td><strong>LCP</strong></td>
+                    <td>~6.5s</td>
+                    <td>&lt;2.5s</td>
+                    <td>-62%</td>
+                </tr>
+                <tr>
+                    <td><strong>FCP</strong></td>
+                    <td>~4.2s</td>
+                    <td>&lt;1.8s</td>
+                    <td>-57%</td>
+                </tr>
+                <tr>
+                    <td><strong>TBT</strong></td>
+                    <td>~850ms</td>
+                    <td>&lt;200ms</td>
+                    <td>-76%</td>
+                </tr>
+                <tr>
+                    <td><strong>CLS</strong></td>
+                    <td>~0.18</td>
+                    <td>&lt;0.1</td>
+                    <td>-44%</td>
+                </tr>
+                <tr>
+                    <td><strong>Security Headers</strong></td>
+                    <td>0 / 7</td>
+                    <td>7 / 7</td>
+                    <td>+7 headers</td>
+                </tr>
+                <tr>
+                    <td><strong>Cache-Control</strong></td>
+                    <td>Липсва</td>
+                    <td>Пълно покритие</td>
+                    <td>+100%</td>
+                </tr>
+                <tr>
+                    <td><strong>Слайдер плъгини</strong></td>
+                    <td>3 (1,029 KB)</td>
+                    <td>1 (~40 KB gzip)</td>
+                    <td>-96%</td>
+                </tr>
+                <tr>
+                    <td><strong>Mixed content (HTTP)</strong></td>
+                    <td>4 URL-а</td>
+                    <td>0</td>
+                    <td>-100%</td>
+                </tr>
+                <tr>
+                    <td><strong>PageSpeed Score (Mobile)</strong></td>
+                    <td>~15-25</td>
+                    <td>&gt;90</td>
+                    <td>+65-75 точки</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ==================== Recommendations ==================== -->
+    <div class="section" id="recommendations">
+        <div class="section-header">13. Конкретни препоръки с очаквано подобрение</div>
+        <div class="section-body">
+            <div class="sub-section">
+                <h3><span class="indicator ind-red"></span>Приоритет 1: Критични (незабавно изпълнение)</h3>
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>Действие</th>
+                        <th>Спестява</th>
+                        <th>Сложност</th>
+                        <th>Ефект върху CWV</th>
+                    </tr>
+                    <tr>
+                        <td>1.1</td>
+                        <td>Оптимизиране на IMG_20260317_130800.jpg (resize + WebP)</td>
+                        <td>~34.8 MB</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>LCP -3-4s</td>
+                    </tr>
+                    <tr>
+                        <td>1.2</td>
+                        <td>Инсталиране на image optimization плъгин (ShortPixel / Imagify)</td>
+                        <td>~35 MB (всички изображения)</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>LCP -2s, Speed Index -3s</td>
+                    </tr>
+                    <tr>
+                        <td>1.3</td>
+                        <td>Добавяне на <code>defer</code> атрибут към всички скриптове</td>
+                        <td>~0 KB, но -1.5s рендериране</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>FCP -1.5s, TBT -300ms</td>
+                    </tr>
+                    <tr>
+                        <td>1.4</td>
+                        <td>Активиране на <code>loading="lazy"</code> за below-fold изображения</td>
+                        <td>~35 MB initial load</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>LCP -1s, Speed Index -2s</td>
+                    </tr>
+                    <tr>
+                        <td>1.5</td>
+                        <td>Добавяне на Cache-Control хедъри (.htaccess)</td>
+                        <td>Повторни посещения -90%</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>Repeat visits: всички метрики -70%</td>
+                    </tr>
+                    <tr>
+                        <td>1.6</td>
+                        <td>Добавяне на Security Headers (.htaccess)</td>
+                        <td>Сигурност от F до A</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>Няма (но задължително)</td>
+                    </tr>
+                    <tr>
+                        <td>1.7</td>
+                        <td>Мигриране на HTTP линкове към HTTPS</td>
+                        <td>4 mixed content проблема</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>Няма (но задължително)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="sub-section">
+                <h3><span class="indicator ind-orange"></span>Приоритет 2: Високи (в рамките на 1 месец)</h3>
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>Действие</th>
+                        <th>Спестява</th>
+                        <th>Сложност</th>
+                        <th>Ефект върху CWV</th>
+                    </tr>
+                    <tr>
+                        <td>2.1</td>
+                        <td>Премахване на 2 от 3 слайдер плъгина (оставяне само на един)</td>
+                        <td>~700-900 KB JS + ~60-90 KB CSS</td>
+                        <td><span class="badge badge-warning">Средна</span></td>
+                        <td>TBT -300ms, FCP -0.5s</td>
+                    </tr>
+                    <tr>
+                        <td>2.2</td>
+                        <td>Critical CSS extraction + async зареждане на Fusion CSS</td>
+                        <td>~800 KB render-blocking</td>
+                        <td><span class="badge badge-warning">Средна</span></td>
+                        <td>FCP -1.5s</td>
+                    </tr>
+                    <tr>
+                        <td>2.3</td>
+                        <td>PurgeCSS за Fusion styles бъндъла</td>
+                        <td>~700-800 KB CSS</td>
+                        <td><span class="badge badge-warning">Средна</span></td>
+                        <td>FCP -0.5s</td>
+                    </tr>
+                    <tr>
+                        <td>2.4</td>
+                        <td>SVG лого вместо PNG</td>
+                        <td>~120 KB</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>LCP -0.1s</td>
+                    </tr>
+                    <tr>
+                        <td>2.5</td>
+                        <td>Cloudflare CDN за статични ресурси</td>
+                        <td>Латентност -50-100ms</td>
+                        <td><span class="badge badge-warning">Средна</span></td>
+                        <td>Всички метрики -10-20%</td>
+                    </tr>
+                    <tr>
+                        <td>2.6</td>
+                        <td>Preconnect за naval-acad.nvna.eu</td>
+                        <td>~100-200ms DNS+TLS</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>LCP -0.2s</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="sub-section">
+                <h3><span class="indicator ind-blue"></span>Приоритет 3: Средни (в рамките на 3 месеца)</h3>
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>Действие</th>
+                        <th>Спестява</th>
+                        <th>Сложност</th>
+                        <th>Ефект</th>
+                    </tr>
+                    <tr>
+                        <td>3.1</td>
+                        <td>Миграция от Avada към лека custom тема</td>
+                        <td>~1.5 MB (CSS+JS)</td>
+                        <td><span class="badge badge-critical">Висока</span></td>
+                        <td>PageSpeed 80+</td>
+                    </tr>
+                    <tr>
+                        <td>3.2</td>
+                        <td>Замяна на jQuery с vanilla JS</td>
+                        <td>~102 KB</td>
+                        <td><span class="badge badge-critical">Висока</span></td>
+                        <td>TBT -100ms</td>
+                    </tr>
+                    <tr>
+                        <td>3.3</td>
+                        <td>SVG sprite вместо Font Awesome + Icomoon</td>
+                        <td>~210 KB (CSS + шрифтове)</td>
+                        <td><span class="badge badge-warning">Средна</span></td>
+                        <td>FCP -0.2s</td>
+                    </tr>
+                    <tr>
+                        <td>3.4</td>
+                        <td>Премахване на page-specific inline CSS</td>
+                        <td>~8-12 KB HTML</td>
+                        <td><span class="badge badge-warning">Средна</span></td>
+                        <td>Чистота на кода</td>
+                    </tr>
+                    <tr>
+                        <td>3.5</td>
+                        <td>Деактивиране на wp-emoji-loader</td>
+                        <td>~2 KB + 1 HTTP заявка</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>Минимално</td>
+                    </tr>
+                    <tr>
+                        <td>3.6</td>
+                        <td>font-display: swap за всички @font-face</td>
+                        <td>FOIT елиминиране</td>
+                        <td><span class="badge badge-good">Ниска</span></td>
+                        <td>FCP -0.3s</td>
+                    </tr>
+                    <tr>
+                        <td>3.7</td>
+                        <td>Workbox SW стратегия: CacheFirst за статични ресурси</td>
+                        <td>Offline + repeat visits</td>
+                        <td><span class="badge badge-warning">Средна</span></td>
+                        <td>Repeat visits -80%</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="sub-section" style="margin-top:24px;">
+                <h3>Обобщение на потенциалното подобрение</h3>
+                <div class="highlight-box">
+                    <strong>При изпълнение на Приоритет 1 (ниска сложност):</strong><br>
+                    Очаквано подобрение на PageSpeed Mobile: от 15-25 до 45-55 (+30 точки)<br>
+                    Спестяване на пропускателна способност: ~35 MB на зареждане<br>
+                    Подобрение на LCP: от ~6.5s до ~3.5s<br><br>
+
+                    <strong>При изпълнение на Приоритет 1 + 2:</strong><br>
+                    Очаквано подобрение на PageSpeed Mobile: от 15-25 до 70-80 (+50 точки)<br>
+                    Подобрение на LCP: от ~6.5s до ~2.5s (зелена зона)<br>
+                    Подобрение на FCP: от ~4.2s до ~1.8s (зелена зона)<br><br>
+
+                    <strong>При пълна миграция (Приоритет 1 + 2 + 3):</strong><br>
+                    PageSpeed Mobile: 90+ (зелена зона)<br>
+                    Всички Core Web Vitals в зелена зона<br>
+                    Общо тегло на страницата: &lt;500 KB
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    Frontend Architect анализ | Изготвен от Деян Стоянов Стоянов | Факултетен № 001114 | ВВМУ „Н. Й. Вапцаров" | Март 2026
+</div>
+
+</body>
+</html>

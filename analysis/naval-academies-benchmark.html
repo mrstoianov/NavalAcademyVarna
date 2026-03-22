@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бенчмарк анализ: Уебсайтове на военноморски академии по света</title>
+    <style>
+        :root {
+            --navy: #0B2545;
+            --navy-light: #13315C;
+            --blue: #1a488e;
+            --teal: #0A8080;
+            --accent: #C41E3A;
+            --gold: #B8860B;
+            --bg: #F8F9FC;
+            --bg-card: #FFFFFF;
+            --text: #2D3748;
+            --text-light: #718096;
+            --border: #E2E8F0;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+            --shadow-hover: 0 4px 16px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06);
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 40%, var(--blue) 100%);
+            color: white;
+            padding: 60px 40px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        .hero h1 {
+            font-size: 2.4em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+            letter-spacing: -0.5px;
+        }
+        .hero p {
+            font-size: 1.1em;
+            opacity: 0.85;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .hero .meta {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.6;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-header {
+            text-align: center;
+            padding: 50px 20px 30px;
+        }
+        .section-header h2 {
+            font-size: 1.8em;
+            color: var(--navy);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .section-header p {
+            color: var(--text-light);
+            font-size: 1em;
+        }
+        .section-header .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue), var(--teal));
+            margin: 16px auto 0;
+            border-radius: 2px;
+        }
+
+        .academy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 24px;
+            padding: 0 24px 40px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .academy-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+            border: 1px solid var(--border);
+        }
+        .academy-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .card-header .info h3 {
+            font-size: 1.1em;
+            color: var(--navy);
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .card-header .info .country {
+            font-size: 0.85em;
+            color: var(--text-light);
+        }
+        .card-header .rating {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 6px 12px;
+            text-align: center;
+            min-width: 50px;
+        }
+        .card-header .rating .score {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .card-header .rating .label {
+            font-size: 0.65em;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-body {
+            padding: 16px 24px 20px;
+        }
+
+        .card-url {
+            display: block;
+            font-size: 0.8em;
+            color: var(--blue);
+            text-decoration: none;
+            margin-bottom: 14px;
+            word-break: break-all;
+        }
+        .card-url:hover { text-decoration: underline; }
+
+        .color-palette {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .swatch {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg);
+            border-radius: 6px;
+            padding: 3px 8px 3px 3px;
+            font-size: 0.75em;
+            color: var(--text-light);
+        }
+        .swatch-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .detail-row {
+            margin-bottom: 10px;
+        }
+        .detail-row .label {
+            font-size: 0.75em;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .detail-row .value {
+            font-size: 0.88em;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .ratings-mini {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 16px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+        .rating-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8em;
+        }
+        .rating-item .r-label {
+            color: var(--text-light);
+            flex-shrink: 0;
+            width: 90px;
+        }
+        .rating-bar {
+            flex: 1;
+            height: 6px;
+            background: #EDF2F7;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .rating-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .r1 { background: #E53E3E; }
+        .r2 { background: #ED8936; }
+        .r3 { background: #ECC94B; }
+        .r4 { background: #48BB78; }
+        .r5 { background: #38A169; }
+
+        .table-wrapper {
+            overflow-x: auto;
+            padding: 0 24px 40px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            font-size: 0.85em;
+        }
+        thead {
+            background: var(--navy);
+            color: white;
+        }
+        th {
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        tbody tr:hover {
+            background: #F7FAFC;
+        }
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .score-cell {
+            font-weight: 700;
+            text-align: center;
+        }
+        .score-high { color: #38A169; }
+        .score-mid { color: #D69E2E; }
+        .score-low { color: #E53E3E; }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 0 24px 40px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .summary-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 28px;
+            border: 1px solid var(--border);
+        }
+        .summary-card h3 {
+            font-size: 1.1em;
+            color: var(--navy);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .summary-card h3 .icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--blue), var(--teal));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1em;
+            flex-shrink: 0;
+        }
+        .summary-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .summary-card li {
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        .summary-card li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 14px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--teal);
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, #EBF4FF 0%, #F0FFF4 100%);
+            border: 2px solid var(--blue);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin: 0 24px 40px;
+            max-width: 1232px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .recommendation h3 {
+            font-size: 1.3em;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+        .rec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .rec-item {
+            background: rgba(255,255,255,0.8);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .rec-item h4 {
+            font-size: 0.95em;
+            color: var(--blue);
+            margin-bottom: 8px;
+        }
+        .rec-item p, .rec-item ul {
+            font-size: 0.85em;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .rec-item ul {
+            list-style: disc;
+            padding-left: 18px;
+        }
+        .rec-item li { margin-bottom: 4px; }
+
+        .best-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 0 24px 40px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .best-card {
+            border-radius: var(--radius);
+            padding: 24px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .best-card.gold { background: linear-gradient(135deg, #B8860B, #DAA520); }
+        .best-card.silver { background: linear-gradient(135deg, #6B7280, #9CA3AF); }
+        .best-card.bronze { background: linear-gradient(135deg, #92400E, #B45309); }
+        .best-card.honorable { background: linear-gradient(135deg, var(--blue), var(--teal)); }
+        .best-card .medal {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .best-card h4 {
+            font-size: 1.1em;
+            margin-bottom: 4px;
+        }
+        .best-card .bc-country {
+            opacity: 0.8;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+        .best-card p {
+            font-size: 0.85em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .trend-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .trend-fill {
+            height: 12px;
+            border-radius: 6px;
+            min-width: 10px;
+        }
+        .trend-pct {
+            font-size: 0.8em;
+            font-weight: 600;
+            color: var(--text-light);
+            white-space: nowrap;
+        }
+
+        footer {
+            background: var(--navy);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.85em;
+        }
+        footer strong { color: rgba(255,255,255,0.9); }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.6em; }
+            .academy-grid { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: 1fr; }
+            .best-cards { grid-template-columns: 1fr; }
+            .rec-grid { grid-template-columns: 1fr; }
+            .ratings-mini { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>Бенчмарк анализ: Военноморски академии</h1>
+    <p>Сравнителен анализ на уебсайтовете на 18 военноморски академии от целия свят. Проучване на дизайн, технологии и потребителско изживяване.</p>
+    <div class="meta">22 март 2026 г. | Изготвен за подобряване на сайта на ВВМУ "Н. Й. Вапцаров" - Варна</div>
+</div>
+
+<!-- Best in Class -->
+<div class="section-header">
+    <h2>Най-добрите примери</h2>
+    <p>Академиите с най-високи оценки за дизайн и функционалност</p>
+    <div class="divider"></div>
+</div>
+
+<div class="best-cards">
+    <div class="best-card gold">
+        <div class="medal">&#9733;</div>
+        <h4>Ecole Navale</h4>
+        <div class="bc-country">Франция</div>
+        <p>Най-визуално изискан дизайн. Персонализирана типография (шрифт Mariane), асиметрични оформления, видео секция, зелено-златна палитра. WordPress + Elementor. Оценка: 5/5</p>
+    </div>
+    <div class="best-card silver">
+        <div class="medal">&#9733;</div>
+        <h4>Royal Canadian Navy</h4>
+        <div class="bc-country">Канада</div>
+        <p>Най-добър UX за набиране. Функция за добавена реалност (AR). Чисти бутони за действие, съдържание с отзиви. Безпроблемно двуезично изпълнение EN/FR. Оценка: 4.5/5</p>
+    </div>
+    <div class="best-card bronze">
+        <div class="medal">&#9733;</div>
+        <h4>Норвегия &amp; Швеция</h4>
+        <div class="bc-country">Скандинавски модел</div>
+        <p>Отличен нордически минимализъм. Чисти мрежови оформления, подход "достъпност на първо място", модерни CMS платформи (Enonic, Optimizely). Оценка: 4/5</p>
+    </div>
+    <div class="best-card honorable">
+        <div class="medal">&#9734;</div>
+        <h4>ВВМУ "Н. Й. Вапцаров"</h4>
+        <div class="bc-country">България (текущ сайт)</div>
+        <p>Над средното ниво в световен план. WordPress + Avada с PWA. Системата за филтриране на програми е отличителна. Потенциал за значително подобрение. Оценка: 4/5</p>
+    </div>
+</div>
+
+<!-- Academy Cards -->
+<div class="section-header">
+    <h2>Детайлен анализ по академии</h2>
+    <p>Подробна информация за всяка от 18-те анализирани военноморски академии</p>
+    <div class="divider"></div>
+</div>
+
+<div class="academy-grid">
+
+    <!-- 1. USNA -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>United States Naval Academy</h3>
+                <div class="country">САЩ (Анаполис)</div>
+            </div>
+            <div class="rating">
+                <div class="score">3.3</div>
+                <div class="label">Средна</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.usna.edu" target="_blank">usna.edu</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#003366"></div>#003366</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#CC0000"></div>#CC0000</div>
+                <div class="swatch"><div class="swatch-color" style="background:#666666"></div>#666</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Custom CMS, Foundation Framework, Google Analytics/GTM, Thundestone Search</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Традиционен институционален с адаптивна мрежа. Пълноширочни hero изображения, мега-меню навигация, четириколонен футър.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Календар за събития, Flickr галерия, автодовършване в търсене, аварийна информация</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. BRNC -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Britannia Royal Naval College</h3>
+                <div class="country">Великобритания (Дартмут)</div>
+            </div>
+            <div class="rating">
+                <div class="score">3.0</div>
+                <div class="label">Средна</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.royalnavy.mod.uk/locations-and-operations/bases-and-stations/brnc-dartmouth" target="_blank">royalnavy.mod.uk/...brnc-dartmouth</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#002B5C"></div>#002B5C</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#C8102E"></div>#C8102E</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Правителствена CMS платформа (mod.uk инфраструктура)</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Интегриран в по-големия портал на Кралските ВМС. Професионален, но ограничен от правителствения шаблон.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Резервиране на обиколки, информация за музея, интеграция в по-широк военен портал</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Italy -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Accademia Navale</h3>
+                <div class="country">Италия (Ливорно)</div>
+            </div>
+            <div class="rating">
+                <div class="score">2.3</div>
+                <div class="label">Ниска</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.marina.difesa.it/EN/training_institute/ItalianNavalAcademy/" target="_blank">marina.difesa.it/.../ItalianNavalAcademy</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#001a33"></div>#001a33</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#edf0f7"></div>#edf0f7</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">SharePoint/Office 365 (v15), Matomo Analytics, ASP.NET AJAX, jQuery/mQuery</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Правителствен SharePoint шаблон. Навигация с "хлебни трохи", плаващ хедър с превключване на езици.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Режим за достъпност (висок контраст), двуезичен IT/EN, cookie consent</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Greece -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Hellenic Naval Academy</h3>
+                <div class="country">Гърция</div>
+            </div>
+            <div class="rating">
+                <div class="score">3.0</div>
+                <div class="label">Средна</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.hna.gr/en/" target="_blank">hna.gr/en/</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#007bff"></div>#007bff</div>
+                <div class="swatch"><div class="swatch-color" style="background:#000000"></div>#000</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Drupal CMS, Revolution Slider, Gavias тема, jQuery, AJAX</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Чист институционален дизайн с паралакс ефекти. Центриран лого навигация, оптимизация на галерия.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Многоезичност (EN/EL), e-Services портал, достъпност, социални медии</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Turkey -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Deniz Harp Okulu</h3>
+                <div class="country">Турция (Истанбул)</div>
+            </div>
+            <div class="rating">
+                <div class="score">2.3</div>
+                <div class="label">Ниска</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://dho.msu.edu.tr" target="_blank">dho.msu.edu.tr</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#0033FF"></div>#0033FF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#333333"></div>#333</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">jQuery, SliderPro плъгин, FancyBox лайтбокс, HitWebCounter</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Настолен дизайн с фиксирана ширина (960px). Модулна архитектура с динамично зареждане на HTML.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Обширен календар на събития, международни състезания (Roboboat 2026)</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. France -->
+    <div class="academy-card" style="border: 2px solid var(--gold);">
+        <div class="card-header" style="background: linear-gradient(135deg, #FFFCF0, #FFF9E0);">
+            <div class="info">
+                <h3>Ecole Navale &#9733;</h3>
+                <div class="country">Франция (Ланвеок)</div>
+            </div>
+            <div class="rating">
+                <div class="score" style="color: var(--gold);">4.5</div>
+                <div class="label">Най-добра</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.ecole-navale.fr/en" target="_blank">ecole-navale.fr/en</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#535D73"></div>#535D73</div>
+                <div class="swatch"><div class="swatch-color" style="background:#54595F"></div>#54595F</div>
+                <div class="swatch"><div class="swatch-color" style="background:#61CE70"></div>#61CE70</div>
+                <div class="swatch"><div class="swatch-color" style="background:#A68B4E"></div>#A68B4E</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFBC7D"></div>#FFBC7D</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">WordPress + Elementor, WP Rocket, Font Awesome 5, JSON-LD Schema</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Модерен и визуално изискан. Hero видео (2.33:1), асиметрични композиции с припокриващи се елементи, паралакс, картови оформления със сенки.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Пълноекранно търсене, мега-меню, персонализирана типография "Mariane" + "Cormorant Garamond", социална мрежа</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r5" style="width:100%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r5" style="width:100%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. India -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Indian Naval Academy</h3>
+                <div class="country">Индия (Ежимала, Керала)</div>
+            </div>
+            <div class="rating">
+                <div class="score">2.3</div>
+                <div class="label">Ниска</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.joinindiannavy.gov.in/en/about-us/training-centers.html" target="_blank">joinindiannavy.gov.in</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#003366"></div>#003366</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FF9933"></div>#FF9933</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Правителствена CMS (NIC платформа)</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Част от портала за набиране на Индийските ВМС. Стандартен правителствен шаблон с изисквания за достъпност.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Интегриран в Join Indian Navy, трета най-голяма морска академия в света</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. Korea -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Korea Naval Academy</h3>
+                <div class="country">Южна Корея (Джинхе)</div>
+            </div>
+            <div class="rating">
+                <div class="score">2.0</div>
+                <div class="label">Ниска</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.navy.ac.kr" target="_blank">navy.ac.kr</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#003366"></div>#003366</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#888888"></div>#888</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">JSP (Java Server Pages), JavaScript</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Традиционен военен институционален дизайн. Корейски като основен език с английска подсекция.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Уебсайт на музея, двуезична поддръжка, основана 1946 г.</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. Australia -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Royal Australian Naval College</h3>
+                <div class="country">Австралия (Джървис Бей)</div>
+            </div>
+            <div class="rating">
+                <div class="score">3.0</div>
+                <div class="label">Средна</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.navy.gov.au/about-navy/recruit-school-naval-college/royal-australian-naval-college" target="_blank">navy.gov.au/.../royal-australian-naval-college</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#003366"></div>#003366</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#C8A951"></div>#C8A951</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Правителствена CMS платформа (gov.au)</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Интегриран в портала на Австралийските ВМС. Чист, професионален правителствен дизайн.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">NEOC програмна информация, резервиране за музея, HMAS Creswell база</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. Norway -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Norwegian Defence University</h3>
+                <div class="country">Норвегия (Берген)</div>
+            </div>
+            <div class="rating">
+                <div class="score">4.0</div>
+                <div class="label">Висока</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.forsvaret.no/en/organisation/nduc" target="_blank">forsvaret.no/en/organisation/nduc</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#89bcbc"></div>#89bcbc</div>
+                <div class="swatch"><div class="swatch-color" style="background:#2D3748"></div>#2D3748</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Enonic CMS, Google Tag Manager, Erasmus+ интеграция, cookie framework</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Mobile-first адаптивен. CSS Grid 3-колонен хедър, max-width 1920px. Прозрачен хедър с превключване при скрол.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Schema.org маркиране, плаващ хедър, breadcrumb навигация, Erasmus+ интеграция</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 11. Germany -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Marineschule Murwik</h3>
+                <div class="country">Германия (Фленсбург)</div>
+            </div>
+            <div class="rating">
+                <div class="score">3.8</div>
+                <div class="label">Висока</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.bundeswehr.de/en/organization/navy/organization/naval-academy-muerwik" target="_blank">bundeswehr.de/.../naval-academy-muerwik</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#003366"></div>#003366</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#CC0000"></div>#CC0000</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Headless CMS (Bundeswehr), Matomo Analytics, Google Maps, CDN</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Единен военен портал на Bundeswehr. Privacy-first дизайн с opt-in cookie consent. Достъпност с skip навигация.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Търсене с карти, симулатор за управление на кораб, планетариум, исторически архив</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 12. Portugal -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Escola Naval</h3>
+                <div class="country">Португалия (Алфейте)</div>
+            </div>
+            <div class="rating">
+                <div class="score">3.5</div>
+                <div class="label">Средна+</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://escolanaval.marinha.pt" target="_blank">escolanaval.marinha.pt</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#ae0700"></div>#ae0700</div>
+                <div class="swatch"><div class="swatch-color" style="background:#002D3F"></div>#002D3F</div>
+                <div class="swatch"><div class="swatch-color" style="background:#e1e1e1"></div>#e1e1e1</div>
+                <div class="swatch"><div class="swatch-color" style="background:#282828"></div>#282828</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">SharePoint 2013/2016, jQuery, Bootstrap CSS, Google Analytics</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Модерен институционален. Фиксирана навигация с промяна при скрол, картово съдържание с hover ефекти, паралакс.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Анимирани статистики (counterUp), jumbotron карусел, динамично хамбургер меню, модален търсач</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 13. Spain -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Escuela Naval Militar</h3>
+                <div class="country">Испания (Марин)</div>
+            </div>
+            <div class="rating">
+                <div class="score">2.3</div>
+                <div class="label">Ниска</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.armada.mde.es/enm/" target="_blank">armada.mde.es/enm/</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#003366"></div>#003366</div>
+                <div class="swatch"><div class="swatch-color" style="background:#CC0000"></div>#CC0000</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFC300"></div>#FFC300</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Правителствена CMS (mde.es инфраструктура)</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Част от по-широкия портал на Armada Espanola. Традиционен военен институционален дизайн.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Интеграция с Университет Виго за дипломни програми, двуезично съдържание</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r2" style="width:40%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 14. Chile -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Escuela Naval (Armada de Chile)</h3>
+                <div class="country">Чили</div>
+            </div>
+            <div class="rating">
+                <div class="score">3.0</div>
+                <div class="label">Средна</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.armada.cl/escuela-naval" target="_blank">armada.cl/escuela-naval</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#003366"></div>#003366</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#CC0000"></div>#CC0000</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Custom HTML5, Schema.org, Google Analytics (dual: UA + GA4), Vanilla JavaScript</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Модерен адаптивен с хамбургер меню. Йерархична навигация с разгъващи се подменюта.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Динамична система за оценяване, видимост на съдържание базирана на времеви маркери</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 15. Sweden -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>Sjostridsskolan (Naval Warfare Centre)</h3>
+                <div class="country">Швеция (Карлскруна)</div>
+            </div>
+            <div class="rating">
+                <div class="score">4.0</div>
+                <div class="label">Висока</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.forsvarsmakten.se/en/about/organisation/training-units-schools-and-centres/naval-warfare-centre/" target="_blank">forsvarsmakten.se/.../naval-warfare-centre</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+                <div class="swatch"><div class="swatch-color" style="background:#1B2A4A"></div>#1B2A4A</div>
+                <div class="swatch"><div class="swatch-color" style="background:#999999"></div>#999</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Episerver/Optimizely CMS, Google Tag Manager, Azure Application Insights, custom FindApi</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Достъпност на първо място. Skip-to-content, ARIA етикети. Многоезичен (SV/EN). Филтриране и модални прозорци.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">UNESCO световно наследство контекст, хералдически SVG, социални медии (5+ платформи)</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 16. Canada -->
+    <div class="academy-card" style="border: 2px solid #9CA3AF;">
+        <div class="card-header" style="background: linear-gradient(135deg, #F9FAFB, #F3F4F6);">
+            <div class="info">
+                <h3>Royal Canadian Navy &#9733;</h3>
+                <div class="country">Канада (Халифакс)</div>
+            </div>
+            <div class="rating">
+                <div class="score">4.3</div>
+                <div class="label">Висока</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://forces.ca/en/about-us/navy" target="_blank">forces.ca/en/about-us/navy</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#003366"></div>#003366</div>
+                <div class="swatch"><div class="swatch-color" style="background:#F1F2F2"></div>#F1F2F2</div>
+                <div class="swatch"><div class="swatch-color" style="background:#CC0000"></div>#CC0000</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">Google Analytics, jQuery Carousel, SVG графики, адаптивна маркировка</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Модерен, фокусиран върху набирането. Изпъкнали CTA бутони ("Apply Now"), карти с отзиви, прогресивно разкриване.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Добавена реалност (AR), интерактивен кариерен карусел, двуезичен EN/FR, 6+ соц. медии</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r5" style="width:100%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 17. Taiwan -->
+    <div class="academy-card">
+        <div class="card-header">
+            <div class="info">
+                <h3>R.O.C. Naval Academy</h3>
+                <div class="country">Тайван (Каошиунг)</div>
+            </div>
+            <div class="rating">
+                <div class="score">3.5</div>
+                <div class="label">Средна+</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.rocna.edu.tw/en/" target="_blank">rocna.edu.tw/en/</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#4676c4"></div>#4676c4</div>
+                <div class="swatch"><div class="swatch-color" style="background:#fe9306"></div>#fe9306</div>
+                <div class="swatch"><div class="swatch-color" style="background:#000000"></div>#000</div>
+                <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;border:1px solid #ddd"></div>#FFF</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">PHP, jQuery, Owl Carousel, jQuery UI Autocomplete, blockUI, Google Analytics</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Фокус върху достъпността с преоразмеряване на шрифта и управление на tab-index. Акордеонна навигация.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Контроли за размер на шрифта (S/M/L), автодовършване с 100+ тагове, QR кодове за социални медии</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 18. Bulgaria (VVMU) -->
+    <div class="academy-card" style="border: 2px solid var(--teal);">
+        <div class="card-header" style="background: linear-gradient(135deg, #F0FDFA, #E6FFFA);">
+            <div class="info">
+                <h3>ВВМУ "Н. Й. Вапцаров"</h3>
+                <div class="country">България (Варна)</div>
+            </div>
+            <div class="rating">
+                <div class="score">3.8</div>
+                <div class="label">Средна+</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a class="card-url" href="https://www.naval-acad.bg/en" target="_blank">naval-acad.bg/en</a>
+            <div class="color-palette">
+                <div class="swatch"><div class="swatch-color" style="background:#1a488e"></div>#1a488e</div>
+                <div class="swatch"><div class="swatch-color" style="background:#092147"></div>#092147</div>
+                <div class="swatch"><div class="swatch-color" style="background:#65bd7d"></div>#65bd7d</div>
+                <div class="swatch"><div class="swatch-color" style="background:#198fd9"></div>#198fd9</div>
+                <div class="swatch"><div class="swatch-color" style="background:#f9f9fb"></div>#f9f9fb</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Технологии</div>
+                <div class="value">WordPress + Avada тема, LayerSlider 7.14, Revolution Slider 6, WPML, Google Analytics, PWA (Service Worker)</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Дизайн подход</div>
+                <div class="value">Модерен с анимирани hover ефекти (scale 1.05-1.06), псевдо-елементни текстови смени. 3-колонни програмни карти, плаващ филтриращ панел.</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Забележителни функции</div>
+                <div class="value">Интерактивно филтриране с тагове, PWA, мега-меню, превключвател BG/EN, бюлетин</div>
+            </div>
+            <div class="ratings-mini">
+                <div class="rating-item"><span class="r-label">Дизайн</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Модерност</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">Функции</span><div class="rating-bar"><div class="rating-bar-fill r4" style="width:80%"></div></div></div>
+                <div class="rating-item"><span class="r-label">UX</span><div class="rating-bar"><div class="rating-bar-fill r3" style="width:60%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Comparison Table -->
+<div class="section-header">
+    <h2>Сравнителна таблица</h2>
+    <p>Обобщение на всички 18 академии с ключови характеристики</p>
+    <div class="divider"></div>
+</div>
+
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>Академия</th>
+                <th>Страна</th>
+                <th>CMS / Платформа</th>
+                <th>Осн. цвят</th>
+                <th>Дизайн</th>
+                <th>Модерност</th>
+                <th>Функции</th>
+                <th>UX</th>
+                <th>Средна</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Ecole Navale</strong></td>
+                <td>Франция</td>
+                <td>WordPress + Elementor</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#535D73;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Slate</td>
+                <td class="score-cell score-high">5</td>
+                <td class="score-cell score-high">5</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high"><strong>4.5</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Royal Canadian Navy</strong></td>
+                <td>Канада</td>
+                <td>Custom (forces.ca)</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#003366;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">5</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high"><strong>4.3</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Норвежки ВМА</strong></td>
+                <td>Норвегия</td>
+                <td>Enonic CMS</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#89bcbc;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Teal</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high"><strong>4.0</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Sjostridsskolan</strong></td>
+                <td>Швеция</td>
+                <td>Optimizely CMS</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#1B2A4A;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high"><strong>4.0</strong></td>
+            </tr>
+            <tr style="background: #F0FDFA;">
+                <td><strong>ВВМУ Вапцаров</strong></td>
+                <td>България</td>
+                <td>WordPress + Avada</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#1a488e;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Blue</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-high"><strong>3.8</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Marineschule Murwik</strong></td>
+                <td>Германия</td>
+                <td>Headless CMS</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#003366;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high"><strong>3.8</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Escola Naval</strong></td>
+                <td>Португалия</td>
+                <td>SharePoint + Bootstrap</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#ae0700;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Red</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid"><strong>3.5</strong></td>
+            </tr>
+            <tr>
+                <td><strong>R.O.C. Naval Academy</strong></td>
+                <td>Тайван</td>
+                <td>PHP + jQuery</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#4676c4;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Blue</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-mid"><strong>3.5</strong></td>
+            </tr>
+            <tr>
+                <td><strong>USNA</strong></td>
+                <td>САЩ</td>
+                <td>Custom CMS + Foundation</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#003366;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-high">4</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid"><strong>3.3</strong></td>
+            </tr>
+            <tr>
+                <td><strong>BRNC Dartmouth</strong></td>
+                <td>Великобритания</td>
+                <td>Gov CMS (mod.uk)</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#002B5C;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid"><strong>3.0</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Hellenic Naval Academy</strong></td>
+                <td>Гърция</td>
+                <td>Drupal CMS</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#007bff;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Blue</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid"><strong>3.0</strong></td>
+            </tr>
+            <tr>
+                <td><strong>RANC Australia</strong></td>
+                <td>Австралия</td>
+                <td>Gov CMS (gov.au)</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#003366;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid"><strong>3.0</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Escuela Naval Chile</strong></td>
+                <td>Чили</td>
+                <td>Custom HTML5</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#003366;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-mid"><strong>3.0</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Accademia Navale</strong></td>
+                <td>Италия</td>
+                <td>SharePoint/O365</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#001a33;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low"><strong>2.3</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Deniz Harp Okulu</strong></td>
+                <td>Турция</td>
+                <td>jQuery + Custom</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#0033FF;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Blue</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low"><strong>2.3</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Escuela Naval Militar</strong></td>
+                <td>Испания</td>
+                <td>Gov CMS (mde.es)</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#003366;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low"><strong>2.3</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Indian Naval Academy</strong></td>
+                <td>Индия</td>
+                <td>NIC Gov Platform</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#003366;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-mid">3</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low"><strong>2.3</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Korea Naval Academy</strong></td>
+                <td>Южна Корея</td>
+                <td>JSP</td>
+                <td><span style="display:inline-block;width:14px;height:14px;background:#003366;border-radius:3px;vertical-align:middle;margin-right:4px;"></span> Navy</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low">2</td>
+                <td class="score-cell score-low"><strong>2.0</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Color Trends -->
+<div class="section-header">
+    <h2>Тенденции в цветовите палитри</h2>
+    <p>Разпространение на цветовите категории сред 18-те анализирани академии</p>
+    <div class="divider"></div>
+</div>
+
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>Цветова категория</th>
+                <th>Примерен цвят</th>
+                <th style="width:40%">Разпространение</th>
+                <th>Процент</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Тъмно синьо (Navy Blue)</strong></td>
+                <td><span style="display:inline-block;width:24px;height:24px;background:#003366;border-radius:4px;vertical-align:middle;"></span></td>
+                <td><div style="height:14px;border-radius:7px;background:linear-gradient(90deg,#003366,#1a488e);width:100%"></div></td>
+                <td class="trend-pct">18/18 (100%)</td>
+            </tr>
+            <tr>
+                <td><strong>Бяло</strong></td>
+                <td><span style="display:inline-block;width:24px;height:24px;background:#FFFFFF;border-radius:4px;vertical-align:middle;border:1px solid #ddd;"></span></td>
+                <td><div style="height:14px;border-radius:7px;background:linear-gradient(90deg,#E2E8F0,#CBD5E0);width:100%"></div></td>
+                <td class="trend-pct">18/18 (100%)</td>
+            </tr>
+            <tr>
+                <td><strong>Сиво</strong></td>
+                <td><span style="display:inline-block;width:24px;height:24px;background:#888888;border-radius:4px;vertical-align:middle;"></span></td>
+                <td><div style="height:14px;border-radius:7px;background:linear-gradient(90deg,#A0AEC0,#718096);width:83%"></div></td>
+                <td class="trend-pct">15/18 (83%)</td>
+            </tr>
+            <tr>
+                <td><strong>Червено (акцент)</strong></td>
+                <td><span style="display:inline-block;width:24px;height:24px;background:#CC0000;border-radius:4px;vertical-align:middle;"></span></td>
+                <td><div style="height:14px;border-radius:7px;background:linear-gradient(90deg,#E53E3E,#C53030);width:56%"></div></td>
+                <td class="trend-pct">10/18 (56%)</td>
+            </tr>
+            <tr>
+                <td><strong>Златно / Жълто</strong></td>
+                <td><span style="display:inline-block;width:24px;height:24px;background:#B8860B;border-radius:4px;vertical-align:middle;"></span></td>
+                <td><div style="height:14px;border-radius:7px;background:linear-gradient(90deg,#ECC94B,#D69E2E);width:28%"></div></td>
+                <td class="trend-pct">5/18 (28%)</td>
+            </tr>
+            <tr>
+                <td><strong>Зелено</strong></td>
+                <td><span style="display:inline-block;width:24px;height:24px;background:#61CE70;border-radius:4px;vertical-align:middle;"></span></td>
+                <td><div style="height:14px;border-radius:7px;background:linear-gradient(90deg,#48BB78,#38A169);width:17%"></div></td>
+                <td class="trend-pct">3/18 (17%)</td>
+            </tr>
+            <tr>
+                <td><strong>Тийл / Циан</strong></td>
+                <td><span style="display:inline-block;width:24px;height:24px;background:#0A8080;border-radius:4px;vertical-align:middle;"></span></td>
+                <td><div style="height:14px;border-radius:7px;background:linear-gradient(90deg,#38B2AC,#319795);width:17%"></div></td>
+                <td class="trend-pct">3/18 (17%)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Common Patterns -->
+<div class="section-header">
+    <h2>Общи дизайн модели</h2>
+    <p>Най-често срещаните технически и дизайнерски решения</p>
+    <div class="divider"></div>
+</div>
+
+<div class="summary-grid">
+    <div class="summary-card">
+        <h3><span class="icon">&#9776;</span> Навигация</h3>
+        <ul>
+            <li>Мега-меню или йерархични падащи менюта (15/18 сайта)</li>
+            <li>"Хлебни трохи" (breadcrumb) навигация (10/18)</li>
+            <li>Хамбургер меню за мобилни устройства (14/18)</li>
+            <li>Плаващ (sticky) хедър (8/18)</li>
+        </ul>
+    </div>
+    <div class="summary-card">
+        <h3><span class="icon">&#9724;</span> Оформление</h3>
+        <ul>
+            <li>Пълноширочни hero секции с изображения (14/18)</li>
+            <li>Картово съдържание за новини и програми (12/18)</li>
+            <li>Многоколонен информационен футър (16/18)</li>
+            <li>Видео hero секции - само най-модерните (3/18)</li>
+        </ul>
+    </div>
+    <div class="summary-card">
+        <h3><span class="icon">&#127760;</span> Многоезичност</h3>
+        <ul>
+            <li>Двуезична или многоезична поддръжка (14/18)</li>
+            <li>Превключвател за език в хедъра (12/18)</li>
+            <li>Пълен превод на съдържанието (10/18)</li>
+            <li>WPML или подобна система за CMS (4/18)</li>
+        </ul>
+    </div>
+    <div class="summary-card">
+        <h3><span class="icon">&#128187;</span> Технологии</h3>
+        <ul>
+            <li>WordPress (най-популярен за самостоятелни сайтове): 4/18</li>
+            <li>SharePoint/Gov CMS (за интегрирани портали): 6/18</li>
+            <li>jQuery (все още широко разпространен): 12/18</li>
+            <li>Google Analytics (доминиращ): 12/18</li>
+            <li>Matomo (за поверителност в ЕС): 2/18</li>
+        </ul>
+    </div>
+    <div class="summary-card">
+        <h3><span class="icon">&#9889;</span> Модерни функции</h3>
+        <ul>
+            <li>Достъпност (ARIA, skip links): ~50% от сайтовете</li>
+            <li>Schema.org структурирани данни: 4/18</li>
+            <li>PWA (Progressive Web App): само 1/18 (ВВМУ!)</li>
+            <li>Добавена реалност (AR): само 1/18 (Канада)</li>
+        </ul>
+    </div>
+    <div class="summary-card">
+        <h3><span class="icon">&#128241;</span> Мобилен подход</h3>
+        <ul>
+            <li>Адаптивен дизайн (responsive): 18/18</li>
+            <li>Mobile-first подход: само ~7/18 (40%)</li>
+            <li>Touch-friendly навигация: 10/18</li>
+            <li>Гъвкави изображения с динамичен размер: 8/18</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Recommendations -->
+<div class="section-header">
+    <h2>Препоръки за новия сайт на ВВМУ</h2>
+    <p>Конкретни предложения на база на глобалния бенчмарк</p>
+    <div class="divider"></div>
+</div>
+
+<div class="recommendation">
+    <h3>Стратегически препоръки за подобряване</h3>
+    <div class="rec-grid">
+        <div class="rec-item">
+            <h4>Цветова палитра</h4>
+            <ul>
+                <li><strong>Запазете</strong> тъмно синьото (#1a488e / #092147) - универсално и очаквано</li>
+                <li><strong>Помислете</strong> за замяна на зеления акцент с Черноморски тийл (#0A8080) или мед-злато (#B8860B)</li>
+                <li><strong>Добавете</strong> топъл акцент за CTA бутони (тъмно червено #C41E3A или кехлибар #E8A317)</li>
+            </ul>
+        </div>
+        <div class="rec-item">
+            <h4>Технологична платформа</h4>
+            <ul>
+                <li><strong>Надградете</strong> от Avada тема към персонализирана WP тема или headless CMS (Next.js)</li>
+                <li><strong>Запазете</strong> PWA имплементацията - това е напредничаво</li>
+                <li><strong>Добавете</strong> Matomo аналитика за GDPR съответствие</li>
+                <li><strong>Внедрете</strong> JSON-LD структурирани данни</li>
+            </ul>
+        </div>
+        <div class="rec-item">
+            <h4>Дизайн модели за внедряване</h4>
+            <ul>
+                <li><strong>Hero видео</strong> (от Франция): симулации, обучение, Черно море</li>
+                <li><strong>Добавена реалност</strong> (от Канада): виртуални обиколки на кампуса</li>
+                <li><strong>Анимирани статистики</strong> (от Португалия): записани, завършили, кораби</li>
+                <li><strong>Контроли за достъпност</strong> (от Тайван): размер на шрифта, контраст</li>
+                <li><strong>Пълноекранно търсене</strong> (от Франция)</li>
+            </ul>
+        </div>
+        <div class="rec-item">
+            <h4>Потребителско изживяване (UX)</h4>
+            <ul>
+                <li>Целеви страници за набиране с ясни CTA бутони</li>
+                <li>Отзиви от курсанти с карти (канадски модел)</li>
+                <li>Mobile-first преработка на всички точки на прекъсване</li>
+                <li>Мега-меню с бързи връзки към програми</li>
+                <li>Многоезичност: BG/EN/RU за регионалната аудитория</li>
+            </ul>
+        </div>
+        <div class="rec-item">
+            <h4>Типография</h4>
+            <ul>
+                <li><strong>Заменете</strong> "Russo One" и "Poiret One" с по-професионална комбинация</li>
+                <li><strong>Препоръка:</strong> "Inter" или "Plus Jakarta Sans" за тяло + "Playfair Display" за заглавия</li>
+                <li><strong>Алтернатива:</strong> Персонализиран шрифт по модела на френския "Mariane"</li>
+            </ul>
+        </div>
+        <div class="rec-item">
+            <h4>Съдържание</h4>
+            <ul>
+                <li>Професионална морска фотография</li>
+                <li>Програмни страници с резултати, кариерни пътища и статистики</li>
+                <li>Секция за алумни мрежа (липсва при повечето - възможност за лидерство)</li>
+                <li>Научни публикации с DOI линкове и свободен достъп</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p><strong>Бенчмарк анализ на уебсайтове на военноморски академии</strong></p>
+    <p>Изготвен на 22 март 2026 г. за целите на подобряване на уебсайта на ВВМУ "Н. Й. Вапцаров" - Варна, България</p>
+    <p style="margin-top: 10px;">Анализирани 18 военноморски академии от 18 държави</p>
+</footer>
+
+</body>
+</html>

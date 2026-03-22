@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пътна карта — ВВМУ „Н. Й. Вапцаров" — Нов уебсайт и платформа</title>
+<style>
+  :root {
+    --navy: #1a3a5c;
+    --navy-dark: #0f2440;
+    --navy-light: #2a5a8c;
+    --accent: #c9a84c;
+    --accent-light: #f0e4c4;
+    --bg: #ffffff;
+    --bg-alt: #f4f6f8;
+    --bg-card: #ffffff;
+    --text: #2c3e50;
+    --text-light: #5a6d7e;
+    --border: #dce3ea;
+    --green: #27ae60;
+    --green-light: #eafaf1;
+    --orange: #e67e22;
+    --orange-light: #fef5e7;
+    --red: #e74c3c;
+    --blue: #3498db;
+    --blue-light: #ebf5fb;
+    --purple: #8e44ad;
+    --shadow: 0 2px 12px rgba(26,58,92,0.08);
+    --shadow-hover: 0 4px 24px rgba(26,58,92,0.14);
+    --radius: 10px;
+    --transition: 0.25s ease;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
+    color: #fff;
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .site-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3rem;
+    position: relative;
+  }
+  .site-header .subtitle {
+    font-size: 1.15rem;
+    opacity: 0.85;
+    font-weight: 300;
+    position: relative;
+  }
+  .header-accent {
+    display: inline-block;
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 1rem auto;
+    border-radius: 2px;
+    position: relative;
+  }
+  .site-header .doc-meta {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    position: relative;
+  }
+
+  /* ===== NAV ===== */
+  .toc {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 1.2rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .toc-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  .toc a {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: var(--bg-card);
+    color: var(--navy);
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    transition: all var(--transition);
+    white-space: nowrap;
+  }
+  .toc a:hover, .toc a:focus {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+    transform: translateY(-1px);
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* ===== PHILOSOPHY BOX ===== */
+  .philosophy {
+    background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 2rem 2.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .philosophy::after {
+    content: '';
+    position: absolute;
+    right: -40px;
+    top: -40px;
+    width: 160px;
+    height: 160px;
+    background: var(--accent);
+    opacity: 0.08;
+    border-radius: 50%;
+  }
+  .philosophy h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    color: var(--accent);
+  }
+  .philosophy p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    opacity: 0.92;
+  }
+  .philosophy strong { color: var(--accent-light); }
+
+  /* ===== SUMMARY CARDS ===== */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .summary-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.3rem 1.2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+    border-top: 3px solid var(--navy);
+  }
+  .summary-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  .summary-card .number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--navy);
+  }
+  .summary-card .label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.2rem;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    position: relative;
+    padding-left: 60px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--navy), var(--navy-light), var(--accent));
+    border-radius: 2px;
+  }
+
+  /* ===== MILESTONE ===== */
+  .milestone {
+    position: relative;
+    margin-bottom: 3rem;
+    scroll-margin-top: 80px;
+  }
+  .milestone-dot {
+    position: absolute;
+    left: -48px;
+    top: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--navy);
+    z-index: 2;
+  }
+  .milestone-dot.now { background: var(--green); box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--green); }
+  .milestone-dot.client { background: var(--orange); box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--orange); }
+  .milestone-dot.deploy { background: var(--purple); box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--purple); }
+
+  .milestone-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .milestone-header h2 {
+    font-size: 1.55rem;
+    color: var(--navy-dark);
+  }
+  .milestone-timing {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .timing-now {
+    background: var(--green-light);
+    color: var(--green);
+    border: 1px solid var(--green);
+  }
+  .timing-client {
+    background: var(--orange-light);
+    color: var(--orange);
+    border: 1px solid var(--orange);
+  }
+  .timing-deploy {
+    background: #f4ecf7;
+    color: var(--purple);
+    border: 1px solid var(--purple);
+  }
+
+  .milestone-desc {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  /* ===== TASK SECTIONS ===== */
+  .task-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .task-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1rem 1.3rem;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+  .task-section-header:hover {
+    background: #e8ecf0;
+  }
+  .task-section-header h3 {
+    font-size: 1rem;
+    color: var(--navy-dark);
+    flex: 1;
+  }
+  .task-section-toggle {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    transition: transform var(--transition);
+  }
+  .task-section.collapsed .task-section-body { display: none; }
+  .task-section.collapsed .task-section-toggle { transform: rotate(-90deg); }
+
+  .task-section-body {
+    padding: 1rem 1.3rem;
+  }
+
+  /* ===== TASK LIST ===== */
+  .task-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .task-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.45rem 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border-bottom: 1px solid #f0f2f5;
+  }
+  .task-list li:last-child { border-bottom: none; }
+  .task-list input[type="checkbox"] {
+    margin-top: 4px;
+    accent-color: var(--navy);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+  .task-list .tag {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    margin-left: 4px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+  .tag-we { background: #e8f8f0; color: #1a8a5c; }
+  .tag-client { background: #fef5e7; color: #b7791f; }
+  .tag-both { background: var(--blue-light); color: var(--blue); }
+
+  /* ===== DEPENDENCY BOX ===== */
+  .dep-box {
+    background: var(--bg-alt);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.3rem;
+    margin-top: 1rem;
+  }
+  .dep-box h4 {
+    font-size: 0.85rem;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .dep-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .dep-box li {
+    font-size: 0.85rem;
+    padding: 0.2rem 0;
+    color: var(--text-light);
+  }
+  .dep-box li::before {
+    content: '\2192';
+    margin-right: 0.5rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ===== LEGEND ===== */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--text-light);
+  }
+
+  /* ===== SCOPE TABLE ===== */
+  .scope-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.88rem;
+  }
+  .scope-table th {
+    background: var(--navy);
+    color: #fff;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .scope-table td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .scope-table tr:nth-child(even) td { background: var(--bg-alt); }
+  .scope-table tr:hover td { background: #e8ecf0; }
+
+  /* ===== FOOTER ===== */
+  .site-footer {
+    background: var(--navy-dark);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    margin-top: 3rem;
+  }
+  .site-footer strong { color: var(--accent); }
+
+  /* ===== PRINT ===== */
+  @media print {
+    .toc { display: none; }
+    .milestone { break-inside: avoid; }
+    .task-section.collapsed .task-section-body { display: block !important; }
+    body { font-size: 11pt; }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .site-header { padding: 2rem 1.2rem; }
+    .site-header h1 { font-size: 1.6rem; }
+    .container { padding: 1.2rem; }
+    .timeline { padding-left: 44px; }
+    .timeline::before { left: 16px; }
+    .milestone-dot { left: -36px; width: 32px; height: 32px; font-size: 0.9rem; }
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .milestone-header h2 { font-size: 1.25rem; }
+  }
+  @media (max-width: 480px) {
+    .summary-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .legend { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <h1>Пътна карта на проекта</h1>
+  <div class="header-accent"></div>
+  <div class="subtitle">Нов уебсайт и платформа за ВВМУ „Н. Й. Вапцаров"</div>
+  <div class="doc-meta">Версия 1.0 &middot; Март 2026 &middot; Next.js + CMS</div>
+</header>
+
+<!-- ===== NAV ===== -->
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#philosophy">Подход</a>
+    <a href="#overview">Обзор</a>
+    <a href="#m1">М1: Основа</a>
+    <a href="#m2">М2: Съдържание</a>
+    <a href="#m3">М3: Платформа</a>
+    <a href="#m4">М4: Финализация</a>
+    <a href="#m5">М5: Деплой</a>
+    <a href="#scope">Обхват</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- ===== PHILOSOPHY ===== -->
+  <section class="philosophy" id="philosophy">
+    <h2>Принцип: Строим всичко, което можем СЕГА</h2>
+    <p>
+      Не чакаме. Всичко, което не зависи от външен фактор, се изпълнява <strong>паралелно и незабавно</strong>.
+      Единствените основания за изчакване са: <strong>одобрение от клиента</strong> (избор на дизайн вариант),
+      <strong>професионални снимки/видео</strong> (изискват фотограф на място),
+      <strong>превод на английски</strong> (от страна на академията) и
+      <strong>достъп до хостинг/домейн</strong> (инфраструктура на академията).
+      Всичко останало &mdash; от компонентната библиотека до админ панела &mdash; се строи веднага.
+    </p>
+  </section>
+
+  <!-- ===== SUMMARY ===== -->
+  <section id="overview">
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="number">5</div>
+        <div class="label">Етапа</div>
+      </div>
+      <div class="summary-card">
+        <div class="number">3</div>
+        <div class="label">Строим СЕГА</div>
+      </div>
+      <div class="summary-card">
+        <div class="number">45+</div>
+        <div class="label">Специалности</div>
+      </div>
+      <div class="summary-card">
+        <div class="number">60+</div>
+        <div class="label">Курсове</div>
+      </div>
+      <div class="summary-card">
+        <div class="number">6</div>
+        <div class="label">Онлайн форми</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LEGEND ===== -->
+  <div class="legend">
+    <div class="legend-item"><span class="tag tag-we">НИЕ</span> Изпълняваме самостоятелно</div>
+    <div class="legend-item"><span class="tag tag-client">КЛИЕНТ</span> Изисква информация/решение от академията</div>
+    <div class="legend-item"><span class="tag tag-both">ЗАЕДНО</span> Съвместна задача</div>
+    <div class="legend-item"><span class="milestone-timing timing-now" style="font-size:0.7rem">СЕГА</span> Работим незабавно</div>
+    <div class="legend-item"><span class="milestone-timing timing-client" style="font-size:0.7rem">КЛИЕНТ</span> Зависи от входни данни</div>
+  </div>
+
+  <!-- ===== TIMELINE ===== -->
+  <div class="timeline">
+
+    <!-- ==================== MILESTONE 1 ==================== -->
+    <section class="milestone" id="m1">
+      <div class="milestone-dot now">1</div>
+      <div class="milestone-header">
+        <h2>Етап 1: Основа</h2>
+        <span class="milestone-timing timing-now">Строим СЕГА</span>
+      </div>
+      <p class="milestone-desc">
+        Техническият фундамент на целия проект. Инициализация на Next.js, компонентна библиотека,
+        начална страница с 3 дизайн варианта за избор, i18n настройка и пълна миграция на статичното
+        съдържание от текущия WordPress/Avada сайт.
+      </p>
+
+      <!-- Project Init -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Инициализация на проекта</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Next.js 14+ проект с App Router <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> TypeScript конфигурация <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Tailwind CSS + дизайн токени (цветова палитра: navy #1a3a5c, accent #c9a84c) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> ESLint + Prettier настройка <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Git repository инициализация <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Структура на папки: /app, /components, /lib, /public, /content <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Component Library -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Компонентна библиотека</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Header &mdash; лого, навигация, езиков превключвател (БГ/EN), мобилно меню <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Footer &mdash; контакти, банкова информация, социални мрежи (Facebook, X, Instagram, LinkedIn), външни портали <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Мега меню навигация &mdash; Университет, Обучение, Прием, Дейности, Структури, Информационни центрове <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Card компоненти &mdash; новини, специалности, курсове, персонал <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Hero секция &mdash; слайдер/банер с CTA бутони <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Tabs компонент (за структурни страници като Организация) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Breadcrumbs навигация <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Таблици (акредитация, ценоразписи, контакти) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Формуляри &mdash; input, select, textarea, file upload, валидация <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Бутони, badges, alerts, pagination <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Accordion/Collapsible секции <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Sidebar навигация за вътрешни страници <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Homepage -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Начална страница &mdash; 3 дизайн варианта</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Вариант А: Класически академичен &mdash; hero слайдер, новини грид, бързи линкове <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Вариант Б: Модерен морски &mdash; full-screen hero видео фон, карти секции, анимации <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Вариант В: Информационен портал &mdash; dashboard стил, статистики, новинарска лента <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Всеки вариант включва: Пресцентър (последни новини), Специалности (филтър бакалавър/магистър/курсант), Бързи линкове (е-Преподавател, УебСтудент, Разписание), Прием CTA <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Девиз: &bdquo;Вековни традиции &mdash; Модерен хоризонт&ldquo; <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Ключови числа: 145 години история, 11 симулатора, 17 аудитории, 6500 капацитет <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- i18n -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Многоезичност (i18n)</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> next-intl или подобна библиотека &mdash; конфигурация за BG/EN <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Маршрутизация: / (БГ) и /en (EN) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Превод на UI елементи (менюта, бутони, labels) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Език по подразбиране: български <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> hreflang тагове за SEO <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Static Pages -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Миграция на статични страници</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> За нас &mdash; история от 1881, ключови дати, описание <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Традиция и мисия &mdash; табове с традиции и мисия, стратегия 2016-2030 <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Структура / Организация &mdash; 3 таба: Ръководство, Академични структури, Администрация <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Учебна база &mdash; статистики (17 аудитории, 51 класни стаи, 35 лаборатории, 11 симулатора) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Симулатори &mdash; 11 симулатора с описания (TRANSAS, GMDSS, ERS-5000, ECDIS) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Библиотека &mdash; работно време, контакти, електронни ресурси <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Общежитие и хранене &mdash; цени (175 лв/месец), банкови сметки, правилник <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Планетариум &mdash; Carl Zeiss, 120 места, ценоразпис в EUR, резервации <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Акредитация &mdash; институционална (9.07/10 до 2030), професионални направления, докторски програми <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Научна дейност &mdash; 4 направления <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Международна дейност &mdash; Еразъм+, НАТО DEEP <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Кибероперации &mdash; описание на центъра <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Кандидатстудентски справочник <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Докторски програми &mdash; 13 акредитирани програми <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Конференции <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Система за управление на качеството <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> СЪБРА <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Декларация за достъпност <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Responsive -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Responsive дизайн</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Mobile-first подход &mdash; 320px+ <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Tablet &mdash; 768px <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Desktop &mdash; 1024px, 1280px, 1440px+ <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Мобилна навигация &mdash; hamburger меню, slide-out drawer <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Тестване на всички breakpoints <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dep-box">
+        <h4>Зависимости</h4>
+        <ul>
+          <li>Няма външни зависимости &mdash; всичко се изпълнява незабавно</li>
+          <li>Използваме placeholder изображения до получаване на професионални снимки</li>
+          <li>Цялото текстово съдържание е налично от текущия сайт (извлечено и документирано)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== MILESTONE 2 ==================== -->
+    <section class="milestone" id="m2">
+      <div class="milestone-dot now">2</div>
+      <div class="milestone-header">
+        <h2>Етап 2: Съдържание</h2>
+        <span class="milestone-timing timing-now">Строим СЕГА</span>
+      </div>
+      <p class="milestone-desc">
+        Пълно мигриране на всички съдържателни страници &mdash; 45+ специалности, 60+ курсове,
+        новини, факултети, катедри, персонал и търсене. Всичко с реално съдържание от текущия сайт.
+      </p>
+
+      <!-- Specialties -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Специалности &mdash; 45+ страници</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Шаблон за специалност &mdash; описание, ОКС, форма, срок, професионална реализация <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> 15 бакалавърски програми (Навигация, Кибербезопасност, Мехатроника, ИИ, Логистика и др.) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> 23 магистърски програми (Навигация, Морско право, Космическо инженерство, Компютърна криминалистика и др.) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> 7 курсантски програми (ВМС Навигация, Кибероперации, ВМС Логистика, Военен лекар и др.) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Филтри по ОКС: Бакалавър, Магистър, Курсант <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Филтри по факултет: Навигационен, Инженерен <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Листинг страница с карти и търсене <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Courses -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Курсове &mdash; 60+ страници</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Шаблон за курс &mdash; описание, продължителност, цена, сертификат, изисквания <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Морски курсове (IMO конвенции, STCW, безопасност, навигация) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> ИТ курсове (програмиране, мрежи, бази данни, киберсигурност) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Езикови курсове LangMar (английски, немски, испански, STANAG/ALCPT) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Курс за йонизиращи лъчения <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Категоризация по тип: Морски, ИТ, Езикови, Специализирани <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Листинг страница с филтри и карти <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- News -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Новини (Пресцентър)</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Листинг страница &mdash; карти с изображение, дата, автор, excerpt <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Детайлна страница за новина &mdash; пълен текст, галерия, споделяне <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Филтри по година: 2022, 2023, 2024, 2025, 2026 <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Категории: Тържества, Делегации, Еразъм+, Конференции, Курсанти, Спорт и др. <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Pagination <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> RSS feed <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Миграция на съществуващи новини от WordPress <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Faculty & Departments -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Факултети, катедри и структурни звена</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Навигационен факултет &mdash; 5 катедри (Морска тактика, Навигация, Национална сигурност, Експлоатация на морски транспорт, Езикова подготовка) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Инженерен факултет &mdash; 5 катедри (Корабни машини, Електротехника, Мехатроника, Електроника, ИТ) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> ДСДКДО (Следдипломна квалификация) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Професионален сержантски колеж <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Научна секция <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Център за дистанционно обучение <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Контактна информация за всяко звено (телефон, имейл, ръководител) <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Staff -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Шаблон за персонал</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Профилна карта &mdash; снимка, име, длъжност, звание, научна степен <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Контакти &mdash; телефон, имейл, кабинет <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Листинг по звено/катедра <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Ръководство &mdash; Ректор, зам.-ректори с пълна информация <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Декани и началници на катедри <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Администрация &mdash; отдели и контакти <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Documents -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Документи и нормативна база</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Страница &bdquo;Документи&ldquo; &mdash; категоризиран списък <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Акредитационни сертификати <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Правилници (общежитие, библиотека, качество) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Стратегия за развитие 2016-2030 <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Обществени поръчки / Тръжни процедури <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Антикорупция <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Класации за общежитие <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Търсене</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Full-text търсене по всички страници <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Autocomplete / suggest <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Филтри по тип: специалности, курсове, новини, документи, персонал <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Резултатна страница с highlighted matches <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Клавишна комбинация за бързо търсене (Ctrl+K / Cmd+K) <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dep-box">
+        <h4>Зависимости</h4>
+        <ul>
+          <li>Етап 1 трябва да е достатъчно напреднал (компоненти и шаблони готови), но работата може да е паралелна</li>
+          <li>Цялото текстово съдържание за 45+ специалности и 60+ курсове е извлечено от текущия сайт</li>
+          <li>Снимки на персонала &mdash; използваме placeholder; реални снимки се добавят при получаване</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== MILESTONE 3 ==================== -->
+    <section class="milestone" id="m3">
+      <div class="milestone-dot now">3</div>
+      <div class="milestone-header">
+        <h2>Етап 3: Платформа</h2>
+        <span class="milestone-timing timing-now">Строим СЕГА</span>
+      </div>
+      <p class="milestone-desc">
+        Административен панел (CMS), система за документи, онлайн формуляри за прием, курсове, общежитие,
+        Еразъм+ и др., обработка на заявки от служителите и автентикация.
+      </p>
+
+      <!-- Admin CMS -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Админ панел &mdash; CMS</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Dashboard &mdash; обзор на съдържание, последни промени, статистики <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> CRUD за новини &mdash; създаване, редактиране, публикуване, архивиране <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> CRUD за специалности и курсове <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> CRUD за персонал профили <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Управление на статични страници (rich text editor) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Медийна библиотека &mdash; качване, организация, оптимизация на изображения <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Управление на менюта и навигация <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Превод интерфейс &mdash; БГ/EN контент side-by-side <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Чернови и предварителен преглед (preview) <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Documents -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Система за документи</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Качване на PDF, DOCX, XLSX файлове <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Категоризация &mdash; правилници, сертификати, стратегии, поръчки, класации <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Версиониране на документи <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Публичен/частен достъп <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Преглед на PDF в браузъра <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Миграция от Google Drive линкове към локално хранилище <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Online Forms -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Онлайн формуляри &mdash; 6 типа</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> <strong>Кандидатстване (Прием)</strong> &mdash; лични данни, образование, избор на специалност, документи <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> <strong>Записване за курс</strong> &mdash; избор на курс, данни, плащане, фактура <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> <strong>Запитвания</strong> &mdash; обща контактна форма, избор на отдел <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> <strong>Общежитие</strong> &mdash; заявка за настаняване, лични данни, статус на студент <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> <strong>Удостоверения</strong> &mdash; заявка за академична справка, диплома, сертификат <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> <strong>Еразъм+</strong> &mdash; кандидатура за мобилност, мотивационно писмо, езиково ниво <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Валидация на всички полета (client + server) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Потвърждение по имейл при подаване <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> reCAPTCHA или подобна защита <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Form Processing -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Обработка на заявки (за служители)</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Inbox &mdash; списък на всички получени заявки по тип <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Статуси: Нова, В обработка, Одобрена, Отхвърлена <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Филтриране и търсене по дата, тип, статус <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Известия по имейл за нови заявки <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Експорт на данни (CSV/Excel) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Преглед на прикачени документи <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Auth -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Автентикация</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Вход за админ портал &mdash; имейл + парола <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Роли: Администратор, Редактор, Преглед <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Сесии и JWT токени <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Смяна на парола <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Audit log &mdash; кой какво е променил и кога <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dep-box">
+        <h4>Зависимости</h4>
+        <ul>
+          <li>Компонентната библиотека от Етап 1 трябва да е готова за UI на админ панела</li>
+          <li>Модели за данни на специалности/курсове/новини от Етап 2</li>
+          <li>Полетата на формулярите са дефинирани от извлеченото съдържание &mdash; не чакаме клиента</li>
+          <li>Имейл конфигурация за нотификации &mdash; можем да използваме временен SMTP до деплой</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== MILESTONE 4 ==================== -->
+    <section class="milestone" id="m4">
+      <div class="milestone-dot client">4</div>
+      <div class="milestone-header">
+        <h2>Етап 4: Финализация</h2>
+        <span class="milestone-timing timing-client">СЕГА + вход от клиента</span>
+      </div>
+      <p class="milestone-desc">
+        Преглед от клиента, избор на дизайн вариант, интеграция на реални снимки/видео,
+        завършване на английския превод, SEO оптимизация, достъпност и тестване.
+        SEO и достъпност ги правим НИЕ &mdash; чакаме само медия и превод от академията.
+      </p>
+
+      <!-- Client Review -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Преглед и избор от клиента</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Презентация на 3-те варианта за начална страница <span class="tag tag-both">ЗАЕДНО</span></li>
+            <li><input type="checkbox"> Избор на дизайн вариант (А, Б или В) <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> Прилагане на корекции по избрания вариант <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Финален преглед на всички вътрешни страници <span class="tag tag-both">ЗАЕДНО</span></li>
+            <li><input type="checkbox"> Проверка на точността на съдържанието &mdash; контакти, цени, структура <span class="tag tag-client">КЛИЕНТ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Media -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Реални снимки и видео</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Професионални снимки на сградата, кампуса, аудиториите <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> Снимки на 11-те симулатора <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> Снимки на библиотеката, планетариума, общежитието <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> Портретни снимки на ръководство и персонал <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> Промоционално видео за hero секция (ако е избран вариант Б) <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> Оптимизация на изображения (WebP, responsive sizes, lazy loading) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Интеграция в сайта и замяна на placeholders <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Translation -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Английска версия</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Превод на съдържателни страници (от академията или катедра „Езикова подготовка") <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> Превод на 45+ специалности &mdash; описания и заглавия <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> Превод на курсове <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> Интеграция на преведеното съдържание в i18n системата <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Проверка на всички EN маршрути и fallback логика <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SEO -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>SEO оптимизация</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Meta тагове за всяка страница (title, description, og:image) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Schema.org структурирани данни &mdash; EducationalOrganization, Course, Event <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> XML Sitemap генериране <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> robots.txt <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Canonical URLs <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Open Graph за социални мрежи <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Google Analytics интеграция (миграция на G-PS67DMR7KR) <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Accessibility -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Достъпност (WCAG 2.1)</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> ARIA roles и labels за всички интерактивни елементи <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Keyboard навигация <mdash; Tab, Enter, Escape <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Цветови контраст &mdash; минимум 4.5:1 за текст <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Alt текстове за всички изображения <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Skip to content линк <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Тестване с axe-core / Lighthouse <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Обновена Декларация за достъпност <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Performance -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Производителност и тестване</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Lighthouse Performance &ge; 90 <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Core Web Vitals &mdash; LCP < 2.5s, FID < 100ms, CLS < 0.1 <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Кеширане стратегия (ISR/SSG за статични, SSR за динамични) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Image optimization pipeline <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Bundle size анализ и оптимизация <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Cross-browser тестване (Chrome, Firefox, Safari, Edge) <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Мобилно тестване (iOS Safari, Android Chrome) <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Docs -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Документация</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Ръководство за потребители (CMS) &mdash; как да публикуват новини, курсове <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Техническа документация &mdash; архитектура, деплой, бекъп <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Ръководство за администратори &mdash; управление на потребители, роли <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dep-box">
+        <h4>Зависимости</h4>
+        <ul>
+          <li><strong>Дизайн избор:</strong> клиентът трябва да избере 1 от 3-те варианта за начална страница</li>
+          <li><strong>Снимки/видео:</strong> професионален фотограф трябва да заснеме обекти на академията</li>
+          <li><strong>Превод:</strong> английското съдържание се осигурява от академията</li>
+          <li>SEO, достъпност, производителност и документация &mdash; НЕ зависят от клиента и се правят паралелно</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== MILESTONE 5 ==================== -->
+    <section class="milestone" id="m5">
+      <div class="milestone-dot deploy">5</div>
+      <div class="milestone-header">
+        <h2>Етап 5: Деплой</h2>
+        <span class="milestone-timing timing-deploy">Изисква клиент</span>
+      </div>
+      <p class="milestone-desc">
+        Пускане в реална среда. Изисква достъп до хостинг инфраструктура на академията
+        (или решение за облачен хостинг), конфигурация на домейн, обучение на персонала и go-live.
+      </p>
+
+      <!-- Hosting -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Хостинг и инфраструктура</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Решение: собствен сървър на академията или облак (Vercel, AWS, Hetzner) <span class="tag tag-both">ЗАЕДНО</span></li>
+            <li><input type="checkbox"> Настройка на production среда <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> SSL сертификат за naval-acad.bg <span class="tag tag-both">ЗАЕДНО</span></li>
+            <li><input type="checkbox"> CI/CD pipeline за автоматичен деплой <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> База данни &mdash; production instance <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Бекъп стратегия &mdash; автоматични ежедневни бекъпи <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Мониторинг (uptime, грешки, производителност) <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Domain -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Домейн конфигурация</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> DNS пренасочване на naval-acad.bg към новия сървър <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> HTTPS за всички поддомейни (премахване на HTTP проблеми) <span class="tag tag-both">ЗАЕДНО</span></li>
+            <li><input type="checkbox"> 301 редиректи от стари WordPress URL-и към нови <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Проверка на всички външни портали линкове (teacher, ws, nvna.eu, dlc и др.) <span class="tag tag-we">НИЕ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Training -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Обучение на персонала</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Обучение на пресцентъра &mdash; публикуване на новини, снимки <span class="tag tag-both">ЗАЕДНО</span></li>
+            <li><input type="checkbox"> Обучение на администратори &mdash; управление на специалности, курсове, документи <span class="tag tag-both">ЗАЕДНО</span></li>
+            <li><input type="checkbox"> Обучение за обработка на формуляри (прием, курсове, общежитие) <span class="tag tag-both">ЗАЕДНО</span></li>
+            <li><input type="checkbox"> Създаване на потребителски акаунти за персонала <span class="tag tag-both">ЗАЕДНО</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Go-live -->
+      <div class="task-section">
+        <div class="task-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+          <span class="task-section-toggle">&#9660;</span>
+          <h3>Go-live</h3>
+        </div>
+        <div class="task-section-body">
+          <ul class="task-list">
+            <li><input type="checkbox"> Финален smoke test на production <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Превключване на DNS <span class="tag tag-client">КЛИЕНТ</span></li>
+            <li><input type="checkbox"> Мониторинг в първите 48 часа <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Hotfix процес за критични проблеми <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Google Search Console &mdash; верификация и подаване на sitemap <span class="tag tag-we">НИЕ</span></li>
+            <li><input type="checkbox"> Деактивиране на стария WordPress сайт <span class="tag tag-client">КЛИЕНТ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dep-box">
+        <h4>Зависимости</h4>
+        <ul>
+          <li><strong>Етапи 1-4</strong> трябва да са завършени</li>
+          <li><strong>Хостинг достъп:</strong> академията трябва да предостави сървър или да одобри облачен вариант</li>
+          <li><strong>DNS достъп:</strong> необходим за пренасочване на домейна naval-acad.bg</li>
+          <li><strong>Обучение:</strong> персоналът на пресцентъра и администрацията трябва да са налични за обучение</li>
+          <li><strong>Координация:</strong> go-live трябва да е планиран за подходящ момент (извън кандидатстудентска кампания)</li>
+        </ul>
+      </div>
+    </section>
+
+  </div><!-- /timeline -->
+
+  <!-- ===== SCOPE TABLE ===== -->
+  <section id="scope" style="scroll-margin-top: 80px;">
+    <h2 style="font-size:1.5rem; color:var(--navy-dark); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:2px solid var(--navy);">Обхват на проекта &mdash; обобщение</h2>
+    <p style="color:var(--text-light); margin-bottom:1.5rem; font-size:0.95rem;">
+      Пълен преглед на това какво мигрираме от текущия WordPress/Avada сайт и какво ново изграждаме.
+    </p>
+    <table class="scope-table">
+      <thead>
+        <tr>
+          <th>Категория</th>
+          <th>Брой</th>
+          <th>Статус</th>
+          <th>Етап</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Компоненти (header, footer, cards, forms...)</td>
+          <td>12+</td>
+          <td><span class="tag tag-we">НОВО</span></td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Начална страница (3 варианта)</td>
+          <td>3</td>
+          <td><span class="tag tag-we">НОВО</span></td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Статични страници (За нас, Мисия, База, Акредитация...)</td>
+          <td>18+</td>
+          <td>Миграция от WP</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Специалности (бакалавър + магистър + курсант)</td>
+          <td>45+</td>
+          <td>Миграция от WP</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Курсове (морски, ИТ, езикови, специализирани)</td>
+          <td>60+</td>
+          <td>Миграция от WP</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Новини (пресцентър)</td>
+          <td>100+</td>
+          <td>Миграция от WP</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Факултети и катедри</td>
+          <td>12+</td>
+          <td>Миграция от WP</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Профили на персонал</td>
+          <td>30+</td>
+          <td>Миграция от WP</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Документи и нормативна база</td>
+          <td>20+</td>
+          <td>Миграция от Google Drive</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Админ панел (CMS)</td>
+          <td>1</td>
+          <td><span class="tag tag-we">НОВО</span></td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Онлайн формуляри</td>
+          <td>6</td>
+          <td><span class="tag tag-we">НОВО</span></td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Система за документи</td>
+          <td>1</td>
+          <td><span class="tag tag-we">НОВО</span></td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Система за обработка на заявки</td>
+          <td>1</td>
+          <td><span class="tag tag-we">НОВО</span></td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Автентикация и роли</td>
+          <td>1</td>
+          <td><span class="tag tag-we">НОВО</span></td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Търсене (full-text)</td>
+          <td>1</td>
+          <td><span class="tag tag-we">НОВО</span></td>
+          <td>2</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</div><!-- /container -->
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <strong>Пътна карта на проекта</strong> | Деян Стоянов Стоянов | Факултетен № 001114 | ВВМУ „Н. Й. Вапцаров" | Март 2026
+</footer>
+
+<script>
+// Minimal interactivity for collapsing sections
+document.querySelectorAll('.task-section-header').forEach(header => {
+  header.setAttribute('role', 'button');
+  header.setAttribute('tabindex', '0');
+  header.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      header.click();
+    }
+  });
+});
+</script>
+
+</body>
+</html>

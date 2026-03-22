@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Предложение за нов уебсайт — ВВМУ „Н. Й. Вапцаров"</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;600;700&display=swap');
+
+        :root {
+            --navy: #1B2A4A;
+            --navy-light: #2C3E6B;
+            --navy-dark: #0F1A2E;
+            --gold: #C5A55A;
+            --gold-light: #E8D5A0;
+            --text: #2C2C2C;
+            --text-light: #555555;
+            --bg: #FAFAF8;
+            --white: #FFFFFF;
+            --border: #D8D8D0;
+            --accent-green: #2E7D32;
+            --accent-red: #C62828;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif', 'Georgia', 'Times New Roman', serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            font-size: 11.5pt;
+        }
+
+        .page {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 50px 60px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+
+        .page + .page {
+            margin-top: 30px;
+        }
+
+        /* ===== HEADER ===== */
+        .letter-header {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 3px double var(--navy);
+            margin-bottom: 35px;
+        }
+
+        .letter-header .institution {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 10pt;
+            color: var(--navy);
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-bottom: 4px;
+        }
+
+        .letter-header .doc-title {
+            font-size: 16pt;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 10px 0 5px;
+        }
+
+        .letter-header .doc-subtitle {
+            font-size: 10pt;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* ===== COVER LETTER ===== */
+        .letter-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            font-size: 10pt;
+            color: var(--text-light);
+        }
+
+        .letter-meta .date {
+            text-align: right;
+        }
+
+        .addressee {
+            margin-bottom: 28px;
+            padding-left: 0;
+        }
+
+        .addressee p {
+            margin-bottom: 3px;
+            font-size: 10.5pt;
+        }
+
+        .addressee .name {
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .salutation {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 18px;
+            font-size: 11.5pt;
+        }
+
+        .letter-body p {
+            margin-bottom: 14px;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .letter-body .highlight {
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        .letter-body .dedication {
+            font-style: italic;
+            color: var(--navy-light);
+            border-left: 3px solid var(--gold);
+            padding-left: 16px;
+            margin: 22px 0;
+        }
+
+        .letter-body .stat-inline {
+            background: #F0EDE4;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: 'Noto Sans', sans-serif;
+            font-weight: 600;
+            font-size: 10.5pt;
+            color: var(--navy);
+        }
+
+        .closing {
+            margin-top: 30px;
+        }
+
+        .closing p {
+            margin-bottom: 4px;
+        }
+
+        .closing .regards {
+            margin-bottom: 18px;
+        }
+
+        .closing .signature-name {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 12pt;
+        }
+
+        .closing .signature-detail {
+            font-size: 9.5pt;
+            color: var(--text-light);
+        }
+
+        /* ===== PROPOSAL PAGE ===== */
+        .proposal-header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 3px double var(--navy);
+            margin-bottom: 30px;
+        }
+
+        .proposal-header .label {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .proposal-header .title {
+            font-size: 17pt;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+
+        .proposal-header .subtitle {
+            font-size: 10pt;
+            color: var(--text-light);
+        }
+
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-number {
+            font-family: 'Noto Sans', sans-serif;
+            display: inline-block;
+            background: var(--navy);
+            color: var(--white);
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            border-radius: 50%;
+            font-size: 9pt;
+            font-weight: 700;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .section h2 {
+            font-size: 12.5pt;
+            color: var(--navy);
+            margin-bottom: 10px;
+            display: inline;
+            vertical-align: middle;
+        }
+
+        .section h2::after {
+            content: '';
+            display: block;
+            margin-top: 6px;
+        }
+
+        .section p {
+            margin-bottom: 8px;
+            text-align: justify;
+            font-size: 10.5pt;
+        }
+
+        .section ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 8px 0;
+        }
+
+        .section ul li {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 6px;
+            font-size: 10.5pt;
+            line-height: 1.55;
+        }
+
+        .section ul li::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 8px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .included li::before {
+            background: var(--accent-green);
+        }
+
+        .excluded li::before {
+            background: var(--accent-red);
+        }
+
+        .score-box {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: linear-gradient(135deg, #F8F6F0 0%, #EEEAE0 100%);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--gold);
+            border-radius: 4px;
+            padding: 14px 20px;
+            margin: 10px 0;
+        }
+
+        .score-box .score {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 26pt;
+            font-weight: 700;
+            color: var(--accent-red);
+            line-height: 1;
+        }
+
+        .score-box .score span {
+            font-size: 13pt;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .score-box .score-text {
+            font-size: 10pt;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .next-steps {
+            background: var(--navy);
+            color: var(--white);
+            padding: 18px 24px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .next-steps h2 {
+            color: var(--gold-light) !important;
+            display: inline;
+        }
+
+        .next-steps .section-number {
+            background: var(--gold);
+            color: var(--navy-dark);
+        }
+
+        .next-steps p {
+            color: rgba(255,255,255,0.9);
+            font-size: 10.5pt;
+            margin-top: 10px;
+        }
+
+        /* ===== FOOTER ===== */
+        .page-footer {
+            margin-top: 35px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 8.5pt;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        .page-footer .name {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 9pt;
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            body {
+                background: white;
+                font-size: 11pt;
+            }
+
+            .page {
+                box-shadow: none;
+                padding: 30px 40px;
+                margin: 0;
+                max-width: none;
+            }
+
+            .page + .page {
+                margin-top: 0;
+                page-break-before: always;
+            }
+
+            .next-steps {
+                background: var(--navy) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .section-number {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .score-box {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .included li::before,
+            .excluded li::before {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: COVER LETTER ==================== -->
+<div class="page" id="cover-letter">
+
+    <div class="letter-header">
+        <div class="institution">До ръководството на</div>
+        <div class="doc-title">ВВМУ „Никола Йонков Вапцаров"</div>
+        <div class="doc-subtitle">Придружително писмо и предложение за нов уебсайт</div>
+    </div>
+
+    <div class="letter-meta">
+        <div class="ref">Изх. №: DSS-2026-001</div>
+        <div class="date">гр. Варна, 23 март 2026 г.</div>
+    </div>
+
+    <div class="addressee">
+        <p>До</p>
+        <p class="name">Флотилен адмирал проф. д-р Калин Калинов</p>
+        <p>Ректор на ВВМУ „Н. Й. Вапцаров"</p>
+        <p>гр. Варна</p>
+    </div>
+
+    <div class="salutation">Уважаеми господин Ректор,</div>
+
+    <div class="letter-body">
+        <p>
+            Обръщам се към Вас като възпитаник на Висшето военноморско училище „Никола Йонков Вапцаров"
+            (Факултетен № 001114) с предложение, което вярвам, че ще допринесе за модерното присъствие
+            на академията в дигиталното пространство.
+        </p>
+
+        <p class="dedication">
+            Този проект е посветен на паметта на моя баща, който прекара дълги години от професионалния
+            си живот в служба на академията. Работата по него е не само израз на благодарност към
+            институцията, която ме изгради, но и начин да почета неговия принос.
+        </p>
+
+        <p>
+            През последните седмици извърших задълбочен анализ на настоящия уебсайт на ВВМУ. Анализът
+            включва <span class="highlight">четири независими експертни оценки</span> по множество
+            критерии — технологична база, мобилна адаптивност, съдържание, достъпност, сигурност,
+            навигация и визуален дизайн. Резултатът е обща оценка от
+            <span class="stat-inline">4.3 / 10</span>. Паралелно проведох сравнително проучване
+            на <span class="highlight">18 морски академии от цял свят</span>, за да идентифицирам
+            най-добрите практики в сектора.
+        </p>
+
+        <p>
+            Въз основа на тези данни, бих желал да предложа на академията
+            <span class="highlight">изцяло нов, модерен уебсайт и вътрешна платформа за управление</span>
+            — разработени и предоставени <span class="highlight">напълно безвъзмездно</span>.
+        </p>
+
+        <p>
+            Основната ми цел е платформата да направи академията <span class="highlight">напълно
+            самостоятелна</span> в управлението на своето онлайн присъствие. Към проекта ще бъдат
+            включени подробни и разбираеми ръководства за употреба и пълна документация, така че
+            персоналът да може да управлява всичко самостоятелно — без външна зависимост.
+        </p>
+
+        <p>
+            Мотото на ВВМУ — „Вековни традиции — Модерен хоризонт" — точно описва духа на това
+            предложение: да се съхрани авторитетът и традицията на институцията, като същевременно
+            се представи по съвременен и достоен начин пред света.
+        </p>
+
+        <p>
+            Готов съм да представя предложението лично пред Вас или пред определена от Вас комисия,
+            в удобно за академията време.
+        </p>
+
+        <p>
+            На следващата страница ще намерите кратко резюме на предложението.
+        </p>
+    </div>
+
+    <div class="closing">
+        <p class="regards">С уважение и респект към институцията,</p>
+        <p class="signature-name">Деян Стоянов Стоянов</p>
+        <p class="signature-detail">Факултетен № 001114</p>
+        <p class="signature-detail">Възпитаник на ВВМУ „Н. Й. Вапцаров"</p>
+    </div>
+
+    <div class="page-footer">
+        <span class="name">Деян Стоянов Стоянов</span> &nbsp;|&nbsp;
+        Факултетен № 001114 &nbsp;|&nbsp;
+        Възпитаник на ВВМУ „Н. Й. Вапцаров"
+    </div>
+</div>
+
+<!-- ==================== PAGE 2: EXECUTIVE PROPOSAL ==================== -->
+<div class="page" id="proposal">
+
+    <div class="proposal-header">
+        <div class="label">Кратко предложение</div>
+        <div class="title">Нов уебсайт и платформа за управление</div>
+        <div class="subtitle">ВВМУ „Н. Й. Вапцаров" — безвъзмездна инициатива от възпитаник</div>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="section">
+        <span class="section-number">1</span>
+        <h2>Какво предлагаме</h2>
+        <p>
+            Изцяло нов публичен уебсайт, изграден с модерни технологии (Next.js), заедно с
+            вътрешен портал за управление — предназначен за администрацията на ВВМУ. Порталът
+            позволява самостоятелно управление на съдържание, документи, новини и заявления,
+            без необходимост от технически специалист.
+        </p>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="section">
+        <span class="section-number">2</span>
+        <h2>Защо</h2>
+        <div class="score-box">
+            <div class="score">4.3<span> / 10</span></div>
+            <div class="score-text">
+                Текуща обща оценка от независим анализ (4 експертни оценки).<br>
+                Сравнение с 18 международни морски академии показва значителен потенциал за подобрение.
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="section">
+        <span class="section-number">3</span>
+        <h2>Какво включва безвъзмездното предложение</h2>
+        <ul class="included">
+            <li>Нов модерен уебсайт (Next.js) — 4-6 пъти по-бърз от настоящия</li>
+            <li>Двуезична версия (български + английски) от самото начало</li>
+            <li>Вътрешен портал за управление на съдържание, документи и новини</li>
+            <li>Онлайн форми за кандидатстване, записване за курсове и запитвания</li>
+            <li>Обработка на заявления от служителите чрез вътрешната платформа</li>
+            <li>Система за управление на документи (без зависимост от Google Drive)</li>
+            <li>Пълна документация и ясни ръководства за употреба</li>
+            <li>Обучение на персонала за работа с платформата</li>
+        </ul>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="section">
+        <span class="section-number">4</span>
+        <h2>Какво НЕ включва</h2>
+        <ul class="excluded">
+            <li>Хостинг инфраструктура (платформата може да се хоства в самата академия)</li>
+            <li>Професионална фотография и видеография</li>
+            <li>Съдържание на английски език (превод на текстовете)</li>
+        </ul>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="section next-steps">
+        <span class="section-number">5</span>
+        <h2>Следващи стъпки</h2>
+        <p>
+            Каня Ви на кратка среща или презентация, на която да представя анализа и
+            предложението в детайли. Готов съм да се съобразя изцяло с Вашия график.
+            Моля, не се колебайте да се свържете с мен за уточняване на дата и час.
+        </p>
+    </div>
+
+    <div class="page-footer">
+        <span class="name">Деян Стоянов Стоянов</span> &nbsp;|&nbsp;
+        Факултетен № 001114 &nbsp;|&nbsp;
+        Възпитаник на ВВМУ „Н. Й. Вапцаров"
+    </div>
+</div>
+
+</body>
+</html>

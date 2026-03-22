@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ и предложение — ВВМУ "Н. Й. Вапцаров"</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #fafafa; color: #2d2d2d; line-height: 1.7;
+            padding: 2rem; max-width: 1000px; margin: 0 auto;
+        }
+        .header {
+            text-align: center; padding: 2rem 0; margin-bottom: 2rem;
+            border-bottom: 3px solid #1a3a5c;
+        }
+        .header h1 { font-size: 1.8rem; color: #1a3a5c; margin-bottom: 0.3rem; }
+        .header .subtitle { color: #666; font-size: 1rem; }
+        .header .date { color: #999; font-size: 0.85rem; margin-top: 0.5rem; }
+        .toc {
+            background: white; border: 1px solid #e0e0e0; border-radius: 8px;
+            padding: 1.5rem 2rem; margin-bottom: 2rem;
+        }
+        .toc h3 { color: #1a3a5c; margin-bottom: 0.8rem; font-size: 1rem; }
+        .toc ol { padding-left: 1.5rem; }
+        .toc li { margin-bottom: 0.3rem; }
+        .toc a { color: #2980b9; text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+        h2 {
+            font-size: 1.3rem; color: #1a3a5c; margin-top: 2.5rem; margin-bottom: 1rem;
+            border-left: 4px solid #2980b9; padding-left: 0.75rem;
+        }
+        h3 { font-size: 1.05rem; color: #444; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+        th { background: #1a3a5c; color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 500; }
+        td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; }
+        tr:nth-child(even) { background: #f5f7fa; }
+        tr:hover { background: #eef2f7; }
+        code { background: #e8eef4; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; color: #c0392b; }
+        .score-card {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem; margin: 1rem 0;
+        }
+        .score-item {
+            background: white; border: 1px solid #e0e0e0; border-radius: 8px;
+            padding: 1rem; text-align: center;
+        }
+        .score-item .label { font-size: 0.85rem; color: #666; }
+        .score-item .value { font-size: 1.8rem; font-weight: 700; color: #1a3a5c; margin: 0.3rem 0; }
+        .score-item .comment { font-size: 0.75rem; color: #888; }
+        .overall-score {
+            background: #1a3a5c; color: white; border-radius: 8px;
+            padding: 1.5rem; text-align: center; margin: 1.5rem 0;
+        }
+        .overall-score .value { font-size: 3rem; font-weight: 700; }
+        .overall-score .label { font-size: 1.1rem; opacity: 0.9; }
+        .issue-critical { background: #fdf0f0; border-left: 4px solid #e74c3c; padding: 0.8rem 1rem; margin: 0.5rem 0; border-radius: 0 4px 4px 0; }
+        .issue-medium { background: #fef9e7; border-left: 4px solid #f39c12; padding: 0.8rem 1rem; margin: 0.5rem 0; border-radius: 0 4px 4px 0; }
+        .issue-positive { background: #eafaf1; border-left: 4px solid #27ae60; padding: 0.8rem 1rem; margin: 0.5rem 0; border-radius: 0 4px 4px 0; }
+        .tech-badge {
+            display: inline-block; background: #e8eef4; color: #1a3a5c;
+            padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.85rem; margin: 0.2rem;
+        }
+        .tech-badge.bad { background: #fde8e8; color: #c0392b; }
+        .tech-badge.good { background: #e8fae8; color: #27ae60; }
+        ul { padding-left: 1.5rem; margin: 0.5rem 0; }
+        li { margin-bottom: 0.3rem; }
+        .culprit {
+            display: flex; align-items: center; gap: 1rem;
+            background: white; border: 1px solid #e0e0e0; border-radius: 8px;
+            padding: 1rem 1.2rem; margin: 0.7rem 0;
+        }
+        .culprit-rank {
+            background: #e74c3c; color: white; font-weight: 700;
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .culprit-rank.medium { background: #f39c12; }
+        .culprit-rank.low { background: #95a5a6; }
+        .culprit-info { flex: 1; }
+        .culprit-info strong { display: block; margin-bottom: 0.2rem; }
+        .culprit-info span { font-size: 0.85rem; color: #666; }
+        .culprit-weight { font-size: 1.1rem; font-weight: 700; color: #e74c3c; white-space: nowrap; }
+        .comparison {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;
+        }
+        .comparison-card {
+            background: white; border-radius: 10px; padding: 1.5rem;
+            border: 2px solid #e0e0e0; text-align: center;
+        }
+        .comparison-card.current { border-color: #e74c3c; }
+        .comparison-card.target { border-color: #27ae60; }
+        .comparison-card h4 { margin-bottom: 1rem; font-size: 1.1rem; }
+        .comparison-card.current h4 { color: #e74c3c; }
+        .comparison-card.target h4 { color: #27ae60; }
+        .metric-row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; }
+        .metric-row .val { font-weight: 700; }
+        .section-intro { background: #f0f4f8; border-radius: 8px; padding: 1.2rem; margin: 1rem 0; font-size: 0.95rem; }
+        .page-break { page-break-before: always; }
+        @media print {
+            body { padding: 1rem; font-size: 11pt; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Анализ на уебсайта на ВВМУ "Н. Й. Вапцаров"</h1>
+    <div class="subtitle">Комплексен технически доклад и препоръки за подобрение</div>
+    <div class="date">22 март 2026 г. | https://www.naval-acad.bg/</div>
+</div>
+
+<div class="toc">
+    <h3>Съдържание</h3>
+    <ol>
+        <li><a href="#tech">Технологична платформа</a></li>
+        <li><a href="#nav">Навигация и структура</a></li>
+        <li><a href="#org">Организационна структура</a></li>
+        <li><a href="#content">Съдържателни категории</a></li>
+        <li><a href="#lang">Езикови версии</a></li>
+        <li><a href="#score">Обща оценка</a></li>
+        <li><a href="#perf">Производителност и бързодействие</a></li>
+        <li><a href="#anim">Анимации и визуални ефекти</a></li>
+        <li><a href="#issues">Идентифицирани проблеми</a></li>
+        <li><a href="#comparison">Сравнение: Сега vs Подобрен сайт</a></li>
+        <li><a href="#recommendations">Препоръки</a></li>
+    </ol>
+</div>
+
+<!-- SECTION 1 -->
+<h2 id="tech">1. Технологична платформа</h2>
+<div class="section-intro">
+    Сайтът е изграден на WordPress с премиум тема Avada — популярен и надежден избор за образователни институции.
+    Въпреки това, натрупаните с времето плъгини и конфигурации създават проблеми с производителността.
+</div>
+<p>
+    <span class="tech-badge">WordPress 6.9.4</span>
+    <span class="tech-badge">Avada 7.11.13</span>
+    <span class="tech-badge">Fusion Builder</span>
+    <span class="tech-badge">WPML</span>
+    <span class="tech-badge bad">LayerSlider 7.14.0</span>
+    <span class="tech-badge bad">Revolution Slider</span>
+    <span class="tech-badge">jQuery</span>
+    <span class="tech-badge good">Workbox v7.3.0</span>
+    <span class="tech-badge">Google Analytics</span>
+</p>
+
+<!-- SECTION 2 -->
+<h2 id="nav">2. Навигация и структура</h2>
+
+<h3>Главно меню</h3>
+<table>
+    <tr><th>Елемент</th><th>URL</th></tr>
+    <tr><td>За нас</td><td><code>/university/about-us/</code></td></tr>
+    <tr><td>Структура</td><td><code>/university/organization</code></td></tr>
+    <tr><td>Традиция и мисия</td><td><code>/university/traditions-and-mission</code></td></tr>
+    <tr><td>Учебна база</td><td><code>/university/training-facilities</code></td></tr>
+    <tr><td>Акредитация</td><td><code>/university/accreditation</code></td></tr>
+    <tr><td>Пресцентър</td><td><code>/university/presscenter</code></td></tr>
+    <tr><td>Специалности</td><td><code>/specialties</code></td></tr>
+    <tr><td>Кандидатстудентски справочник</td><td><code>/candidate_student_handbook</code></td></tr>
+    <tr><td>Докторски програми</td><td><code>/application/phd</code></td></tr>
+    <tr><td>Прием</td><td><code>https://fees.nvna.eu/</code></td></tr>
+    <tr><td>Научна дейност</td><td><code>/activities/scientific-activities</code></td></tr>
+    <tr><td>Еразъм+</td><td><code>/activities/erasmus1</code></td></tr>
+    <tr><td>Курсове</td><td><code>/courses</code></td></tr>
+    <tr><td>Кариерен център</td><td><code>https://career.nvna.eu/</code></td></tr>
+    <tr><td>Кибероперации</td><td><code>/cyber-ops-center</code></td></tr>
+</table>
+
+<h3>Външни портали и системи</h3>
+<table>
+    <tr><th>Система</th><th>URL</th><th>Протокол</th></tr>
+    <tr><td>е-Преподавател</td><td>teacher.naval-acad.bg</td><td><span class="tech-badge good">HTTPS</span></td></tr>
+    <tr><td>УебСтудент</td><td>ws.naval-acad.bg</td><td><span class="tech-badge bad">HTTP</span></td></tr>
+    <tr><td>Информационен център</td><td>nvna.eu</td><td><span class="tech-badge good">HTTPS</span></td></tr>
+    <tr><td>Дистанционно обучение</td><td>dlc.naval-acad.bg</td><td><span class="tech-badge good">HTTPS</span></td></tr>
+    <tr><td>Разписание</td><td>nvna.eu/wp/</td><td><span class="tech-badge good">HTTPS</span></td></tr>
+    <tr><td>Проекти</td><td>projects.nvna.eu</td><td><span class="tech-badge bad">HTTP</span></td></tr>
+    <tr><td>Издателски център</td><td>scholar.nvna.eu</td><td><span class="tech-badge good">HTTPS</span></td></tr>
+    <tr><td>Студентски съвет</td><td>studentcouncil.naval-acad.bg</td><td><span class="tech-badge bad">HTTP</span></td></tr>
+    <tr><td>Спортен клуб</td><td>uvsk.nvna.eu</td><td><span class="tech-badge good">HTTPS</span></td></tr>
+</table>
+
+<!-- SECTION 3 -->
+<h2 id="org">3. Организационна структура</h2>
+<table>
+    <tr><th>Звено</th><th>Детайли</th></tr>
+    <tr><td><strong>Ректор</strong></td><td>Флотилен адмирал проф. д-р Калин Калинов</td></tr>
+    <tr><td><strong>Навигационен факултет</strong></td><td>Морска тактика, Навигация, Национална сигурност, Експлоатация на морски транспорт, Езикова подготовка</td></tr>
+    <tr><td><strong>Инженерен факултет</strong></td><td>Корабни машини, Електротехника, Мехатроника, Електроника, Информационни технологии</td></tr>
+    <tr><td><strong>Допълнителни</strong></td><td>Сержантски колеж, Център за кибероперации, Дистанционно обучение, Научна секция</td></tr>
+</table>
+
+<!-- SECTION 4 -->
+<h2 id="content">4. Съдържателни категории</h2>
+<ul>
+    <li><strong>Образование</strong> — бакалавърски, магистърски програми и курсанти (военни)</li>
+    <li><strong>Прием и кандидатстване</strong> — справочник, докторски програми, външен портал</li>
+    <li><strong>Научна дейност</strong> — 4 направления: военноморски оръжия, навигация, морски технологии, морско образование</li>
+    <li><strong>Международна дейност</strong> — Еразъм+, международни курсове, НАТО DEEP</li>
+    <li><strong>Новини и пресцентър</strong> — актуални новини, събития, чествания</li>
+    <li><strong>Курсове и квалификация</strong> — морски, езикови, ИТ</li>
+    <li><strong>Кариерен център</strong> — отделен портал</li>
+    <li><strong>Студентски живот</strong> — студентски съвет, спортен клуб, разписание</li>
+    <li><strong>Институционална информация</strong> — история, мисия, акредитация</li>
+</ul>
+
+<!-- SECTION 5 -->
+<h2 id="lang">5. Езикови версии</h2>
+<div class="issue-medium">
+    <strong>Английска версия:</strong> Налична на <code>/en</code>, но значително изоставаща. Новините на английски са от 2023–2025 г., докато българските са актуални до март 2026 г. Това създава лошо впечатление за международните посетители и партньори.
+</div>
+
+<!-- SECTION 6 -->
+<h2 id="score">6. Обща оценка</h2>
+
+<div class="overall-score">
+    <div class="label">Обща оценка на текущия сайт</div>
+    <div class="value">3.5 / 5</div>
+</div>
+
+<div class="score-card">
+    <div class="score-item"><div class="label">Технологична база</div><div class="value">4</div><div class="comment">WordPress + Avada, Service Worker</div></div>
+    <div class="score-item"><div class="label">Мобилна адаптивност</div><div class="value">4</div><div class="comment">Responsive с breakpoints</div></div>
+    <div class="score-item"><div class="label">Съдържание</div><div class="value">4</div><div class="comment">Богато и разнообразно</div></div>
+    <div class="score-item"><div class="label">Английска версия</div><div class="value">2</div><div class="comment">Изоставаща по актуалност</div></div>
+    <div class="score-item"><div class="label">Достъпност</div><div class="value">3</div><div class="comment">Базови мерки, без WCAG 2.1</div></div>
+    <div class="score-item"><div class="label">Сигурност</div><div class="value">3</div><div class="comment">HTTP линкове към поддомейни</div></div>
+    <div class="score-item"><div class="label">Навигация и UX</div><div class="value">3.5</div><div class="comment">Разпръсната инфраструктура</div></div>
+    <div class="score-item"><div class="label">Визуален дизайн</div><div class="value">3.5</div><div class="comment">Шаблонен (Avada тема)</div></div>
+</div>
+
+<!-- SECTION 7 -->
+<div class="page-break"></div>
+<h2 id="perf">7. Производителност и бързодействие</h2>
+
+<div class="section-intro">
+    Основното потребителско оплакване е <strong>бавното зареждане на страниците</strong>. Техническият анализ разкрива конкретните причини — натрупване на тежки плъгини, неоптимизирани ресурси и остарели подходи.
+</div>
+
+<h3>Основни фактори за бавно зареждане (по тежест)</h3>
+
+<div class="culprit">
+    <div class="culprit-rank">1</div>
+    <div class="culprit-info">
+        <strong>Двоен слайдер — LayerSlider + Revolution Slider</strong>
+        <span>Зареждат се ЕДНОВРЕМЕННО два тежки слайдер плъгина. Revolution Slider се инициализира на ВСЯКА страница, включително вътрешни, където не се използва.</span>
+    </div>
+    <div class="culprit-weight">~800KB</div>
+</div>
+
+<div class="culprit">
+    <div class="culprit-rank">2</div>
+    <div class="culprit-info">
+        <strong>Avada inline CSS</strong>
+        <span>~20KB CSS код се вгражда директно в HTML-а на всяка страница. Включва стилове за 40+ други страници, които не се посещават. Този CSS не може да бъде кеширан от браузъра.</span>
+    </div>
+    <div class="culprit-weight">~20KB/стр.</div>
+</div>
+
+<div class="culprit">
+    <div class="culprit-rank">3</div>
+    <div class="culprit-info">
+        <strong>Неоптимизирани изображения</strong>
+        <span>Всички изображения са в JPEG/PNG формат — без модерни WebP/AVIF. Логото е 136KB PNG вместо ~5KB SVG. Липсва lazy loading на повечето изображения.</span>
+    </div>
+    <div class="culprit-weight">+300-500KB</div>
+</div>
+
+<div class="culprit">
+    <div class="culprit-rank medium">4</div>
+    <div class="culprit-info">
+        <strong>WPML overhead</strong>
+        <span>Плъгинът за многоезичност зарежда cookie management и UI компоненти на всяка страница.</span>
+    </div>
+    <div class="culprit-weight">~50-100KB</div>
+</div>
+
+<div class="culprit">
+    <div class="culprit-rank medium">5</div>
+    <div class="culprit-info">
+        <strong>Fusion Builder DOM сложност</strong>
+        <span>Шаблонът генерира 5-6 нива вложени контейнери за всеки елемент, което забавя визуализирането.</span>
+    </div>
+    <div class="culprit-weight">DOM bloat</div>
+</div>
+
+<div class="culprit">
+    <div class="culprit-rank low">6</div>
+    <div class="culprit-info">
+        <strong>WordPress emoji система</strong>
+        <span>Зарежда detection скрипт и SVG набори за emoji — напълно ненужно за академичен сайт.</span>
+    </div>
+    <div class="culprit-weight">~8KB</div>
+</div>
+
+<!-- SECTION 8 -->
+<h2 id="anim">8. Анимации и визуални ефекти</h2>
+
+<div class="section-intro">
+    Сайтът използва остарели анимационни технологии, които натоварват допълнително и без това тежките страници.
+</div>
+
+<table>
+    <tr><th>Технология</th><th>Проблем</th><th>Тежест</th></tr>
+    <tr><td><span class="tech-badge bad">LayerSlider 7.14.0</span></td><td>Тежък JS слайдер с множество skin assets</td><td>Критична</td></tr>
+    <tr><td><span class="tech-badge bad">Revolution Slider</span></td><td>Втори слайдер, зарежда се на ВСЯКА страница</td><td>Критична</td></tr>
+    <tr><td><span class="tech-badge bad">transition: all</span></td><td>Масово използване — анимира ВСИЧКИ CSS свойства вместо конкретни</td><td>Средна</td></tr>
+    <tr><td><span class="tech-badge bad">backdrop-filter: blur()</span></td><td>Тежка GPU операция за мобилен overlay</td><td>Средна</td></tr>
+    <tr><td><span class="tech-badge bad">4x lightSlider</span></td><td>4 отделни карусел инстанции в пресцентъра</td><td>Средна</td></tr>
+    <tr><td><span class="tech-badge">CSS fadeIn/scale</span></td><td>Приемливо изпълнение</td><td>Ниска</td></tr>
+</table>
+
+<!-- SECTION 9 -->
+<h2 id="issues">9. Обобщение на идентифицираните проблеми</h2>
+
+<h3>Критични</h3>
+<div class="issue-critical">
+    <strong>Производителност:</strong> Двоен слайдер (LayerSlider + Revolution Slider) добавя ~800KB ненужен код. Страниците тежат 3-5MB.
+</div>
+<div class="issue-critical">
+    <strong>HTTP линкове:</strong> ws.naval-acad.bg, projects.nvna.eu, studentcouncil.naval-acad.bg използват незащитен HTTP протокол.
+</div>
+<div class="issue-critical">
+    <strong>Неактуална английска версия:</strong> Новините на английски изостават с години.
+</div>
+
+<h3>Средни</h3>
+<div class="issue-medium">
+    <strong>Некеширан CSS:</strong> 20KB inline стилове на всяка страница — браузърът не може да ги кешира.
+</div>
+<div class="issue-medium">
+    <strong>Неоптимизирани изображения:</strong> Без WebP, без lazy loading. Логото е 136KB PNG.
+</div>
+<div class="issue-medium">
+    <strong>Разпръсната инфраструктура:</strong> 9+ отделни портала с различен дизайн и потребителско изживяване.
+</div>
+<div class="issue-medium">
+    <strong>Достъпност:</strong> Непълна WCAG 2.1 имплементация.
+</div>
+
+<h3>Положителни практики (за запазване)</h3>
+<div class="issue-positive">Декларация за достъпност до обществена информация</div>
+<div class="issue-positive">Банкова информация за студенти в долната навигация</div>
+<div class="issue-positive">Добре структурирана страница за специалности с филтри</div>
+<div class="issue-positive">Интеграция със социални мрежи (Facebook, X, Instagram, LinkedIn)</div>
+<div class="issue-positive">Service Worker за подобрена производителност при повторни посещения</div>
+
+<!-- SECTION 10 -->
+<div class="page-break"></div>
+<h2 id="comparison">10. Очаквано подобрение</h2>
+
+<div class="comparison">
+    <div class="comparison-card current">
+        <h4>Текущ сайт (WordPress + Avada)</h4>
+        <div class="metric-row"><span>First Contentful Paint</span><span class="val">3-5s</span></div>
+        <div class="metric-row"><span>Largest Contentful Paint</span><span class="val">5-8s</span></div>
+        <div class="metric-row"><span>Total Blocking Time</span><span class="val">500-1000ms</span></div>
+        <div class="metric-row"><span>Layout Shift</span><span class="val">0.2-0.5</span></div>
+        <div class="metric-row"><span>Тегло на страница</span><span class="val">3-5MB</span></div>
+        <div class="metric-row"><span>HTTP заявки</span><span class="val">50-80+</span></div>
+    </div>
+    <div class="comparison-card target">
+        <h4>Подобрен сайт (Next.js)</h4>
+        <div class="metric-row"><span>First Contentful Paint</span><span class="val">&lt;1.5s</span></div>
+        <div class="metric-row"><span>Largest Contentful Paint</span><span class="val">&lt;2.5s</span></div>
+        <div class="metric-row"><span>Total Blocking Time</span><span class="val">&lt;200ms</span></div>
+        <div class="metric-row"><span>Layout Shift</span><span class="val">&lt;0.1</span></div>
+        <div class="metric-row"><span>Тегло на страница</span><span class="val">&lt;800KB</span></div>
+        <div class="metric-row"><span>HTTP заявки</span><span class="val">15-25</span></div>
+    </div>
+</div>
+
+<!-- SECTION 11 -->
+<h2 id="recommendations">11. Препоръки за подобрен сайт</h2>
+
+<div class="issue-positive">
+    <strong>Модерна платформа (Next.js):</strong> Вграден server-side rendering, автоматично code splitting, оптимизирано зареждане. 4-6 пъти по-бързо от текущия сайт.
+</div>
+<div class="issue-positive">
+    <strong>Оптимизирани изображения:</strong> Автоматична конверсия в WebP/AVIF, responsive размери, вграден lazy loading. Логото като SVG (~5KB вместо 136KB).
+</div>
+<div class="issue-positive">
+    <strong>Лек hero компонент:</strong> CSS-only или минимален слайдер (~40KB) вместо 800KB двоен слайдер.
+</div>
+<div class="issue-positive">
+    <strong>Вградена многоезичност:</strong> Next.js i18n routing без нужда от тежък плъгин. Български и английски от старта.
+</div>
+<div class="issue-positive">
+    <strong>Модерен CSS:</strong> Автоматично tree-shaking, минификация и кеширане. Само използваните стилове на всяка страница.
+</div>
+<div class="issue-positive">
+    <strong>Чиста архитектура:</strong> Компонентна система с 2-3 нива вместо 5-6 нива wrapper елементи.
+</div>
+<div class="issue-positive">
+    <strong>HTTPS навсякъде:</strong> Всички линкове през защитен протокол.
+</div>
+<div class="issue-positive">
+    <strong>WCAG 2.1 достъпност:</strong> Пълна ARIA имплементация, keyboard navigation, screen reader поддръжка.
+</div>
+
+<div style="margin-top: 3rem; padding: 1.5rem; background: #f0f4f8; border-radius: 8px; text-align: center; color: #666; font-size: 0.9rem;">
+    Изготвен от Деян Стоянов Стоянов | Факултетен № 001114 | ВВМУ "Н. Й. Вапцаров" | Март 2026
+</div>
+
+</body>
+</html>

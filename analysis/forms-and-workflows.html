@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Формуляри и работни процеси — ВВМУ „Н. Й. Вапцаров"</title>
+    <style>
+        :root {
+            --navy: #1a3a5c;
+            --navy-light: #2a5a8c;
+            --navy-dark: #0e2240;
+            --accent: #e8a317;
+            --green: #2e8b57;
+            --red: #c0392b;
+            --orange: #e67e22;
+            --bg: #ffffff;
+            --bg-alt: #f4f6f8;
+            --text: #2c3e50;
+            --text-light: #5d6d7e;
+            --border: #d5dce4;
+            --shadow: rgba(26, 58, 92, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            color: white;
+            padding: 48px 0 40px;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        header .subtitle {
+            font-size: 17px;
+            opacity: 0.85;
+            font-weight: 300;
+        }
+
+        header .meta {
+            margin-top: 16px;
+            font-size: 13px;
+            opacity: 0.65;
+        }
+
+        /* Summary banner */
+        .summary-banner {
+            background: var(--bg-alt);
+            border: 2px solid var(--navy);
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+            text-align: center;
+        }
+
+        .summary-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 24px;
+            min-width: 150px;
+        }
+
+        .stat-item .val {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        .stat-item .lbl {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* TOC */
+        .toc {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px 32px;
+            margin: 24px 0 40px;
+        }
+
+        .toc h3 {
+            color: var(--navy);
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .toc ol {
+            columns: 2;
+            column-gap: 32px;
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .toc li {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .toc a {
+            color: var(--navy-light);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+            color: var(--navy);
+        }
+
+        /* Sections */
+        section {
+            margin: 48px 0;
+        }
+
+        h2 {
+            font-size: 22px;
+            color: var(--navy);
+            border-bottom: 3px solid var(--navy);
+            padding-bottom: 10px;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 17px;
+            color: var(--navy);
+            margin: 24px 0 12px;
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 15px;
+            color: var(--navy-light);
+            margin: 16px 0 8px;
+            font-weight: 600;
+        }
+
+        p { margin-bottom: 12px; }
+
+        ul, ol {
+            margin: 8px 0 16px 20px;
+        }
+
+        li { margin-bottom: 5px; }
+
+        /* Form cards */
+        .form-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin: 24px 0;
+            background: white;
+            box-shadow: 0 2px 8px var(--shadow);
+            overflow: hidden;
+        }
+
+        .form-card-header {
+            background: var(--navy);
+            color: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-card-header h3 {
+            color: white;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .form-card-body {
+            padding: 24px;
+        }
+
+        .form-card-body .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .detail-block {
+            background: var(--bg-alt);
+            border-radius: 8px;
+            padding: 16px;
+            border-left: 3px solid var(--navy-light);
+        }
+
+        .detail-block h4 {
+            margin-top: 0;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .detail-block ul {
+            margin: 4px 0 0 16px;
+            font-size: 14px;
+        }
+
+        .detail-block p {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .detail-block.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Priority badge */
+        .priority {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-high { background: #fde8e8; color: var(--red); border: 1px solid var(--red); }
+        .priority-mid { background: #fef3e2; color: var(--orange); border: 1px solid var(--orange); }
+        .priority-low { background: #e8f5e9; color: var(--green); border: 1px solid var(--green); }
+
+        /* Category badge */
+        .category-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        /* Status stages */
+        .status-flow {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin: 8px 0;
+        }
+
+        .status-step {
+            background: white;
+            border: 2px solid var(--navy);
+            border-radius: 6px;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--navy);
+            white-space: nowrap;
+        }
+
+        .status-step.submitted { border-color: var(--orange); color: var(--orange); }
+        .status-step.review { border-color: var(--navy-light); color: var(--navy-light); }
+        .status-step.approved { border-color: var(--green); color: var(--green); background: #e8f5e9; }
+        .status-step.rejected { border-color: var(--red); color: var(--red); background: #fde8e8; }
+
+        .status-arrow {
+            font-size: 16px;
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 14px;
+        }
+
+        thead th {
+            background: var(--navy);
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        tbody td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tbody tr:nth-child(even) { background: var(--bg-alt); }
+        tbody tr:hover { background: #eef2f7; }
+
+        /* Workflow diagrams */
+        .workflow-diagram {
+            margin: 32px 0;
+            padding: 28px;
+            background: var(--bg-alt);
+            border-radius: 12px;
+            border: 2px solid var(--navy);
+        }
+
+        .workflow-diagram h3 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: var(--navy);
+            font-size: 18px;
+        }
+
+        .wf-row {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 0;
+            margin: 8px 0;
+            flex-wrap: wrap;
+        }
+
+        .wf-box {
+            border: 2px solid var(--navy);
+            border-radius: 8px;
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--navy);
+            background: white;
+            min-width: 140px;
+            max-width: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .wf-box small {
+            display: block;
+            font-size: 10px;
+            color: var(--text-light);
+            font-weight: 400;
+            margin-top: 4px;
+        }
+
+        .wf-box.start {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        .wf-box.start small { color: rgba(255,255,255,0.7); }
+
+        .wf-box.process {
+            background: #e8f0fa;
+            border-color: var(--navy-light);
+        }
+
+        .wf-box.decision {
+            background: #fff8e6;
+            border-color: var(--accent);
+            color: #8b6914;
+            transform: rotate(0deg);
+            border-style: dashed;
+        }
+
+        .wf-box.end-ok {
+            background: var(--green);
+            color: white;
+            border-color: var(--green);
+        }
+
+        .wf-box.end-ok small { color: rgba(255,255,255,0.7); }
+
+        .wf-box.end-no {
+            background: var(--red);
+            color: white;
+            border-color: var(--red);
+        }
+
+        .wf-box.end-no small { color: rgba(255,255,255,0.7); }
+
+        .wf-box.notify {
+            background: #f0e6ff;
+            border-color: #7b2d8e;
+            color: #7b2d8e;
+            border-style: dotted;
+        }
+
+        .wf-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--navy);
+            font-weight: 700;
+            padding: 0 6px;
+            min-width: 30px;
+        }
+
+        .wf-arrow-down {
+            text-align: center;
+            font-size: 22px;
+            color: var(--navy);
+            font-weight: 700;
+            padding: 4px 0;
+        }
+
+        .wf-split {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 8px 0;
+        }
+
+        .wf-branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .wf-branch-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .wf-legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .wf-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .wf-legend-box {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            border: 2px solid;
+        }
+
+        /* Note box */
+        .note-box {
+            background: #f0f4f8;
+            border-left: 4px solid var(--navy-light);
+            padding: 14px 18px;
+            margin: 16px 0;
+            font-size: 14px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Category section header */
+        .category-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 8px;
+            margin: 40px 0 8px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .category-header span {
+            font-size: 13px;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-left: 12px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy-dark);
+            color: rgba(255,255,255,0.8);
+            padding: 24px 0;
+            margin-top: 60px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-card-body .detail-grid { grid-template-columns: 1fr; }
+            .wf-row { flex-direction: column; align-items: center; }
+            .wf-arrow { transform: rotate(90deg); }
+            .wf-split { flex-direction: column; align-items: center; gap: 12px; }
+            .summary-stats { flex-direction: column; align-items: center; }
+            .toc ol { columns: 1; }
+            header h1 { font-size: 22px; }
+        }
+
+        /* Print styles */
+        @media print {
+            header { padding: 24px 0; }
+            .form-card { break-inside: avoid; }
+            .workflow-diagram { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Анализ на формуляри и работни процеси</h1>
+        <div class="subtitle">Идентификация на всички процеси, изискващи онлайн формуляри за замяна на текущите PDF, Google Drive, телефонни и присъствени процедури</div>
+        <div class="meta">ВВМУ „Н. Й. Вапцаров" | Март 2026 | Бизнес анализ</div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- ОБОБЩЕНИЕ -->
+    <div class="summary-banner">
+        <div class="summary-stats">
+            <div class="stat-item"><div class="val">22</div><div class="lbl">Идентифицирани формуляра</div></div>
+            <div class="stat-item"><div class="val">10</div><div class="lbl">Категории процеси</div></div>
+            <div class="stat-item"><div class="val">8</div><div class="lbl">Висок приоритет</div></div>
+            <div class="stat-item"><div class="val">8</div><div class="lbl">Среден приоритет</div></div>
+            <div class="stat-item"><div class="val">6</div><div class="lbl">Нисък приоритет</div></div>
+        </div>
+    </div>
+
+    <!-- СЪДЪРЖАНИЕ -->
+    <div class="toc">
+        <h3>Съдържание</h3>
+        <ol>
+            <li><a href="#cat-admission">Прием (Кандидатстване)</a></li>
+            <li><a href="#cat-courses">Курсове (Морски, ИТ, Езикови, Йонизиращи лъчения)</a></li>
+            <li><a href="#cat-erasmus">Еразъм+ (Мобилност)</a></li>
+            <li><a href="#cat-dormitory">Общежитие (Настаняване)</a></li>
+            <li><a href="#cat-certificates">Удостоверения и справки</a></li>
+            <li><a href="#cat-phd">Докторанти</a></li>
+            <li><a href="#cat-science">Научна дейност</a></li>
+            <li><a href="#cat-career">Кариерен център</a></li>
+            <li><a href="#cat-general">Обща кореспонденция</a></li>
+            <li><a href="#cat-internal">Вътрешни процеси</a></li>
+            <li><a href="#workflows">Визуални диаграми на работни процеси (Топ 3)</a></li>
+            <li><a href="#summary-table">Обобщена таблица на всички формуляри</a></li>
+        </ol>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КАТЕГОРИЯ 1: ПРИЕМ -->
+    <!-- ============================================================ -->
+    <div class="category-header" id="cat-admission">1. Прием (Кандидатстване) <span>3 формуляра</span></div>
+
+    <!-- Формуляр 1.1 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-01: Онлайн кандидатстване за бакалавър / магистър / курсант</h3>
+            <span class="priority priority-high">Висок приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Кандидатстудентският справочник е достъпен единствено като PDF файл в Google Drive. Подаването на документи се извършва чрез външен портал (fees.nvna.eu) с различен дизайн и домейн. Потребителят преминава през 5-6 кликове с прекъснат потребителски път. Липсват вградени срокове, изисквания и такси на самия сайт.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена (кирилица и латиница)</li>
+                        <li>ЕГН / дата на раждане</li>
+                        <li>Националност / гражданство</li>
+                        <li>Адрес за кореспонденция</li>
+                        <li>Телефон, имейл</li>
+                        <li>Завършено образование (училище, година, среден успех)</li>
+                        <li>Избрана специалност (dropdown с филтри: ОКС, форма, област)</li>
+                        <li>Втора специалност (по желание)</li>
+                        <li>Прикачване на документи: диплома, лична карта, медицинско свидетелство, снимка</li>
+                        <li>Форма на обучение: редовна / задочна / дистанционна</li>
+                        <li>Декларация за съгласие с условията (чекбокс)</li>
+                        <li>CAPTCHA / верификация</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Отдел „Учебна дейност" (Капитан III ранг Живка Костова)</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Проверка на документи</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Оценка на кандидатурата</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Приет</span>
+                        <span class="status-arrow">/</span>
+                        <span class="status-step rejected">Отхвърлен</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към кандидата:</strong> Потвърждение за получена кандидатура (имейл); статус промени; писмо за прием / отхвърляне</li>
+                        <li><strong>Към персонала:</strong> Нова кандидатура в системата; напомняне за непрегледани заявления</li>
+                        <li><strong>Генерирани документи:</strong> Регистрационен номер; Уведомително писмо за прием; Фактура за такса</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 1.2 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-02: Заявка за кандидатстудентски справочник (lead capture)</h3>
+            <span class="priority priority-mid">Среден приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Страницата „Кандидатстудентски справочник" съдържа единствено линк към Google Drive PDF. Няма събиране на контактни данни, няма lead generation, няма възможност за изпращане на актуализации.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Име и фамилия</li>
+                        <li>Имейл адрес</li>
+                        <li>Телефон (по желание)</li>
+                        <li>Интересуваща специалност (dropdown)</li>
+                        <li>Година на завършване на средно образование</li>
+                        <li>Съгласие за получаване на информация (чекбокс)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Пресцентър / Отдел „Учебна дейност"</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Автоматично изпращане на PDF</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към кандидата:</strong> Автоматичен имейл с PDF справочник; последваща серия от имейли (напомняне за срокове, покана за Ден на отворените врати)</li>
+                        <li><strong>Към персонала:</strong> Седмичен отчет за нови заявки (маркетинг данни)</li>
+                        <li><strong>Генерирани документи:</strong> Няма (lead capture формуляр)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 1.3 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-03: Записване за Ден на отворените врати</h3>
+            <span class="priority priority-mid">Среден приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Не съществува механизъм за онлайн записване. Информацията за дни на отворените врати се публикува спорадично в пресцентъра. Кандидатите научават чрез телефонно обаждане или Facebook.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Име и фамилия</li>
+                        <li>Имейл, телефон</li>
+                        <li>Предпочитана дата (от списък с предстоящи дати)</li>
+                        <li>Брой придружители</li>
+                        <li>Интересуваща специалност</li>
+                        <li>Въпроси предварително (текстово поле)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Пресцентър (Росица Колева, Георги Николов)</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Потвърдена</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към кандидата:</strong> Потвърждение с дата/час и локация; напомняне 1 ден преди</li>
+                        <li><strong>Към персонала:</strong> Списък записани за всяка дата</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КАТЕГОРИЯ 2: КУРСОВЕ -->
+    <!-- ============================================================ -->
+    <div class="category-header" id="cat-courses">2. Курсове (Морски, ИТ, Езикови, Йонизиращи лъчения) <span>4 формуляра</span></div>
+
+    <!-- Формуляр 2.1 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-04: Записване за морски курс</h3>
+            <span class="priority priority-high">Висок приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>На страницата „Курсове за морски лица" има таблица с 60+ курса (кодове 1101-2128), но без цени, дати и графици. Единственият вариант е контактна форма за запитване. Конкурентни морски центрове предлагат директно онлайн записване с календар. Значителна бариера за конверсия.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена</li>
+                        <li>ЕГН / дата на раждане</li>
+                        <li>Телефон, имейл</li>
+                        <li>Избран курс (dropdown с код и наименование)</li>
+                        <li>Предпочитана дата (от календар с налични дати)</li>
+                        <li>Морска квалификация / текущо удостоверение (ако е приложимо)</li>
+                        <li>Работодател / корабна компания (по желание)</li>
+                        <li>Начин на плащане (банков превод / онлайн)</li>
+                        <li>Прикачване на документи: диплома, медицинско</li>
+                        <li>Фактурни данни (по желание)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> ДСДКДО (Капитан I ранг доц. д-р Желязко Николов)</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Проверка на предпоставки</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Потвърждение на група</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Очакване на плащане</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Записан</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към курсиста:</strong> Потвърждение за заявка; проформа фактура; потвърждение на записване; напомняне преди начало</li>
+                        <li><strong>Към персонала:</strong> Нова заявка; уведомление при достигнат минимум за група; отчет за плащания</li>
+                        <li><strong>Генерирани документи:</strong> Проформа фактура; Фактура; Удостоверение за завършен курс</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 2.2 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-05: Записване за ИТ курс (CCNA, CCNP, Linux, Киберсигурност)</h3>
+            <span class="priority priority-mid">Среден приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Списък с 9 ИТ курса (кодове 2601-2620). Пълната таблица е достъпна като файл в Google Drive. Липсват цени, графици и онлайн записване. Необходимо е телефонно или имейл запитване.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена</li>
+                        <li>Телефон, имейл</li>
+                        <li>Избран курс (dropdown)</li>
+                        <li>Предпочитана дата / период</li>
+                        <li>Текущо ниво на познания (начинаещ / среден / напреднал)</li>
+                        <li>Организация / работодател (по желание)</li>
+                        <li>Фактурни данни</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Катедра „Информационни технологии" (проф. д-р Валентина Петрова)</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Потвърждение на група</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Очакване на плащане</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Записан</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към курсиста:</strong> Потвърждение; фактура; детайли за начало на курса</li>
+                        <li><strong>Към персонала:</strong> Нова заявка; отчет за записани</li>
+                        <li><strong>Генерирани документи:</strong> Фактура; Сертификат за завършен курс</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 2.3 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-06: Записване за езиков курс LangMar / Marlins тест</h3>
+            <span class="priority priority-high">Висок приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>LangMar има ценоразпис на страницата (390-430 лв. за модулите, 75 лв. за Marlins тест). Ценовият лист е и в Google Drive. Записването обаче се извършва по телефон (+359 52 552-248, +359 882 924 975). Няма онлайн записване или избор на дата.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена</li>
+                        <li>Телефон, имейл</li>
+                        <li>Тип: Курс (Module 1-4, Refresher) / Marlins тест / TOSE тест</li>
+                        <li>Текущо ниво на английски (самооценка)</li>
+                        <li>Предпочитан период / дата за тест</li>
+                        <li>Морска длъжност (палубен / машинен офицер / друго)</li>
+                        <li>Корабна компания (по желание)</li>
+                        <li>Групово записване (брой участници)</li>
+                        <li>Фактурни данни</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Катедра „Езикова подготовка" (доц. д-р Петина Вичева) / LangMar център</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Определяне на дата/група</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Очакване на плащане</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Записан</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към курсиста:</strong> Потвърждение; банкови данни за плащане; дата и час; резултати от Marlins тест</li>
+                        <li><strong>Към персонала:</strong> Нова заявка; списък записани; уведомление за плащане</li>
+                        <li><strong>Генерирани документи:</strong> Фактура; Сертификат за Marlins; Удостоверение за езиков курс</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 2.4 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-07: Записване за курс „Йонизиращи лъчения"</h3>
+            <span class="priority priority-mid">Среден приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Цени и изисквания са публикувани на страницата. Формулярите за кандидатстване (заявление и декларация) са като шаблони в Google Drive. Записването е по телефон (0889645009) или имейл (ioni@nvna.eu). Изисква се банков превод предварително.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена</li>
+                        <li>ЕГН</li>
+                        <li>Организация / работодател</li>
+                        <li>Длъжност</li>
+                        <li>Тип обучение: Първоначално Група I / Група II / Поддържащо</li>
+                        <li>Прикачване: копие на диплома, длъжностна характеристика, медицинско удостоверение (за първоначално); удостоверение за правоспособност (за поддържащо)</li>
+                        <li>Предпочитана дата</li>
+                        <li>Фактурни данни</li>
+                        <li>Вградена декларация (чекбокс)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Технически организатор Людмила Стоянова</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Проверка на документи</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Очакване на плащане</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Записан</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към курсиста:</strong> Потвърждение; проформа; детайли за курса</li>
+                        <li><strong>Към персонала:</strong> Нова заявка; напомняне за непълни документи</li>
+                        <li><strong>Генерирани документи:</strong> Удостоверение за правоспособност за ИЙЛ; Фактура</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КАТЕГОРИЯ 3: ЕРАЗЪМ+ -->
+    <!-- ============================================================ -->
+    <div class="category-header" id="cat-erasmus">3. Еразъм+ (Мобилност) <span>2 формуляра</span></div>
+
+    <!-- Формуляр 3.1 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-08: Заявление за студентска мобилност (Erasmus+ изходяща)</h3>
+            <span class="priority priority-high">Висок приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Формулярите за кандидатстване за студентска мобилност са в Google Drive. Информацията за партньорски университети, грантове и програми е разпръсната в множество Google Drive папки. Процесът се координира по имейл (erasmus@nvna.eu) без проследимост. Английската версия е непълна — бариера за входящи международни студенти.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена (кирилица и латиница)</li>
+                        <li>Факултетен номер</li>
+                        <li>Специалност, курс, ОКС</li>
+                        <li>Среден успех</li>
+                        <li>Ниво на владеене на чужд език (EN/DE/FR/ES)</li>
+                        <li>Предпочитан университет-партньор (dropdown от списък)</li>
+                        <li>Период на мобилност (семестър / академична година)</li>
+                        <li>Тип мобилност: обучение / практика</li>
+                        <li>Мотивационно писмо (текстово поле или файл)</li>
+                        <li>Прикачване: академична справка, CV, езиков сертификат</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Отдел „Международна дейност и протокол" / Еразъм+ координатор (erasmus@nvna.eu)</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Проверка на допустимост</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Класиране / селекция</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Номинация при приемащия университет</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Одобрена</span>
+                        <span class="status-arrow">/</span>
+                        <span class="status-step rejected">Отхвърлена</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към студента:</strong> Потвърждение; резултати от класиране; Learning Agreement за подписване; информация за грант</li>
+                        <li><strong>Към персонала:</strong> Списък кандидати; напомняне за срокове; статистика</li>
+                        <li><strong>Генерирани документи:</strong> Learning Agreement; Grant Agreement; Номинационно писмо; Transcript of Records</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 3.2 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-09: Заявление за преподавателска мобилност (Erasmus+ Staff)</h3>
+            <span class="priority priority-low">Нисък приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Преподавателската мобилност се координира чрез имейл кореспонденция и Google Drive документи. Няма структуриран процес за кандидатстване.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена</li>
+                        <li>Катедра / звено</li>
+                        <li>Академична длъжност</li>
+                        <li>Приемащ университет (dropdown)</li>
+                        <li>Период на мобилност</li>
+                        <li>Тип: преподаване / обучение</li>
+                        <li>Програма за преподаване / план за обучение (файл)</li>
+                        <li>Прикачване: CV, покана от приемащия университет</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Еразъм+ координатор; Зам.-началник по учебната и научната дейност</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Одобрение от декан</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Одобрена</span>
+                        <span class="status-arrow">/</span>
+                        <span class="status-step rejected">Отхвърлена</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към преподавателя:</strong> Потвърждение; одобрение; Mobility Agreement</li>
+                        <li><strong>Генерирани документи:</strong> Staff Mobility Agreement; Grant Agreement; Отчет за мобилност</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КАТЕГОРИЯ 4: ОБЩЕЖИТИЕ -->
+    <!-- ============================================================ -->
+    <div class="category-header" id="cat-dormitory">4. Общежитие (Настаняване) <span>2 формуляра</span></div>
+
+    <!-- Формуляр 4.1 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-10: Заявление за настаняване в общежитие</h3>
+            <span class="priority priority-high">Висок приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Правилникът за общежитието е в Google Drive. Класирането за 2025/26 е PDF файл в Google Drive. Контактите са по телефон (0884-143-494) и абв.бг имейл (naval_ob@abv.bg). Депозитът (350 лв.) и наемът (175 лв./месец) се плащат по банков път. Няма онлайн заявление — процесът е изцяло присъствен или по телефон.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена, факултетен номер</li>
+                        <li>Специалност, курс</li>
+                        <li>Постоянен адрес (за определяне на право)</li>
+                        <li>Предпочитано общежитие: 1 / 2</li>
+                        <li>Пол</li>
+                        <li>Желание за съквартирант (факултетен номер, по желание)</li>
+                        <li>Период на настаняване</li>
+                        <li>Декларация за запознаване с правилника (чекбокс с линк към правилника)</li>
+                        <li>Прикачване: студентска книжка / уверение за записан студент</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Отдел „Логистика" (Полковник Станко Вернов) / Домакин на общежитие</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Проверка на право</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Класиране</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Очакване на депозит</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Настанен</span>
+                        <span class="status-arrow">/</span>
+                        <span class="status-step rejected">В чакащ списък</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към студента:</strong> Потвърждение; позиция в класирането; одобрение с номер на стая; банкови данни за депозит; договор за подпис</li>
+                        <li><strong>Към персонала:</strong> Списък заявления; класиране; отчет за свободни места (4 женски + 4 мъжки към 11.2025)</li>
+                        <li><strong>Генерирани документи:</strong> Договор за наем; Приемо-предавателен протокол; Фактура за депозит</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 4.2 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-11: Заявление за напускане / освобождаване на стая</h3>
+            <span class="priority priority-low">Нисък приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Присъствено подаване на заявление при домакина. Проверка на стаята и връщане на депозит (350 лв.) по банков път.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена, факултетен номер</li>
+                        <li>Номер на стая / общежитие</li>
+                        <li>Дата на напускане</li>
+                        <li>IBAN за връщане на депозит</li>
+                        <li>Причина за напускане (dropdown: завършване / лично желание / друго)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Домакин на общежитие / Финансов отдел</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Оглед на стая</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Връщане на депозит</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Приключено</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към студента:</strong> Потвърждение за заявка; дата на оглед; потвърждение за възстановен депозит</li>
+                        <li><strong>Генерирани документи:</strong> Приемо-предавателен протокол; Платежно нареждане за депозит</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КАТЕГОРИЯ 5: УДОСТОВЕРЕНИЯ -->
+    <!-- ============================================================ -->
+    <div class="category-header" id="cat-certificates">5. Удостоверения и справки <span>2 формуляра</span></div>
+
+    <!-- Формуляр 5.1 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-12: Заявление за академична справка / уверение</h3>
+            <span class="priority priority-high">Висок приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Студентите трябва да посещават лично деканата на съответния факултет (Навигационен: 052/552378; Инженерен: 052/552-379) или Отдел „Учебна дейност" (052/552-240). Няма онлайн заявяване. За дистанционни и задочни студенти това е значителна пречка.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена, факултетен номер</li>
+                        <li>Тип документ: Уверение за записан студент / Академична справка / Дубликат на диплома / Европейско дипломно приложение / Transcript of Records</li>
+                        <li>Език: български / английски</li>
+                        <li>Цел на документа (по желание: за работодател / за друг университет / за виза)</li>
+                        <li>Начин на получаване: лично / по куриер / по електронен път</li>
+                        <li>Адрес за доставка (ако е по куриер)</li>
+                        <li>Брой екземпляри</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Деканат на факултет (Йоана Рафаилова / Елена Николова) или Отдел „Учебна дейност"</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">В изготвяне</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Готов за получаване</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към студента:</strong> Потвърждение за заявка; уведомление, че документът е готов; проследяване при куриер</li>
+                        <li><strong>Към персонала:</strong> Нова заявка в опашката; напомняне за неизпълнени заявки</li>
+                        <li><strong>Генерирани документи:</strong> Уверение; Академична справка; Transcript of Records</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 5.2 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-13: Заявление за удостоверение за морска правоспособност</h3>
+            <span class="priority priority-mid">Среден приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Удостоверенията за морска правоспособност се издават след завършване на курсове. Процесът включва присъствено подаване на документи в ДСДКДО. Няма онлайн проследяване на статус.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена (кирилица и латиница)</li>
+                        <li>ЕГН / дата на раждане</li>
+                        <li>Тип удостоверение (dropdown от 60+ курса)</li>
+                        <li>Номер на завършен курс / дата</li>
+                        <li>Текущо удостоверение (за подновяване)</li>
+                        <li>Прикачване: снимка, медицинско</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> ДСДКДО</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Проверка на документи</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Издадено</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към заявителя:</strong> Потвърждение; уведомление за готово удостоверение</li>
+                        <li><strong>Генерирани документи:</strong> Удостоверение за морска правоспособност</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КАТЕГОРИЯ 6: ДОКТОРАНТИ -->
+    <!-- ============================================================ -->
+    <div class="category-header" id="cat-phd">6. Докторанти <span>2 формуляра</span></div>
+
+    <!-- Формуляр 6.1 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-14: Заявление за кандидатстване за докторска програма</h3>
+            <span class="priority priority-high">Висок приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>13 акредитирани докторски програми (много с изтекъл срок на акредитация — 2022-2023). Обявите за прием се публикуват със заповед на МО. Подстраниците за прием, конкурси и процедури съществуват, но без вграден формуляр. Кандидатстването е присъствено или по имейл чрез Научна секция.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена (кирилица и латиница)</li>
+                        <li>ЕГН, гражданство</li>
+                        <li>Имейл, телефон</li>
+                        <li>Образование: магистърска степен, университет, специалност, среден успех</li>
+                        <li>Избрана докторска програма (dropdown от 13 програми)</li>
+                        <li>Форма: редовна / задочна / самостоятелна подготовка</li>
+                        <li>Предложена тема на дисертация (текстово поле)</li>
+                        <li>Предпочитан научен ръководител (по желание)</li>
+                        <li>Прикачване: диплома, CV, списък публикации, мотивационно писмо</li>
+                        <li>Езикови умения</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Научна секция (Капитан I ранг проф. д-р Мирослав Цветков) + съответната катедра</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Проверка на допустимост</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Конкурсен изпит</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Решение на Академичен съвет</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Зачислен</span>
+                        <span class="status-arrow">/</span>
+                        <span class="status-step rejected">Отхвърлен</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към кандидата:</strong> Потвърждение; покана за изпит; резултати; заповед за зачисляване</li>
+                        <li><strong>Към персонала:</strong> Списък кандидати; резултати от изпити; документи за Академичен съвет</li>
+                        <li><strong>Генерирани документи:</strong> Заповед за зачисляване; Индивидуален учебен план; Договор</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 6.2 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-15: Заявление за защита на дисертация</h3>
+            <span class="priority priority-low">Нисък приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Подстраница за защита на дисертация съществува (/application/phd/defence-phd), но процесът е хартиен. Координация чрез Научна секция по имейл и лично.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена, факултетен номер на докторант</li>
+                        <li>Докторска програма</li>
+                        <li>Научен ръководител</li>
+                        <li>Тема на дисертацията</li>
+                        <li>Предложена дата за защита</li>
+                        <li>Прикачване: дисертация (PDF), автореферат, списък с публикации, становища на рецензенти</li>
+                        <li>Предложен състав на научно жури</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Научна секция</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Назначаване на жури</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Публикуване на материали</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Публична защита</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Присъдена степен</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към докторанта:</strong> Потвърждение; състав на жури; дата на защита; решение</li>
+                        <li><strong>Генерирани документи:</strong> Заповед за жури; Протокол от защита; Диплома за ОНС „Доктор"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КАТЕГОРИЯ 7: НАУЧНА ДЕЙНОСТ -->
+    <!-- ============================================================ -->
+    <div class="category-header" id="cat-science">7. Научна дейност <span>2 формуляра</span></div>
+
+    <!-- Формуляр 7.1 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-16: Регистрация за участие в научна конференция</h3>
+            <span class="priority priority-mid">Среден приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Конференциите имат отделни поддомейни (bssc.nvna.eu, imla2023.nvna.eu и др.) с различен дизайн. Регистрацията е чрез имейл или PDF формуляри. Архив от 2016-2026 с 15+ конференции. Няма унифициран подход.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена (кирилица и латиница)</li>
+                        <li>Афилиация (университет / институция)</li>
+                        <li>Имейл, телефон</li>
+                        <li>Конференция (dropdown от предстоящи)</li>
+                        <li>Тип участие: доклад / постер / слушател</li>
+                        <li>Заглавие на доклад (ако е приложимо)</li>
+                        <li>Резюме (текстово поле, 300 думи)</li>
+                        <li>Секция / тематично направление</li>
+                        <li>Необходимост от настаняване (да/не)</li>
+                        <li>Фактурни данни за такса участие</li>
+                        <li>Прикачване: пълен текст на доклад (PDF)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Научна секция / Организационен комитет на конференцията</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Рецензиране на доклад</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Приет</span>
+                        <span class="status-arrow">/</span>
+                        <span class="status-step rejected">Отхвърлен</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към участника:</strong> Потвърждение за регистрация; резултат от рецензия; програма; сертификат за участие</li>
+                        <li><strong>Генерирани документи:</strong> Фактура за такса; Сертификат; Сборник с доклади (чрез scholar.nvna.eu)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 7.2 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-17: Заявление за участие в конкурс за академична длъжност</h3>
+            <span class="priority priority-mid">Среден приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>43+ конкурса за академични длъжности са публикувани на страницата, като документите за всеки конкурс са в отделна Google Drive папка. Кандидатстването е по имейл или присъствено. Обявяват се позиции за асистент, доцент, професор, хоноруван преподавател.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена</li>
+                        <li>Имейл, телефон</li>
+                        <li>Конкурс, за който се кандидатства (dropdown от активни конкурси)</li>
+                        <li>Текуща академична длъжност и институция</li>
+                        <li>Научна степен</li>
+                        <li>Прикачване: CV, списък публикации, копия на дипломи, справка за цитирания, творческа автобиография</li>
+                        <li>Декларация за автентичност (чекбокс)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Научна секция + Отдел „Кадри, протокол и деловодство" (Капитан II ранг Димана Славова)</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Проверка на допустимост</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Назначаване на жури</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Оценка и гласуване</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Избран</span>
+                        <span class="status-arrow">/</span>
+                        <span class="status-step rejected">Неизбран</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към кандидата:</strong> Потвърждение за кандидатура; покана за представяне; решение</li>
+                        <li><strong>Генерирани документи:</strong> Протокол от жури; Заповед за избор; Договор</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КАТЕГОРИЯ 8: КАРИЕРЕН ЦЕНТЪР -->
+    <!-- ============================================================ -->
+    <div class="category-header" id="cat-career">8. Кариерен център <span>2 формуляра</span></div>
+
+    <!-- Формуляр 8.1 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-18: Публикуване на стаж / работна позиция (за работодатели)</h3>
+            <span class="priority priority-mid">Среден приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Кариерният център е на отделен домейн (career.nvna.eu) с борса за работа и Клуб Алумни. Липсва видимост от главния сайт. Работодателите нямат ясен път за публикуване на позиции. Оценка на покритието: 3/10 за работодатели.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Наименование на компания</li>
+                        <li>Контактно лице, имейл, телефон</li>
+                        <li>Тип позиция: стаж / работа / практика</li>
+                        <li>Длъжност / заглавие</li>
+                        <li>Описание на позицията (rich text)</li>
+                        <li>Изисквания: специалност, ОКС, умения</li>
+                        <li>Локация</li>
+                        <li>Заплата / възнаграждение (по желание)</li>
+                        <li>Срок за кандидатстване</li>
+                        <li>Лого на компания (прикачване)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Център за кариерно развитие (career.nvna.eu)</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Модерация</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Публикувана</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към работодателя:</strong> Потвърждение; публикация; статистика за кандидатури</li>
+                        <li><strong>Към студентите:</strong> Имейл с нови позиции (седмичен бюлетин)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 8.2 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-19: Регистрация в Клуб Алумни</h3>
+            <span class="priority priority-low">Нисък приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Клуб Алумни (career.nvna.eu/alumni/) е на отделен домейн с минимална интеграция. Оценка: 3/10 за алумни общност. Липсва видимост от основния сайт.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена</li>
+                        <li>Имейл, телефон</li>
+                        <li>Випуск (година на завършване)</li>
+                        <li>Специалност</li>
+                        <li>Текуща длъжност и организация</li>
+                        <li>Желание за менторство (да/не)</li>
+                        <li>Интерес: събития / менторство / кариерна борса / дарения</li>
+                        <li>Снимка (по желание)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Кариерен център</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Верификация</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Регистриран</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към алумни:</strong> Потвърждение; достъп до алумни платформа; покани за събития</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КАТЕГОРИЯ 9: ОБЩА КОРЕСПОНДЕНЦИЯ -->
+    <!-- ============================================================ -->
+    <div class="category-header" id="cat-general">9. Обща кореспонденция <span>2 формуляра</span></div>
+
+    <!-- Формуляр 9.1 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-20: Обща форма за контакт / запитване</h3>
+            <span class="priority priority-high">Висок приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Контактната информация е само в сайта: телефон (+359 52 632 015), имейл (info@naval-acad.bg) и адрес (ул. Васил Друмев 73, Варна 9002). Няма отделна страница „Контакти" с карта, работно време и вградена форма. Единствената вградена контактна форма е за морски курсове.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Име и фамилия</li>
+                        <li>Имейл, телефон</li>
+                        <li>Категория запитване: Прием / Курсове / Общежитие / Еразъм+ / Научна дейност / Пресцентър / Партньорство / Друго</li>
+                        <li>Тема (кратко описание)</li>
+                        <li>Съобщение (текстово поле)</li>
+                        <li>Прикачване на файл (по желание)</li>
+                        <li>CAPTCHA</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Автоматично маршрутизиране по категория към съответния отдел</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Маршрутизирана</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Отговорена</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към подателя:</strong> Автоматично потвърждение с номер на заявка; отговор от съответния отдел</li>
+                        <li><strong>Към персонала:</strong> Ново запитване в системата; напомняне при неотговорени &gt;48ч.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Формуляр 9.2 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-21: Заявка за посещение на Планетариум</h3>
+            <span class="priority priority-low">Нисък приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Резервациите за планетариума изискват 3 дни предварително уведомление по телефон (052/552 280, 0887 778 702) в работно време 8:00-16:30. Плащането е по банков път (IBAN: BG87STSA93003106864001). Цени: 2.56-7.67 EUR в зависимост от група и език. Наем на зала: 72.60-85.90 EUR/час.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Организация / име на заявител</li>
+                        <li>Имейл, телефон</li>
+                        <li>Тип: Посещение на група / Наем на зала</li>
+                        <li>Предпочитана дата (календар, мин. 3 дни напред)</li>
+                        <li>Час</li>
+                        <li>Брой участници (15-120)</li>
+                        <li>Категория: възрастни / деца-ученици</li>
+                        <li>Език на програма: БГ / EN / DE / FR / RU / RO</li>
+                        <li>Фактурни данни (по желание)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Директор на планетариум (доц. д-р Веселка Радева, Научна секция)</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Проверка за наличност</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Потвърдена</span>
+                        <span class="status-arrow">/</span>
+                        <span class="status-step rejected">Предложена друга дата</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към заявителя:</strong> Потвърждение с дата/час; банкови данни; напомняне 1 ден преди</li>
+                        <li><strong>Генерирани документи:</strong> Проформа фактура; Фактура</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КАТЕГОРИЯ 10: ВЪТРЕШНИ ПРОЦЕСИ -->
+    <!-- ============================================================ -->
+    <div class="category-header" id="cat-internal">10. Вътрешни процеси <span>1 формуляр</span></div>
+
+    <!-- Формуляр 10.1 -->
+    <div class="form-card">
+        <div class="form-card-header">
+            <h3>Ф-22: Заявка за достъп до обществена информация</h3>
+            <span class="priority priority-low">Нисък приоритет</span>
+        </div>
+        <div class="form-card-body">
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <h4>Текущ процес</h4>
+                    <p>Страница за достъп до обществена информация съществува (/public-information-access). Декларацията за достъпност указва процедура за жалби (подаване до адреса на академията в рамките на 1 месец). Процесът е хартиен.</p>
+                </div>
+                <div class="detail-block">
+                    <h4>Предложен онлайн формуляр</h4>
+                    <ul>
+                        <li>Три имена / наименование на организация</li>
+                        <li>Адрес за кореспонденция</li>
+                        <li>Имейл, телефон</li>
+                        <li>Описание на исканата информация (текстово поле)</li>
+                        <li>Предпочитана форма за получаване: електронна / хартиена</li>
+                        <li>Декларация (чекбокс)</li>
+                    </ul>
+                </div>
+                <div class="detail-block">
+                    <h4>Работен процес след подаване</h4>
+                    <p><strong>Обработващо звено:</strong> Юридически съветник (Борис Борисов, 052/552-226)</p>
+                    <div class="status-flow">
+                        <span class="status-step submitted">Подадена</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step review">Преглед (14 дни)</span>
+                        <span class="status-arrow">&rarr;</span>
+                        <span class="status-step approved">Предоставена</span>
+                        <span class="status-arrow">/</span>
+                        <span class="status-step rejected">Отказана (с мотиви)</span>
+                    </div>
+                </div>
+                <div class="detail-block">
+                    <h4>Известия и документи</h4>
+                    <ul>
+                        <li><strong>Към заявителя:</strong> Потвърждение с входящ номер; решение в 14-дневен срок</li>
+                        <li><strong>Генерирани документи:</strong> Решение за предоставяне/отказ на информация</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ВИЗУАЛНИ ДИАГРАМИ НА РАБОТНИ ПРОЦЕСИ -->
+    <!-- ============================================================ -->
+    <section id="workflows">
+        <h2>Визуални диаграми на работни процеси (Топ 3)</h2>
+        <p>По-долу са представени визуални диаграми за трите най-важни формуляра, базирани на честота на използване и бизнес въздействие.</p>
+
+        <!-- Диаграма 1: Кандидатстване за бакалавър -->
+        <div class="workflow-diagram">
+            <h3>Работен процес 1: Онлайн кандидатстване за бакалавър / магистър (Ф-01)</h3>
+
+            <div class="wf-row">
+                <div class="wf-box start">Кандидатът попълва онлайн формуляр<small>Лични данни, специалност, документи</small></div>
+                <div class="wf-arrow">&rarr;</div>
+                <div class="wf-box process">Системата валидира данните<small>Автоматична проверка за пълнота</small></div>
+                <div class="wf-arrow">&rarr;</div>
+                <div class="wf-box notify">Имейл потвърждение<small>Кандидат получава рег. номер</small></div>
+            </div>
+
+            <div class="wf-arrow-down">&darr;</div>
+
+            <div class="wf-row">
+                <div class="wf-box process">Отдел „Учебна дейност" получава заявление<small>Уведомление в системата</small></div>
+                <div class="wf-arrow">&rarr;</div>
+                <div class="wf-box process">Проверка на документи<small>Диплома, среден успех, медицинско</small></div>
+                <div class="wf-arrow">&rarr;</div>
+                <div class="wf-box decision">Документите пълни и валидни?<small>Решение на инспектора</small></div>
+            </div>
+
+            <div class="wf-arrow-down">&darr;</div>
+
+            <div class="wf-split">
+                <div class="wf-branch">
+                    <div class="wf-branch-label">Да</div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box process">Оценка на кандидатурата<small>Успех, входен изпит (ако е приложимо)</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box decision">Класиране<small>Среден успех + допълнителни критерии</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-split">
+                        <div class="wf-branch">
+                            <div class="wf-branch-label">Приет</div>
+                            <div class="wf-arrow-down">&darr;</div>
+                            <div class="wf-box notify">Писмо за прием + фактура<small>Имейл до кандидата</small></div>
+                            <div class="wf-arrow-down">&darr;</div>
+                            <div class="wf-box process">Плащане на такса<small>Онлайн / банков превод</small></div>
+                            <div class="wf-arrow-down">&darr;</div>
+                            <div class="wf-box end-ok">Записан студент<small>Генериране на факултетен номер</small></div>
+                        </div>
+                        <div class="wf-branch">
+                            <div class="wf-branch-label">Неприет</div>
+                            <div class="wf-arrow-down">&darr;</div>
+                            <div class="wf-box end-no">Уведомление за отказ<small>Имейл с мотиви</small></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wf-branch">
+                    <div class="wf-branch-label">Не (непълни документи)</div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box notify">Имейл за допълване<small>Списък с липсващи документи</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box process">Кандидатът допълва<small>Срок: 7 дни</small></div>
+                </div>
+            </div>
+
+            <div class="wf-legend">
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:var(--navy);border-color:var(--navy);"></div> Начало (потребител)</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:#e8f0fa;border-color:var(--navy-light);"></div> Процес (система/персонал)</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:#fff8e6;border-color:var(--accent);border-style:dashed;"></div> Решение</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:#f0e6ff;border-color:#7b2d8e;border-style:dotted;"></div> Известие</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:var(--green);border-color:var(--green);"></div> Успешен край</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:var(--red);border-color:var(--red);"></div> Неуспешен край</div>
+            </div>
+        </div>
+
+        <!-- Диаграма 2: Записване за морски курс -->
+        <div class="workflow-diagram">
+            <h3>Работен процес 2: Записване за морски курс (Ф-04)</h3>
+
+            <div class="wf-row">
+                <div class="wf-box start">Курсист избира курс от каталога<small>60+ курса с цени, дати, описание</small></div>
+                <div class="wf-arrow">&rarr;</div>
+                <div class="wf-box start">Попълва формуляр за записване<small>Данни, курс, дата, документи</small></div>
+                <div class="wf-arrow">&rarr;</div>
+                <div class="wf-box notify">Автоматично потвърждение<small>Имейл с детайли и проформа</small></div>
+            </div>
+
+            <div class="wf-arrow-down">&darr;</div>
+
+            <div class="wf-row">
+                <div class="wf-box process">ДСДКДО проверява предпоставки<small>Квалификация, документи, медицинско</small></div>
+                <div class="wf-arrow">&rarr;</div>
+                <div class="wf-box decision">Отговаря на изискванията?</div>
+            </div>
+
+            <div class="wf-arrow-down">&darr;</div>
+
+            <div class="wf-split">
+                <div class="wf-branch">
+                    <div class="wf-branch-label">Да</div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box process">Включен в група<small>Мин. брой участници за стартиране</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box notify">Потвърждение за група и дата<small>Имейл + банкови данни</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box process">Плащане<small>Банков превод / онлайн</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box end-ok">Записан за курс<small>Напомняне 3 дни преди начало</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box process">Завършване и изпит<small>Практическа и теоретична оценка</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box end-ok">Издаване на удостоверение<small>Морска правоспособност</small></div>
+                </div>
+                <div class="wf-branch">
+                    <div class="wf-branch-label">Не</div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box notify">Уведомление за липсващи предпоставки<small>Имейл с детайли</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box end-no">Заявката е отхвърлена<small>Предложение за алтернативен курс</small></div>
+                </div>
+            </div>
+
+            <div class="wf-legend">
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:var(--navy);border-color:var(--navy);"></div> Действие на курсист</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:#e8f0fa;border-color:var(--navy-light);"></div> Процес (ДСДКДО)</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:#fff8e6;border-color:var(--accent);border-style:dashed;"></div> Решение</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:#f0e6ff;border-color:#7b2d8e;border-style:dotted;"></div> Имейл известие</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:var(--green);border-color:var(--green);"></div> Успешен край</div>
+            </div>
+        </div>
+
+        <!-- Диаграма 3: Еразъм+ студентска мобилност -->
+        <div class="workflow-diagram">
+            <h3>Работен процес 3: Еразъм+ студентска мобилност (Ф-08)</h3>
+
+            <div class="wf-row">
+                <div class="wf-box start">Студент попълва заявление<small>Данни, университет, мотивация, CV</small></div>
+                <div class="wf-arrow">&rarr;</div>
+                <div class="wf-box notify">Потвърждение за получена заявка<small>Имейл с входящ номер</small></div>
+                <div class="wf-arrow">&rarr;</div>
+                <div class="wf-box process">Еразъм+ координатор проверява<small>Допустимост, среден успех, език</small></div>
+            </div>
+
+            <div class="wf-arrow-down">&darr;</div>
+
+            <div class="wf-row">
+                <div class="wf-box decision">Допустим кандидат?</div>
+            </div>
+
+            <div class="wf-arrow-down">&darr;</div>
+
+            <div class="wf-split">
+                <div class="wf-branch">
+                    <div class="wf-branch-label">Да</div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box process">Класиране на кандидати<small>По критерии: успех, мотивация, език</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box notify">Уведомление за резултат<small>Имейл до всички кандидати</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box process">Номинация при приемащия университет<small>Координаторът изпраща документи</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box process">Подписване на Learning Agreement<small>Студент + изпращащ + приемащ</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box process">Подписване на Grant Agreement<small>Определяне на грант и период</small></div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box end-ok">Мобилност стартирана<small>Превод на първа вноска от грант</small></div>
+                </div>
+                <div class="wf-branch">
+                    <div class="wf-branch-label">Не</div>
+                    <div class="wf-arrow-down">&darr;</div>
+                    <div class="wf-box end-no">Отказ с мотиви<small>Имейл + препоръка за следващ прием</small></div>
+                </div>
+            </div>
+
+            <div class="wf-legend">
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:var(--navy);border-color:var(--navy);"></div> Действие на студент</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:#e8f0fa;border-color:var(--navy-light);"></div> Процес (координатор)</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:#fff8e6;border-color:var(--accent);border-style:dashed;"></div> Решение</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:#f0e6ff;border-color:#7b2d8e;border-style:dotted;"></div> Имейл известие</div>
+                <div class="wf-legend-item"><div class="wf-legend-box" style="background:var(--green);border-color:var(--green);"></div> Мобилност стартирана</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ОБОБЩЕНА ТАБЛИЦА -->
+    <!-- ============================================================ -->
+    <section id="summary-table">
+        <h2>Обобщена таблица на всички формуляри</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Наименование на формуляра</th>
+                    <th>Категория</th>
+                    <th>Текущ процес</th>
+                    <th>Обработващо звено</th>
+                    <th>Приоритет</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ф-01</td>
+                    <td>Онлайн кандидатстване за бакалавър / магистър / курсант</td>
+                    <td>Прием</td>
+                    <td>Външен портал (fees.nvna.eu) + PDF справочник в Google Drive</td>
+                    <td>Отдел „Учебна дейност"</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-02</td>
+                    <td>Заявка за кандидатстудентски справочник (lead capture)</td>
+                    <td>Прием</td>
+                    <td>Директен линк към Google Drive PDF</td>
+                    <td>Пресцентър</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-03</td>
+                    <td>Записване за Ден на отворените врати</td>
+                    <td>Прием</td>
+                    <td>Няма механизъм; телефон / Facebook</td>
+                    <td>Пресцентър</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-04</td>
+                    <td>Записване за морски курс</td>
+                    <td>Курсове</td>
+                    <td>Контактна форма за запитване; без цени/дати</td>
+                    <td>ДСДКДО</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-05</td>
+                    <td>Записване за ИТ курс</td>
+                    <td>Курсове</td>
+                    <td>Таблица в Google Drive; без онлайн записване</td>
+                    <td>Катедра ИТ</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-06</td>
+                    <td>Записване за езиков курс LangMar / Marlins тест</td>
+                    <td>Курсове</td>
+                    <td>Телефонно записване; ценоразпис в Google Drive</td>
+                    <td>Катедра „Езикова подготовка" / LangMar</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-07</td>
+                    <td>Записване за курс „Йонизиращи лъчения"</td>
+                    <td>Курсове</td>
+                    <td>Шаблони в Google Drive; телефон/имейл</td>
+                    <td>Технически организатор</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-08</td>
+                    <td>Заявление за студентска мобилност (Erasmus+)</td>
+                    <td>Еразъм+</td>
+                    <td>Google Drive формуляри; имейл кореспонденция</td>
+                    <td>Еразъм+ координатор</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-09</td>
+                    <td>Заявление за преподавателска мобилност (Erasmus+)</td>
+                    <td>Еразъм+</td>
+                    <td>Имейл; Google Drive</td>
+                    <td>Еразъм+ координатор</td>
+                    <td><span class="priority priority-low">Нисък</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-10</td>
+                    <td>Заявление за настаняване в общежитие</td>
+                    <td>Общежитие</td>
+                    <td>Присъствено / телефон; правилник в Google Drive</td>
+                    <td>Отдел „Логистика"</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-11</td>
+                    <td>Заявление за напускане / освобождаване на стая</td>
+                    <td>Общежитие</td>
+                    <td>Присъствено</td>
+                    <td>Домакин / Финансов отдел</td>
+                    <td><span class="priority priority-low">Нисък</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-12</td>
+                    <td>Заявление за академична справка / уверение</td>
+                    <td>Удостоверения</td>
+                    <td>Присъствено в деканат</td>
+                    <td>Деканат / Отдел „Учебна дейност"</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-13</td>
+                    <td>Заявление за удостоверение за морска правоспособност</td>
+                    <td>Удостоверения</td>
+                    <td>Присъствено в ДСДКДО</td>
+                    <td>ДСДКДО</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-14</td>
+                    <td>Кандидатстване за докторска програма</td>
+                    <td>Докторанти</td>
+                    <td>Присъствено / имейл; подстраници без формуляр</td>
+                    <td>Научна секция</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-15</td>
+                    <td>Заявление за защита на дисертация</td>
+                    <td>Докторанти</td>
+                    <td>Хартиен процес</td>
+                    <td>Научна секция</td>
+                    <td><span class="priority priority-low">Нисък</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-16</td>
+                    <td>Регистрация за участие в научна конференция</td>
+                    <td>Научна дейност</td>
+                    <td>Отделни поддомейни; PDF формуляри; имейл</td>
+                    <td>Научна секция / Орг. комитет</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-17</td>
+                    <td>Кандидатстване за конкурс за академична длъжност</td>
+                    <td>Научна дейност</td>
+                    <td>Google Drive папки; присъствено / имейл</td>
+                    <td>Научна секция / Кадри</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-18</td>
+                    <td>Публикуване на стаж / работна позиция</td>
+                    <td>Кариерен център</td>
+                    <td>Отделен домейн (career.nvna.eu); неясен процес</td>
+                    <td>Кариерен център</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-19</td>
+                    <td>Регистрация в Клуб Алумни</td>
+                    <td>Кариерен център</td>
+                    <td>Отделен домейн; минимална интеграция</td>
+                    <td>Кариерен център</td>
+                    <td><span class="priority priority-low">Нисък</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-20</td>
+                    <td>Обща форма за контакт / запитване</td>
+                    <td>Обща кореспонденция</td>
+                    <td>Само телефон и имейл във футъра</td>
+                    <td>Маршрутизиране по категория</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-21</td>
+                    <td>Заявка за посещение на Планетариум</td>
+                    <td>Обща кореспонденция</td>
+                    <td>Телефонно записване (мин. 3 дни предварително)</td>
+                    <td>Директор на планетариум</td>
+                    <td><span class="priority priority-low">Нисък</span></td>
+                </tr>
+                <tr>
+                    <td>Ф-22</td>
+                    <td>Заявка за достъп до обществена информация</td>
+                    <td>Вътрешни процеси</td>
+                    <td>Хартиен процес; поща</td>
+                    <td>Юридически съветник</td>
+                    <td><span class="priority priority-low">Нисък</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note-box">
+            <strong>Методология за приоритизиране:</strong> Приоритетът е определен по два критерия — <strong>честота на използване</strong> (колко потребители ще ползват формуляра годишно) и <strong>бизнес въздействие</strong> (ефект върху приходи, репутация и оперативна ефективност). „Висок" приоритет получават формуляри, които заместват процеси с над 200 взаимодействия годишно и/или имат пряко влияние върху приходите (прием, курсове). „Среден" — формуляри с 50-200 взаимодействия или значителен потенциал за подобрение. „Нисък" — формуляри с под 50 взаимодействия или вътрешни процеси.
+        </div>
+    </section>
+
+    <!-- ПРЕПОРЪКИ ЗА РЕАЛИЗАЦИЯ -->
+    <section>
+        <h2>Препоръки за реализация</h2>
+
+        <h3>Фаза 1 — Критични формуляри (месец 1-2)</h3>
+        <ul>
+            <li><strong>Ф-01:</strong> Онлайн кандидатстване — интегриране в основния сайт вместо external redirect</li>
+            <li><strong>Ф-04:</strong> Записване за морски курс — с каталог, цени, календар</li>
+            <li><strong>Ф-06:</strong> LangMar записване — замяна на телефонния процес</li>
+            <li><strong>Ф-12:</strong> Академични справки — спестяване на присъствени посещения</li>
+            <li><strong>Ф-20:</strong> Обща форма за контакт — с маршрутизиране по категория</li>
+        </ul>
+
+        <h3>Фаза 2 — Важни формуляри (месец 3-4)</h3>
+        <ul>
+            <li><strong>Ф-08:</strong> Еразъм+ студентска мобилност</li>
+            <li><strong>Ф-10:</strong> Настаняване в общежитие</li>
+            <li><strong>Ф-14:</strong> Докторски програми</li>
+            <li><strong>Ф-02, Ф-03:</strong> Lead capture и Ден на отворените врати</li>
+        </ul>
+
+        <h3>Фаза 3 — Допълнителни формуляри (месец 5-6)</h3>
+        <ul>
+            <li><strong>Ф-05, Ф-07:</strong> ИТ курсове и йонизиращи лъчения</li>
+            <li><strong>Ф-13, Ф-16, Ф-17, Ф-18:</strong> Удостоверения, конференции, конкурси, кариерен център</li>
+            <li><strong>Ф-09, Ф-11, Ф-15, Ф-19, Ф-21, Ф-22:</strong> Нисък приоритет — преподавателска мобилност, напускане на общежитие, защита на дисертация, алумни, планетариум, обществена информация</li>
+        </ul>
+
+        <h3>Технически изисквания за всички формуляри</h3>
+        <ul>
+            <li>Интеграция с единен back-end (вместо разпръснати 8+ домейна)</li>
+            <li>Уведомления по имейл (автоматични шаблони на БГ и EN)</li>
+            <li>Dashboard за персонала с опашка от заявления и статуси</li>
+            <li>GDPR съвместимост — съгласие за обработка на лични данни</li>
+            <li>Responsive дизайн (мобилни устройства)</li>
+            <li>Двуезичност (БГ/EN) за формулярите, достъпни за международни потребители</li>
+            <li>Conversion tracking (Google Analytics events) за всяко подаване</li>
+            <li>CAPTCHA защита срещу spam</li>
+            <li>Автоматично генериране на PDF документи (фактури, уверения, сертификати)</li>
+        </ul>
+    </section>
+
+</div>
+
+<footer>
+    <div class="container">
+        Анализ на формуляри и работни процеси | Изготвен от Деян Стоянов Стоянов | Факултетен № 001114 | ВВМУ „Н. Й. Вапцаров" | Март 2026
+    </div>
+</footer>
+
+</body>
+</html>

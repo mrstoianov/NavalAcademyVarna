@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бизнес анализ — ВВМУ „Н. Й. Вапцаров"</title>
+    <style>
+        :root {
+            --navy: #1a3a5c;
+            --navy-light: #2a5a8c;
+            --navy-dark: #0e2240;
+            --accent: #e8a317;
+            --green: #2e8b57;
+            --red: #c0392b;
+            --orange: #e67e22;
+            --bg: #ffffff;
+            --bg-alt: #f4f6f8;
+            --bg-card: #ffffff;
+            --text: #2c3e50;
+            --text-light: #5d6d7e;
+            --border: #d5dce4;
+            --shadow: rgba(26, 58, 92, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            color: white;
+            padding: 48px 0 40px;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        header .subtitle {
+            font-size: 17px;
+            opacity: 0.85;
+            font-weight: 300;
+        }
+
+        header .meta {
+            margin-top: 16px;
+            font-size: 13px;
+            opacity: 0.65;
+        }
+
+        /* Score banner */
+        .score-banner {
+            background: var(--bg-alt);
+            border: 2px solid var(--navy);
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+            text-align: center;
+        }
+
+        .score-banner .score {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        .score-banner .score span {
+            font-size: 28px;
+            color: var(--text-light);
+        }
+
+        .score-banner .score-label {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
+        .score-breakdown {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .score-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 20px;
+            min-width: 140px;
+        }
+
+        .score-item .val {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .score-item .lbl {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Sections */
+        section {
+            margin: 40px 0;
+        }
+
+        h2 {
+            font-size: 22px;
+            color: var(--navy);
+            border-bottom: 3px solid var(--navy);
+            padding-bottom: 10px;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 17px;
+            color: var(--navy);
+            margin: 24px 0 12px;
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 15px;
+            color: var(--navy-light);
+            margin: 16px 0 8px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 14px;
+        }
+
+        thead th {
+            background: var(--navy);
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        tbody td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tbody tr:nth-child(even) {
+            background: var(--bg-alt);
+        }
+
+        tbody tr:hover {
+            background: #eef2f7;
+        }
+
+        /* Rating badges */
+        .rating {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 12px;
+            color: white;
+        }
+
+        .rating-high { background: var(--green); }
+        .rating-mid { background: var(--orange); }
+        .rating-low { background: var(--red); }
+
+        /* Strengths / Weaknesses */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            background: var(--bg-card);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .card.strength { border-left: 4px solid var(--green); }
+        .card.weakness { border-left: 4px solid var(--red); }
+        .card.opportunity { border-left: 4px solid var(--accent); }
+        .card.info { border-left: 4px solid var(--navy); }
+
+        .card h4 {
+            margin-top: 0;
+            color: var(--navy);
+        }
+
+        .card ul {
+            margin: 8px 0;
+            padding-left: 18px;
+        }
+
+        .card li {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        /* User Journey Flow Diagrams */
+        .journey {
+            margin: 24px 0;
+            padding: 20px;
+            background: var(--bg-alt);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .journey-title {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .journey-flow {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .journey-step {
+            background: white;
+            border: 2px solid var(--navy);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--navy);
+            text-align: center;
+            min-width: 100px;
+            position: relative;
+        }
+
+        .journey-step.start {
+            background: var(--navy);
+            color: white;
+        }
+
+        .journey-step.end {
+            background: var(--green);
+            color: white;
+            border-color: var(--green);
+        }
+
+        .journey-step.problem {
+            background: #fff5f5;
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .journey-step.external {
+            background: #fff8e6;
+            border-color: var(--accent);
+            color: #8b6914;
+        }
+
+        .journey-arrow {
+            font-size: 20px;
+            color: var(--navy);
+            font-weight: 700;
+            padding: 0 2px;
+        }
+
+        .journey-meta {
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .journey-meta strong {
+            color: var(--text);
+        }
+
+        /* Audience Matrix */
+        .matrix-table td:first-child {
+            font-weight: 600;
+            color: var(--navy);
+            white-space: nowrap;
+        }
+
+        /* Priority labels */
+        .priority {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .priority-high { background: #fde8e8; color: var(--red); }
+        .priority-mid { background: #fef3e2; color: var(--orange); }
+        .priority-low { background: #e8f5e9; color: var(--green); }
+
+        /* Lists */
+        ul, ol {
+            margin: 8px 0 16px 20px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* Recommendation cards */
+        .rec-list {
+            counter-reset: rec;
+        }
+
+        .rec-item {
+            background: var(--bg-alt);
+            border-left: 4px solid var(--navy);
+            padding: 16px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        .rec-item::before {
+            counter-increment: rec;
+            content: counter(rec);
+            position: absolute;
+            left: -16px;
+            top: 14px;
+            width: 28px;
+            height: 28px;
+            background: var(--navy);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .rec-item .rec-title {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .rec-item .rec-effect {
+            font-size: 13px;
+            color: var(--green);
+            font-style: italic;
+            margin-top: 6px;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin: 12px 0 20px;
+            font-size: 13px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            border: 2px solid;
+        }
+
+        .legend-box.start { background: var(--navy); border-color: var(--navy); }
+        .legend-box.normal { background: white; border-color: var(--navy); }
+        .legend-box.problem { background: #fff5f5; border-color: var(--red); }
+        .legend-box.ext { background: #fff8e6; border-color: var(--accent); }
+        .legend-box.end { background: var(--green); border-color: var(--green); }
+
+        /* Competitive radar placeholder */
+        .competitive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .comp-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            background: white;
+        }
+
+        .comp-card .comp-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .comp-bar {
+            height: 8px;
+            background: #e8ecf1;
+            border-radius: 4px;
+            margin: 4px 0;
+            overflow: hidden;
+        }
+
+        .comp-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--navy);
+        }
+
+        .comp-bar-fill.highlight {
+            background: var(--accent);
+        }
+
+        .comp-score {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy-dark);
+            color: rgba(255,255,255,0.8);
+            padding: 24px 0;
+            margin-top: 60px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .card-grid { grid-template-columns: 1fr; }
+            .journey-flow { flex-direction: column; align-items: flex-start; }
+            .journey-arrow { transform: rotate(90deg); }
+            .score-breakdown { flex-direction: column; align-items: center; }
+            header h1 { font-size: 22px; }
+        }
+
+        /* Conversion funnel */
+        .funnel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 24px 0;
+        }
+
+        .funnel-step {
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            border-radius: 4px;
+            margin: 2px 0;
+        }
+
+        .note-box {
+            background: #f0f4f8;
+            border-left: 4px solid var(--navy-light);
+            padding: 14px 18px;
+            margin: 16px 0;
+            font-size: 14px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #eef2f7;
+            color: var(--navy);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Бизнес анализ — ВВМУ „Н. Й. Вапцаров"</h1>
+        <div class="subtitle">Оценка на уебсайта от бизнес перспектива: потребителски пътища, конверсия, аудитории и конкурентно позициониране</div>
+        <div class="meta">URL: https://www.naval-acad.bg/ &nbsp;|&nbsp; Анализ: Март 2026</div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- ОБЩА ОЦЕНКА -->
+    <div class="score-banner">
+        <div class="score">5<span>/10</span></div>
+        <div class="score-label">Обща бизнес оценка</div>
+        <div class="score-breakdown">
+            <div class="score-item"><div class="val">5/10</div><div class="lbl">Потребителски пътища</div></div>
+            <div class="score-item"><div class="val">4/10</div><div class="lbl">Conversion ефективност</div></div>
+            <div class="score-item"><div class="val">6/10</div><div class="lbl">Информационна пълнота</div></div>
+            <div class="score-item"><div class="val">5/10</div><div class="lbl">Конкурентна позиция</div></div>
+            <div class="score-item"><div class="val">4/10</div><div class="lbl">Аудитории покритие</div></div>
+            <div class="score-item"><div class="val">6/10</div><div class="lbl">Бранд идентичност</div></div>
+            <div class="score-item"><div class="val">4/10</div><div class="lbl">Измеримост</div></div>
+        </div>
+    </div>
+
+    <!-- СИЛНИ СТРАНИ / КРИТИЧНИ ПРОБЛЕМИ -->
+    <section>
+        <h2>Обобщение</h2>
+        <div class="card-grid">
+            <div class="card strength">
+                <h4>Силни страни</h4>
+                <ul>
+                    <li>Богат каталог от 40+ специалности (бакалавър, магистър, курсант) с работещ филтър по нива, форма, област</li>
+                    <li>Висока институционална акредитация (9.07/10), видимо представена</li>
+                    <li>Уникални активи: 11 симулатора, планетариум, BIP/Erasmus+ програми</li>
+                    <li>60+ морски курса за професионална квалификация — силно revenue stream</li>
+                    <li>PWA имплементация (Service Worker) — изпреварваща за сектора</li>
+                    <li>Активен пресцентър с регулярни новини (март 2026)</li>
+                    <li>Мото „Вековни традиции — Модерен хоризонт" — добра brand promise</li>
+                </ul>
+            </div>
+            <div class="card weakness">
+                <h4>Критични проблеми</h4>
+                <ul>
+                    <li>Кандидатстудентски справочник = един линк към Google Drive PDF — нулева конверсия</li>
+                    <li>Приемът (fees.nvna.eu) е на външен домейн — загуба на потребители при прехода</li>
+                    <li>Английската версия е силно изоставаща — бариера за международни студенти</li>
+                    <li>Липса на ценова информация, графици и онлайн записване за курсовете</li>
+                    <li>Разпръсната инфраструктура (8+ различни домейна/поддомейна)</li>
+                    <li>HTTP (не HTTPS) линкове към ws.naval-acad.bg, projects.nvna.eu, studentcouncil</li>
+                    <li>Липсва event tracking, conversion tracking и фуниен анализ</li>
+                    <li>Нито една страница няма вграден формуляр за кандидатстване</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЦЕЛЕВИ АУДИТОРИИ -->
+    <section>
+        <h2>1. Целеви аудитории и обслужване</h2>
+        <p>Уебсайтът обслужва минимум 8 различни целеви аудитории, всяка с уникални нужди. По-долу е представена матрица на покритие:</p>
+
+        <table class="matrix-table">
+            <thead>
+                <tr>
+                    <th>Аудитория</th>
+                    <th>Основна нужда</th>
+                    <th>Текущо покритие</th>
+                    <th>Оценка</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Кандидат-студенти (БГ)</td>
+                    <td>Информация за специалности, изисквания, срокове, записване</td>
+                    <td>Специалности — добре; справочник — само PDF линк; без вградени срокове и онлайн форма за кандидатстване</td>
+                    <td><span class="rating rating-mid">5/10</span></td>
+                </tr>
+                <tr>
+                    <td>Настоящи студенти</td>
+                    <td>Разписание, портали, стипендии, общежитие, кариери</td>
+                    <td>Разписание (nvna.eu/wp), WebStudent (HTTP!), общежитие — добре. Но навигация до порталите е сложна</td>
+                    <td><span class="rating rating-mid">5/10</span></td>
+                </tr>
+                <tr>
+                    <td>Международни студенти (Erasmus+)</td>
+                    <td>Английска информация, партньори, документи, мобилност</td>
+                    <td>Erasmus+ секция съществува, но EN версия е непълна; партньори и документи са в Google Drive</td>
+                    <td><span class="rating rating-low">3/10</span></td>
+                </tr>
+                <tr>
+                    <td>Изследователи</td>
+                    <td>Научни направления, публикации, конференции, сътрудничество</td>
+                    <td>Научна дейност описана; конференции — архив от 2016-2026; scholar.nvna.eu наличен</td>
+                    <td><span class="rating rating-mid">6/10</span></td>
+                </tr>
+                <tr>
+                    <td>Преподаватели</td>
+                    <td>e-Teacher портал, конкурси, вътрешна документация</td>
+                    <td>e-Teacher портал съществува (HTTPS); конкурси налични; но липсват профили на преподаватели</td>
+                    <td><span class="rating rating-mid">5/10</span></td>
+                </tr>
+                <tr>
+                    <td>Медии</td>
+                    <td>Новини, пресконтакти, снимков архив, събития</td>
+                    <td>Пресцентър с контакт (телефон, email); активни новини; липсва медиа кит и прес банка</td>
+                    <td><span class="rating rating-mid">5/10</span></td>
+                </tr>
+                <tr>
+                    <td>Алумни</td>
+                    <td>Общност, събития, кариерни услуги, менторство</td>
+                    <td>Клуб Алумни (career.nvna.eu/alumni/) — отделен домейн; липсва интеграция и видимост</td>
+                    <td><span class="rating rating-low">3/10</span></td>
+                </tr>
+                <tr>
+                    <td>Работодатели</td>
+                    <td>Стажанти, дипломанти, партньорство, кариерни борси</td>
+                    <td>Кариерен център (career.nvna.eu) има борса за работа; но липсва видимост от главния сайт</td>
+                    <td><span class="rating rating-low">3/10</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note-box">
+            <strong>Ключов извод:</strong> Нито една аудитория не е обслужена на отлично ниво. Кандидат-студентите (основната конверсионна група) срещат прекъснат път, а международните студенти и алумни са практически неглижирани.
+        </div>
+    </section>
+
+    <!-- ПОТРЕБИТЕЛСКИ ПЪТИЩА -->
+    <section>
+        <h2>2. Потребителски пътища (User Journeys)</h2>
+
+        <div class="legend">
+            <div class="legend-item"><div class="legend-box start"></div> Начало</div>
+            <div class="legend-item"><div class="legend-box normal"></div> Стъпка</div>
+            <div class="legend-item"><div class="legend-box problem"></div> Проблемна точка</div>
+            <div class="legend-item"><div class="legend-box ext"></div> Външен домейн</div>
+            <div class="legend-item"><div class="legend-box end"></div> Цел</div>
+        </div>
+
+        <!-- Journey 1: Кандидат-студент — намери специалност и кандидатствай -->
+        <div class="journey">
+            <div class="journey-title">Път 1: Кандидат-студент иска да намери специалност и да кандидатства</div>
+            <div class="journey-flow">
+                <div class="journey-step start">Начална страница</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">Обучение &rarr; Специалности</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">Филтриране по ниво/област</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">„Научете повече" за програма</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step problem">Справочник = Google Drive PDF</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step external">Прием &rarr; fees.nvna.eu</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step end">Подаване на документи</div>
+            </div>
+            <div class="journey-meta">
+                <strong>Кликове до цел:</strong> 5-6 &nbsp;|&nbsp;
+                <strong>Проблеми:</strong> Справочникът е офлоудван в PDF (без структурирано съдържание на сайта); преходът към fees.nvna.eu е видим прекъсващ момент — различен дизайн, домейн, потребителска среда.
+            </div>
+        </div>
+
+        <!-- Journey 2: Запитване за курс -->
+        <div class="journey">
+            <div class="journey-title">Път 2: Професионалист иска да се запише на морски курс</div>
+            <div class="journey-flow">
+                <div class="journey-step start">Начална страница</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">Дейности &rarr; Курсове</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">Избор на категория (морски/ИТ/езикови)</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step problem">Таблица с 60+ курса без цени и дати</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step problem">Контактна форма за запитване</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step end">Изпращане на запитване (?)</div>
+            </div>
+            <div class="journey-meta">
+                <strong>Кликове до цел:</strong> 4-5 &nbsp;|&nbsp;
+                <strong>Проблеми:</strong> Липсват цени, графици, и онлайн записване. Потребителят не може да вземе решение без допълнително запитване — значителна бариера за конверсия. Конкурентни морски центрове предлагат онлайн записване с календар.
+            </div>
+        </div>
+
+        <!-- Journey 3: Международен студент -->
+        <div class="journey">
+            <div class="journey-title">Път 3: Международен студент (Erasmus+) търси информация за мобилност</div>
+            <div class="journey-flow">
+                <div class="journey-step start">EN Homepage</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">Erasmus+ секция</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step problem">Непълен превод / остарели новини</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step external">Google Drive документи</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">erasmus@nvna.eu</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step end">Email кореспонденция</div>
+            </div>
+            <div class="journey-meta">
+                <strong>Кликове до цел:</strong> 4+ &nbsp;|&nbsp;
+                <strong>Проблеми:</strong> Английската версия е непълна и неактуална (последни EN новини от 2023-2025). Документите за мобилност са в Google Drive, а не вградени. Няма online application form за мобилност. Липсва информация за виза, настаняване, град Варна.
+            </div>
+        </div>
+
+        <!-- Journey 4: Намери разписание -->
+        <div class="journey">
+            <div class="journey-title">Път 4: Настоящ студент търси разписание</div>
+            <div class="journey-flow">
+                <div class="journey-step start">Начална страница</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">Инф. центрове &rarr; Разписание</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step external">nvna.eu/wp/</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step end">Преглед на разписание</div>
+            </div>
+            <div class="journey-meta">
+                <strong>Кликове до цел:</strong> 3 &nbsp;|&nbsp;
+                <strong>Проблеми:</strong> Разписанието е на отделен домейн (nvna.eu/wp) с различен интерфейс. За ежедневна нужда (разписание) няма shortcut на homepage или мобилна оптимизация.
+            </div>
+        </div>
+
+        <!-- Journey 5: Контакт с академията -->
+        <div class="journey">
+            <div class="journey-title">Път 5: Посетител иска да се свърже с академията</div>
+            <div class="journey-flow">
+                <div class="journey-step start">Начална страница</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">Скрол до футъра</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step end">Телефон / Email / Адрес</div>
+            </div>
+            <div class="journey-meta">
+                <strong>Кликове до цел:</strong> 1 (скрол) &nbsp;|&nbsp;
+                <strong>Проблеми:</strong> Контактната информация е само във футъра — няма отделна „Контакти" страница с карта, работно време и форма. Положително: основният телефон и email са видими.
+            </div>
+        </div>
+
+        <!-- Journey 6: Докторска програма -->
+        <div class="journey">
+            <div class="journey-title">Път 6: Изследовател иска да кандидатства за докторска програма</div>
+            <div class="journey-flow">
+                <div class="journey-step start">Начална страница</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">Обучение &rarr; Докторанти</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">13 програми с таблица</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step problem">Много програми с изтекла акредитация</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step">Прием на докторанти (подстраница)</div>
+                <span class="journey-arrow">&rarr;</span>
+                <div class="journey-step end">Кандидатстване</div>
+            </div>
+            <div class="journey-meta">
+                <strong>Кликове до цел:</strong> 4-5 &nbsp;|&nbsp;
+                <strong>Проблеми:</strong> Няколко докторски програми имат изтекъл срок на акредитация (2022-2023), което създава несигурност. Липсват актуални срокове, теми и научни ръководители.
+            </div>
+        </div>
+    </section>
+
+    <!-- CONVERSION АНАЛИЗ -->
+    <section>
+        <h2>3. Conversion анализ</h2>
+
+        <h3>3.1. Идентифицирани Call-to-Action елементи</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>CTA</th>
+                    <th>Местоположение</th>
+                    <th>Тип</th>
+                    <th>Ефективност</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>„Кандидатствай" / „Прием"</td>
+                    <td>Главно меню</td>
+                    <td>Линк към fees.nvna.eu</td>
+                    <td><span class="rating rating-mid">Средна</span> — Видим, но води към външен домейн</td>
+                </tr>
+                <tr>
+                    <td>„Кандидатствайте тук! Запишете се сега!"</td>
+                    <td>Страница „Специалности"</td>
+                    <td>Бутон</td>
+                    <td><span class="rating rating-mid">Средна</span> — Добър текст, но пак води навън</td>
+                </tr>
+                <tr>
+                    <td>„Научете повече"</td>
+                    <td>Карти на специалности</td>
+                    <td>Линк</td>
+                    <td><span class="rating rating-high">Добра</span> — Води към детайлна информация</td>
+                </tr>
+                <tr>
+                    <td>Контактна форма за курсове</td>
+                    <td>Страница „Морски курсове"</td>
+                    <td>Форма</td>
+                    <td><span class="rating rating-mid">Средна</span> — Единствената вградена форма</td>
+                </tr>
+                <tr>
+                    <td>Newsletter абонамент</td>
+                    <td>Футър (спорадично)</td>
+                    <td>Форма</td>
+                    <td><span class="rating rating-low">Ниска</span> — Слабо видима</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>3.2. Липсващи Conversion Points</h3>
+        <div class="card-grid">
+            <div class="card weakness">
+                <h4>Критично липсващи</h4>
+                <ul>
+                    <li>Онлайн формуляр за кандидатстване (вграден в сайта)</li>
+                    <li>Онлайн записване за курсове с календар и цени</li>
+                    <li>Чат бот / live chat за бърз отговор на запитвания</li>
+                    <li>Форма за записване за Ден на отворените врати</li>
+                    <li>Email capture (lead magnet) за кандидат-студенти</li>
+                </ul>
+            </div>
+            <div class="card weakness">
+                <h4>Препоръчителни</h4>
+                <ul>
+                    <li>„Сравни специалности" функционалност</li>
+                    <li>Калкулатор на такси</li>
+                    <li>Виртуален тур (360°) — бутон на homepage</li>
+                    <li>Testimonials / истории на успели абсолвенти</li>
+                    <li>CTA „Заяви среща с кариерен консултант"</li>
+                    <li>Форма за работодатели — „Публикувай стаж/позиция"</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>3.3. Конверсионна фуния — текущо състояние</h3>
+        <div class="funnel">
+            <div class="funnel-step" style="width:90%;background:var(--navy);">Посещение на сайта (Homepage) — Google Analytics отчита</div>
+            <div class="funnel-step" style="width:75%;background:var(--navy-light);">Разглеждане на специалности — филтър работи добре</div>
+            <div class="funnel-step" style="width:55%;background:#3a7bc8;">Кандидатстудентски справочник — PDF офлоуд, загуба на потребители</div>
+            <div class="funnel-step" style="width:35%;background:var(--orange);">Преход към fees.nvna.eu — смяна на домейн, неизмерим drop-off</div>
+            <div class="funnel-step" style="width:18%;background:var(--red);">Подаване на документи — няма visibility дали е завършен</div>
+        </div>
+        <div class="note-box">
+            <strong>Проблем:</strong> Конверсионната фуния е прекъсната между основния сайт и fees.nvna.eu. Без cross-domain tracking, drop-off rate между тези стъпки е напълно невидим. Институцията не знае колко потребители губи в процеса.
+        </div>
+    </section>
+
+    <!-- ИНФОРМАЦИОННА ПЪЛНОТА -->
+    <section>
+        <h2>4. Информационна пълнота</h2>
+
+        <h3>4.1. Покрити теми (добре)</h3>
+        <div style="margin:12px 0;">
+            <span class="tag">История и мисия</span>
+            <span class="tag">Организационна структура</span>
+            <span class="tag">Акредитация (детайлна)</span>
+            <span class="tag">Специалности (40+)</span>
+            <span class="tag">Симулатори (11 бр.)</span>
+            <span class="tag">Планетариум</span>
+            <span class="tag">Библиотека</span>
+            <span class="tag">Общежитие</span>
+            <span class="tag">Докторски програми</span>
+            <span class="tag">Научна дейност</span>
+            <span class="tag">Международна дейност</span>
+            <span class="tag">Erasmus+</span>
+            <span class="tag">Конференции (архив)</span>
+            <span class="tag">Морски курсове (60+)</span>
+            <span class="tag">ИТ курсове</span>
+            <span class="tag">Езикови курсове</span>
+            <span class="tag">Кибероперации</span>
+            <span class="tag">Пресцентър</span>
+            <span class="tag">Контактна информация</span>
+        </div>
+
+        <h3>4.2. Липсващи или слаби теми</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Липсваща информация</th>
+                    <th>Засегната аудитория</th>
+                    <th>Приоритет</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Структурирани условия за прием (срокове, изисквания, такси) — само PDF линк</td>
+                    <td>Кандидат-студенти</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Цени, графици и онлайн записване за курсове</td>
+                    <td>Професионалисти</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Профили на преподаватели (снимка, CV, публикации)</td>
+                    <td>Студенти, изследователи</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Кариерна реализация — статистики, процент заетост, средна заплата</td>
+                    <td>Кандидат-студенти, родители</td>
+                    <td><span class="priority priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Студентски живот — клубове, спорт, събития, снимки/видео</td>
+                    <td>Кандидат-студенти</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Виза и имиграция за чуждестранни студенти</td>
+                    <td>Международни студенти</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>FAQ секция (Често задавани въпроси) — структурирана и достъпна</td>
+                    <td>Всички</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Алумни истории на успеха / testimonials</td>
+                    <td>Кандидат-студенти, алумни</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Медия кит (лого, снимки за пресата, факти)</td>
+                    <td>Медии</td>
+                    <td><span class="priority priority-low">Нисък</span></td>
+                </tr>
+                <tr>
+                    <td>Партньори/работодатели — секция с логотипи и възможности</td>
+                    <td>Работодатели</td>
+                    <td><span class="priority priority-mid">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Виртуален тур на кампуса</td>
+                    <td>Кандидат-студенти, международни</td>
+                    <td><span class="priority priority-low">Нисък</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- КОНКУРЕНТНО ПОЗИЦИОНИРАНЕ -->
+    <section>
+        <h2>5. Конкурентно позициониране</h2>
+        <p>Сравнение на уебсайта с водещи военноморски академии по света (на база benchmark на 18 академии):</p>
+
+        <div class="competitive-grid">
+            <div class="comp-card">
+                <div class="comp-name">Ecole Navale (Франция)</div>
+                <div class="comp-bar"><div class="comp-bar-fill" style="width:95%"></div></div>
+                <div class="comp-score">Визуален дизайн 5/5 | UX 4/5</div>
+            </div>
+            <div class="comp-card">
+                <div class="comp-name">Royal Canadian Navy</div>
+                <div class="comp-bar"><div class="comp-bar-fill" style="width:88%"></div></div>
+                <div class="comp-score">Recruitment UX 5/5 | CTA 5/5</div>
+            </div>
+            <div class="comp-card">
+                <div class="comp-name">Norwegian NDUC</div>
+                <div class="comp-bar"><div class="comp-bar-fill" style="width:80%"></div></div>
+                <div class="comp-score">Accessibility 4/5 | Mobile 4/5</div>
+            </div>
+            <div class="comp-card">
+                <div class="comp-name">Swedish Naval Centre</div>
+                <div class="comp-bar"><div class="comp-bar-fill" style="width:80%"></div></div>
+                <div class="comp-score">A11y 4/5 | CMS модерен 4/5</div>
+            </div>
+            <div class="comp-card">
+                <div class="comp-name" style="color:var(--accent);">ВВМУ Вапцаров (БГ)</div>
+                <div class="comp-bar"><div class="comp-bar-fill highlight" style="width:65%"></div></div>
+                <div class="comp-score">Дизайн 4/5 | UX 3/5 | Конверсия 2/5</div>
+            </div>
+            <div class="comp-card">
+                <div class="comp-name">USNA (САЩ)</div>
+                <div class="comp-bar"><div class="comp-bar-fill" style="width:65%"></div></div>
+                <div class="comp-score">Функционалност 4/5 | Дизайн 3/5</div>
+            </div>
+            <div class="comp-card">
+                <div class="comp-name">Escola Naval (Португалия)</div>
+                <div class="comp-bar"><div class="comp-bar-fill" style="width:70%"></div></div>
+                <div class="comp-score">Анимации 4/5 | Дизайн 4/5</div>
+            </div>
+            <div class="comp-card">
+                <div class="comp-name">Hellenic HNA (Гърция)</div>
+                <div class="comp-bar"><div class="comp-bar-fill" style="width:60%"></div></div>
+                <div class="comp-score">Дизайн 3/5 | e-Services 3/5</div>
+            </div>
+        </div>
+
+        <h3>5.1. Конкурентни предимства на ВВМУ</h3>
+        <div class="card-grid">
+            <div class="card strength">
+                <h4>Предимства пред конкурентите</h4>
+                <ul>
+                    <li><strong>PWA (Service Worker)</strong> — само ВВМУ и Канада имат подобна технология</li>
+                    <li><strong>Интерактивен филтър на специалности</strong> — уникален за сектора</li>
+                    <li><strong>Богат каталог от 60+ морски курса</strong> — повечето академии не предлагат подобна гама</li>
+                    <li><strong>Високи акредитационни оценки</strong> (9.07/10) — конкурентно предимство, което трябва по-видимо да се представя</li>
+                    <li><strong>Планетариум и 11 симулатора</strong> — уникални физически активи</li>
+                </ul>
+            </div>
+            <div class="card weakness">
+                <h4>Изоставания от лидерите</h4>
+                <ul>
+                    <li><strong>Липса на видео съдържание</strong> — Ecole Navale (Франция) и Канада имат hero video</li>
+                    <li><strong>Липса на testimonials</strong> — Канада използва студентски карти ефективно</li>
+                    <li><strong>Шаблонен дизайн (Avada)</strong> — Франция и Норвегия имат уникални custom теми</li>
+                    <li><strong>Липса на Augmented Reality / виртуален тур</strong> — Канада предлага AR</li>
+                    <li><strong>Слабо A11y</strong> — Швеция, Норвегия, Тайван превъзхождат значително</li>
+                    <li><strong>Без structured data (JSON-LD)</strong> — Франция и Чили имат Schema.org markup</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>5.2. Позициониране спрямо регионални конкуренти</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Критерий</th>
+                    <th>ВВМУ (България)</th>
+                    <th>HNA (Гърция)</th>
+                    <th>DHO (Турция)</th>
+                    <th>Escola Naval (Португалия)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Онлайн кандидатстване</td>
+                    <td><span class="rating rating-mid">Частично (външен домейн)</span></td>
+                    <td><span class="rating rating-mid">e-Services портал</span></td>
+                    <td><span class="rating rating-low">Не</span></td>
+                    <td><span class="rating rating-mid">Частично</span></td>
+                </tr>
+                <tr>
+                    <td>Многоезичност</td>
+                    <td><span class="rating rating-mid">BG/EN (EN непълен)</span></td>
+                    <td><span class="rating rating-high">EL/EN (пълен)</span></td>
+                    <td><span class="rating rating-low">Само TR</span></td>
+                    <td><span class="rating rating-mid">PT основно</span></td>
+                </tr>
+                <tr>
+                    <td>Мобилна версия</td>
+                    <td><span class="rating rating-high">Responsive + PWA</span></td>
+                    <td><span class="rating rating-mid">Responsive</span></td>
+                    <td><span class="rating rating-low">Desktop-centric</span></td>
+                    <td><span class="rating rating-mid">Responsive</span></td>
+                </tr>
+                <tr>
+                    <td>Курсове за квалификация</td>
+                    <td><span class="rating rating-high">60+ курса</span></td>
+                    <td><span class="rating rating-low">Малко</span></td>
+                    <td><span class="rating rating-low">Малко</span></td>
+                    <td><span class="rating rating-mid">Умерено</span></td>
+                </tr>
+                <tr>
+                    <td>Кариерен център</td>
+                    <td><span class="rating rating-mid">Външен (career.nvna.eu)</span></td>
+                    <td><span class="rating rating-low">Липсва</span></td>
+                    <td><span class="rating rating-low">Липсва</span></td>
+                    <td><span class="rating rating-low">Липсва</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- БРАНД КОНСИСТЕНТНОСТ -->
+    <section>
+        <h2>6. Бранд консистентност и институционална идентичност</h2>
+
+        <div class="card-grid">
+            <div class="card info">
+                <h4>Положителни елементи</h4>
+                <ul>
+                    <li>Мотото „Вековни традиции — Модерен хоризонт" е добре позиционирано и отразява дуалната идентичност</li>
+                    <li>Логото на ВВМУ е последователно използвано в header, footer и favicon</li>
+                    <li>Цветовата палитра (тъмно синьо, зелен акцент) е подходяща за военноморска институция</li>
+                    <li>145-годишната история е добре подчертана</li>
+                    <li>Социални мрежи (Facebook, X, Instagram, LinkedIn) са интегрирани</li>
+                </ul>
+            </div>
+            <div class="card weakness">
+                <h4>Проблеми с идентичността</h4>
+                <ul>
+                    <li><strong>Домейн фрагментация:</strong> naval-acad.bg, nvna.eu, fees.nvna.eu, career.nvna.eu, teacher.naval-acad.bg, ws.naval-acad.bg, dlc.naval-acad.bg, scholar.nvna.eu — два корневи домейна (naval-acad.bg и nvna.eu) създават объркване</li>
+                    <li><strong>Шаблонен дизайн:</strong> Avada тема не отразява уникалната морска идентичност — всеки сайт с Avada изглежда подобно</li>
+                    <li><strong>Типография:</strong> „Russo One" и „Poiret One" — нестандартен избор за академична институция; несъответствие между игрив и официален тон</li>
+                    <li><strong>Визуален език:</strong> Липса на единна фотографска визия — смесват се stock-подобни изображения с реални снимки</li>
+                    <li><strong>Банкови детайли във футъра:</strong> Полезно, но необичайно и визуално натоварващо</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="note-box">
+            <strong>Бранд диагностика:</strong> Институцията страда от „идентичност на многото домейни". Посетител, който навигира между naval-acad.bg, nvna.eu и fees.nvna.eu вижда три различни визуални идентичности, което подкопава доверието. Препоръка: консолидация под единен домейн с унифициран дизайн.
+        </div>
+    </section>
+
+    <!-- ИЗМЕРИМОСТ И ANALYTICS -->
+    <section>
+        <h2>7. Измеримост и Analytics</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Компонент</th>
+                    <th>Статус</th>
+                    <th>Коментар</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Google Analytics</td>
+                    <td><span class="rating rating-high">Активен</span></td>
+                    <td>GA4 (G-PS67DMR7KR) инсталиран чрез Google Site Kit</td>
+                </tr>
+                <tr>
+                    <td>Google Tag Manager</td>
+                    <td><span class="rating rating-low">Не</span></td>
+                    <td>Липсва GTM — ограничава гъвкавостта на event tracking</td>
+                </tr>
+                <tr>
+                    <td>Event Tracking</td>
+                    <td><span class="rating rating-low">Не</span></td>
+                    <td>Без custom events за CTA кликове, form submissions, PDF downloads</td>
+                </tr>
+                <tr>
+                    <td>Conversion Tracking</td>
+                    <td><span class="rating rating-low">Не</span></td>
+                    <td>Без дефинирани цели (goals) за кандидатстване, запитвания, записвания</td>
+                </tr>
+                <tr>
+                    <td>Cross-domain Tracking</td>
+                    <td><span class="rating rating-low">Не</span></td>
+                    <td>Критична липса — fees.nvna.eu, career.nvna.eu не са свързани с основния GA</td>
+                </tr>
+                <tr>
+                    <td>Heatmap / Session Recording</td>
+                    <td><span class="rating rating-low">Не</span></td>
+                    <td>Без Hotjar, Microsoft Clarity или подобен инструмент</td>
+                </tr>
+                <tr>
+                    <td>A/B Testing</td>
+                    <td><span class="rating rating-low">Не</span></td>
+                    <td>Без инфраструктура за тестване на различни варианти</td>
+                </tr>
+                <tr>
+                    <td>GDPR / Cookie Consent</td>
+                    <td><span class="rating rating-mid">Частично</span></td>
+                    <td>Декларация за достъпност съществува; cookie consent — неясно</td>
+                </tr>
+                <tr>
+                    <td>Search Console</td>
+                    <td><span class="rating rating-mid">Вероятно</span></td>
+                    <td>Google Site Kit обикновено включва Search Console интеграция</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note-box">
+            <strong>Ключов извод:</strong> Институцията не може да измери дали уебсайтът изпълнява мисията си. Без event tracking и conversion goals, решенията за подобрение се базират на интуиция вместо данни. Без cross-domain tracking, 100% от трафика към fees.nvna.eu се „губи" аналитично.
+        </div>
+    </section>
+
+    <!-- ПРЕПОРЪКИ -->
+    <section>
+        <h2>8. Препоръки по приоритет</h2>
+
+        <h3>Приоритет: ВИСОК (0-3 месеца)</h3>
+        <div class="rec-list">
+            <div class="rec-item">
+                <div class="rec-title">Вграждане на кандидатстудентска информация директно на сайта</div>
+                <p>Замяна на PDF линка с пълноценна страница: срокове за кандидатстване, изисквания по специалности, такси, необходими документи. Добавяне на CTA бутон „Кандидатствай сега" на видимо място.</p>
+                <div class="rec-effect">Очакван ефект: +40-60% конверсия от посещение на справочника до стартиране на кандидатстване</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-title">Имплементация на cross-domain tracking + conversion goals</div>
+                <p>Инсталиране на GTM; настройка на cross-domain tracking между naval-acad.bg и nvna.eu домейните; дефиниране на conversion goals (подаване на документи, запитвания за курсове, Erasmus заявки).</p>
+                <div class="rec-effect">Очакван ефект: Пълна видимост на конверсионната фуния; data-driven решения</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-title">Добавяне на цени и графици за курсовете с онлайн записване</div>
+                <p>Публикуване на цени, следващи дати за провеждане и форма за директно записване (или поне резервация на място) за всеки от 60+ морски курса.</p>
+                <div class="rec-effect">Очакван ефект: +30-50% повече записвания за курсове; намаляване на телефонни запитвания</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-title">HTTPS миграция за всички поддомейни</div>
+                <p>ws.naval-acad.bg, projects.nvna.eu и studentcouncil.naval-acad.bg трябва незабавно да бъдат мигрирани към HTTPS. Това е и сигурностен, и SEO, и доверителен проблем.</p>
+                <div class="rec-effect">Очакван ефект: Елиминиране на browser warnings; подобрен SEO; повишено доверие</div>
+            </div>
+        </div>
+
+        <h3>Приоритет: СРЕДЕН (3-6 месеца)</h3>
+        <div class="rec-list">
+            <div class="rec-item">
+                <div class="rec-title">Актуализиране и пълно попълване на английската версия</div>
+                <p>Превод на всички специалности, новини от последните 6 месеца, условия за прием, визова информация. Добавяне на „Life in Varna" секция за международни студенти.</p>
+                <div class="rec-effect">Очакван ефект: +50% повече Erasmus заявки; подобрен международен имидж</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-title">Създаване на landing pages за всяка целева аудитория</div>
+                <p>Dedicated pages: „За кандидат-студенти", „За международни студенти", „За професионалисти (курсове)", „За работодатели". Всяка с релевантно съдържание и специфичен CTA.</p>
+                <div class="rec-effect">Очакван ефект: +25% подобрение на engagement per audience segment</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-title">Добавяне на кариерна реализация и testimonials</div>
+                <p>Статистики за заетост на завършили; средна заплата по специалности; видео/текстови истории на алумни. Тези данни са критични за решението на кандидат-студентите.</p>
+                <div class="rec-effect">Очакван ефект: Повишена стойностна възприятие; конкурентно предимство пред други ВУЗ</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-title">Консолидация на домейн архитектурата</div>
+                <p>Планиране на миграция на ключовите портали (разписание, кариерен център, прием) като поддомейни на naval-acad.bg с единен визуален стил. Елиминиране на nvna.eu паралелния домейн.</p>
+                <div class="rec-effect">Очакван ефект: Единна бранд идентичност; опростена потребителска навигация</div>
+            </div>
+        </div>
+
+        <h3>Приоритет: НИСЪК (6-12 месеца)</h3>
+        <div class="rec-list">
+            <div class="rec-item">
+                <div class="rec-title">Виртуален тур и видео съдържание</div>
+                <p>360° тур на кампуса, симулаторните зали и планетариума. Hero видео на началната страница (по модела на Ecole Navale). Drone footage на Черно море и академията.</p>
+                <div class="rec-effect">Очакван ефект: Силно емоционално въздействие; увеличен time-on-site</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-title">Chatbot / AI асистент за кандидат-студенти</div>
+                <p>Автоматизиран помощник, който отговаря на FAQ: „Какви са сроковете?", „Каква е таксата?", „Имате ли общежитие?". Намалява натоварването на приемната комисия.</p>
+                <div class="rec-effect">Очакван ефект: 24/7 обслужване; -30% email/телефонни запитвания за рутинни въпроси</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-title">Профили на преподаватели и изследователска база данни</div>
+                <p>Публични профили с CV, публикации, текущи проекти. Повишава академичната видимост и подпомага международно сътрудничество.</p>
+                <div class="rec-effect">Очакван ефект: Подобрена академична репутация; улеснено партньорство</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ОБОБЩЕНА SWOT МАТРИЦА -->
+    <section>
+        <h2>9. SWOT Матрица (бизнес перспектива)</h2>
+        <div class="card-grid">
+            <div class="card strength">
+                <h4>Strengths (Силни страни)</h4>
+                <ul>
+                    <li>145 години история — най-старото техническо ВУ в България</li>
+                    <li>Акредитация 9.07/10 — над средната за сектора</li>
+                    <li>40+ специалности + 60+ курса — широк product портфолио</li>
+                    <li>11 симулатора (нови) + планетариум — уникална инфраструктура</li>
+                    <li>Международни партньорства (IAMU, IMLA, NATO DEEP)</li>
+                    <li>PWA технология — прогресивен технологичен подход</li>
+                </ul>
+            </div>
+            <div class="card weakness">
+                <h4>Weaknesses (Слабости)</h4>
+                <ul>
+                    <li>Прекъсната конверсионна фуния (сайт &rarr; PDF &rarr; външен домейн)</li>
+                    <li>Фрагментирана инфраструктура (8+ домейна)</li>
+                    <li>Непълна EN версия — бариера за Erasmus+ и международен прием</li>
+                    <li>Нулева аналитична измеримост на конверсии</li>
+                    <li>Липса на кариерна реализация data</li>
+                    <li>Шаблонен дизайн без уникална морска идентичност</li>
+                </ul>
+            </div>
+            <div class="card opportunity">
+                <h4>Opportunities (Възможности)</h4>
+                <ul>
+                    <li>Онлайн записване за 60+ курса — незабавен revenue ръст</li>
+                    <li>ИТ и кибер специалности — растящ пазар с висок интерес</li>
+                    <li>Erasmus+ BIP програма — привличане на повече международни студенти</li>
+                    <li>Черноморска сигурност — актуална и геополитически значима тема</li>
+                    <li>Космическо инженерство (нова магистратура) — иновативно позициониране</li>
+                    <li>Алумни мрежа — потенциал за менторство и дарения</li>
+                </ul>
+            </div>
+            <div class="card info">
+                <h4>Threats (Заплахи)</h4>
+                <ul>
+                    <li>Демографски спад в България — по-малко кандидат-студенти</li>
+                    <li>Конкуренция от частни ИТ обучения (SoftUni, Telerik Academy)</li>
+                    <li>Гръцка и румънска морски академии — конкуренция за Erasmus+</li>
+                    <li>Остаряла технологична платформа (Avada) — нарастващ техн. дълг</li>
+                    <li>Негативно впечатление от HTTP уязвимости и разпокъсан UX</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЗАКЛЮЧЕНИЕ -->
+    <section>
+        <h2>10. Заключение</h2>
+        <p>
+            Уебсайтът на ВВМУ „Н. Й. Вапцаров" притежава солидно съдържателно ядро — богат каталог от специалности и курсове, добра институционална информация и активен пресцентър. Въпреки това, от бизнес перспектива, сайтът сериозно пропуска потенциал за конверсия. Основната причина е фрагментираната архитектура: прекъснатите потребителски пътища между основния сайт и 8+ външни домейна, офлоудването на критична информация в Google Drive документи, и пълната липса на conversion tracking.
+        </p>
+        <p>
+            Ако академията инвестира в три ключови области — <strong>(1) вграждане на приемната информация и онлайн формуляри директно на сайта</strong>, <strong>(2) имплементация на measurement framework с GTM и cross-domain tracking</strong>, и <strong>(3) актуализиране на английската версия</strong> — може да очаква значително подобрение в броя кандидатстващи и записали се студенти, особено в сегментите на морски курсове и Erasmus+ мобилност.
+        </p>
+        <p>
+            Спрямо глобалния benchmark, ВВМУ се позиционира в горната половина по визуален дизайн и технология, но в долната по конверсионна ефективност и потребителски пътища. С целенасочени подобрения, сайтът може да достигне нивото на скандинавските академии (Норвегия, Швеция) в рамките на 6-12 месеца.
+        </p>
+    </section>
+
+</div>
+
+<footer>
+    <div class="container">
+        Бизнес анализ | Изготвен от Деян Стоянов Стоянов | Факултетен № 001114 | ВВМУ „Н. Й. Вапцаров" | Март 2026
+    </div>
+</footer>
+
+</body>
+</html>

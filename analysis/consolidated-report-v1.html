@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Консолидиран доклад — ВВМУ „Н. Й. Вапцаров"</title>
+    <style>
+        :root {
+            --navy: #1a3a5c;
+            --navy-light: #2a5a8c;
+            --navy-dark: #0e2240;
+            --accent: #198fd9;
+            --green: #28a745;
+            --orange: #e8850c;
+            --red: #dc3545;
+            --bg: #ffffff;
+            --bg-alt: #f4f6f8;
+            --text: #2c3e50;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --shadow: 0 2px 12px rgba(0,0,0,0.07);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .container { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            color: white;
+            padding: 52px 0 44px;
+            border-bottom: 5px solid var(--accent);
+        }
+        header .badge-type {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 4px 14px;
+            border-radius: 14px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 14px;
+        }
+        header h1 { font-size: 30px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+        header .subtitle { font-size: 16px; opacity: 0.85; font-weight: 400; max-width: 700px; }
+        header .meta { margin-top: 18px; font-size: 13px; opacity: 0.65; display: flex; gap: 20px; flex-wrap: wrap; }
+
+        /* Navigation */
+        .report-nav {
+            background: var(--navy-dark);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .report-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .report-nav a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            font-size: 12.5px;
+            padding: 6px 14px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .report-nav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+        /* Sections */
+        section { margin-bottom: 48px; }
+        .section-alt { background: var(--bg-alt); padding: 40px 0; margin: 0 -9999px; padding-left: 9999px; padding-right: 9999px; }
+
+        h2 {
+            font-size: 22px;
+            color: var(--navy);
+            margin-bottom: 22px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent);
+            font-weight: 700;
+        }
+        h2 .section-num {
+            display: inline-block;
+            background: var(--navy);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-size: 14px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        h3 { font-size: 17px; color: var(--navy); margin: 22px 0 12px; font-weight: 600; }
+        h4 { font-size: 15px; color: var(--navy-light); margin: 14px 0 8px; font-weight: 600; }
+        p { margin-bottom: 12px; }
+
+        /* Executive Summary Box */
+        .exec-summary {
+            background: linear-gradient(135deg, #f0f5fa, #e8eef5);
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+            border-left: 5px solid var(--navy);
+        }
+        .exec-summary h3 { margin-top: 0; font-size: 19px; }
+        .exec-summary p { font-size: 15px; color: #34495e; }
+
+        /* Score Cards Row */
+        .score-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 28px 0;
+        }
+        .score-card {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.2s;
+        }
+        .score-card:hover { transform: translateY(-2px); }
+        .score-card .expert-name {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        .score-card .score-value {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .score-card .score-value span { font-size: 22px; font-weight: 400; color: var(--text-light); }
+        .score-card .score-bar { height: 6px; background: #e9ecef; border-radius: 3px; margin-top: 12px; overflow: hidden; }
+        .score-card .score-bar-fill { height: 100%; border-radius: 3px; }
+        .score-card .score-label { font-size: 13px; color: var(--text-light); margin-top: 8px; }
+        .score-red { color: var(--red); }
+        .score-orange { color: var(--orange); }
+        .score-green { color: var(--green); }
+        .fill-red { background: var(--red); }
+        .fill-orange { background: var(--orange); }
+        .fill-green { background: var(--green); }
+
+        /* Overall score highlight */
+        .overall-score-box {
+            background: var(--navy);
+            color: white;
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+            margin: 28px 0;
+        }
+        .overall-score-box .big-score {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .overall-score-box .big-score span { font-size: 30px; opacity: 0.6; }
+        .overall-score-box .verdict {
+            font-size: 18px;
+            opacity: 0.85;
+            margin-top: 8px;
+        }
+        .overall-score-box .verdict-detail {
+            font-size: 14px;
+            opacity: 0.65;
+            margin-top: 4px;
+        }
+
+        /* Radar Chart (CSS) */
+        .radar-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+        .radar-chart {
+            position: relative;
+            width: 320px;
+            height: 320px;
+        }
+        .radar-bg {
+            position: absolute;
+            top: 50%; left: 50%;
+            border-radius: 50%;
+            border: 1px solid #d0d8e0;
+            transform: translate(-50%, -50%);
+        }
+        .radar-bg.r1 { width: 280px; height: 280px; background: #f8fafc; }
+        .radar-bg.r2 { width: 210px; height: 210px; background: #f0f4f8; }
+        .radar-bg.r3 { width: 140px; height: 140px; background: #e8eef4; }
+        .radar-bg.r4 { width: 70px; height: 70px; background: #dde5ee; }
+        .radar-label {
+            position: absolute;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--navy);
+            text-align: center;
+            width: 90px;
+        }
+        .radar-label.top { top: -4px; left: 50%; transform: translateX(-50%); }
+        .radar-label.right { right: -30px; top: 50%; transform: translateY(-50%); }
+        .radar-label.bottom { bottom: -4px; left: 50%; transform: translateX(-50%); }
+        .radar-label.left { left: -30px; top: 50%; transform: translateY(-50%); }
+        .radar-shape {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+        }
+        .radar-polygon {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .radar-polygon svg {
+            width: 280px;
+            height: 280px;
+        }
+
+        /* Expert Detail Blocks */
+        .expert-block {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+        .expert-score-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+        .circle-red { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+        .circle-orange { background: linear-gradient(135deg, #d68910, #f0a030); }
+        .circle-green { background: linear-gradient(135deg, #1e8449, #28a745); }
+        .expert-info h3 { margin-top: 0; font-size: 16px; }
+        .expert-info .expert-subtitle { font-size: 13px; color: var(--text-light); margin-bottom: 10px; }
+        .expert-findings { list-style: none; padding: 0; }
+        .expert-findings li {
+            padding: 6px 0 6px 18px;
+            position: relative;
+            font-size: 14px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        .expert-findings li:last-child { border-bottom: none; }
+        .expert-findings li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 13px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .finding-bad::before { background: var(--red); }
+        .finding-good::before { background: var(--green); }
+        .finding-warn::before { background: var(--orange); }
+
+        /* Numbered list blocks */
+        .numbered-list { counter-reset: item-counter; }
+        .numbered-item {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 18px 20px 18px 70px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+            counter-increment: item-counter;
+        }
+        .numbered-item::before {
+            content: counter(item-counter);
+            position: absolute;
+            left: 18px;
+            top: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .numbered-item.critical::before { background: var(--red); }
+        .numbered-item.strength::before { background: var(--green); }
+        .numbered-item .item-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .numbered-item .item-desc { font-size: 13px; color: var(--text-light); }
+        .numbered-item .item-source {
+            display: inline-block;
+            background: #edf2f7;
+            color: var(--navy);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        /* Comparison table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        th {
+            background: var(--navy);
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        tr:nth-child(even) td { background: #f8fafc; }
+        tr:hover td { background: #edf2f7; }
+        .td-highlight { font-weight: 700; color: var(--navy); }
+        .badge-gold { background: #fef3c7; color: #92400e; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+        .badge-silver { background: #e5e7eb; color: #374151; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+        .badge-bronze { background: #fde8d8; color: #9a3412; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+        .status-good { color: var(--green); font-weight: 600; }
+        .status-mid { color: var(--orange); font-weight: 600; }
+        .status-bad { color: var(--red); font-weight: 600; }
+
+        /* Vision cards */
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 18px;
+            margin: 20px 0;
+        }
+        .vision-card {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--accent);
+        }
+        .vision-card h4 { color: var(--navy); font-size: 16px; margin-bottom: 10px; margin-top: 0; }
+        .vision-card ul { padding-left: 18px; margin: 0; }
+        .vision-card li { font-size: 13px; margin-bottom: 5px; }
+
+        /* Results cards */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin: 20px 0;
+        }
+        .result-card {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 22px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .result-card .result-before {
+            font-size: 13px;
+            color: var(--red);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .result-card .result-arrow { font-size: 18px; color: var(--green); margin: 4px 0; }
+        .result-card .result-after {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--green);
+        }
+        .result-card .result-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Note boxes */
+        .note-box {
+            background: #ebf8ff;
+            border-left: 4px solid var(--accent);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        .warn-box {
+            background: #fff5f5;
+            border-left: 4px solid var(--red);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy-dark);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 32px 20px;
+            font-size: 13px;
+            margin-top: 48px;
+            line-height: 1.8;
+        }
+        footer strong { color: white; }
+
+        /* Utility */
+        .mt-0 { margin-top: 0; }
+        .mb-sm { margin-bottom: 8px; }
+        .text-center { text-align: center; }
+        .text-small { font-size: 13px; }
+        .text-muted { color: var(--text-light); }
+
+        /* Sub-scores inline */
+        .sub-scores {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .sub-score-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            background: #edf2f7;
+            color: var(--navy);
+        }
+
+        /* Print styles */
+        @media print {
+            body { font-size: 12px; line-height: 1.5; }
+            .report-nav { display: none; }
+            header { padding: 24px 0; background: var(--navy) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .container { max-width: 100%; padding: 0 16px; }
+            section { page-break-inside: avoid; margin-bottom: 24px; }
+            .score-card, .expert-block, .numbered-item, .vision-card, .result-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+            .overall-score-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .expert-score-circle { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .numbered-item::before { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            h2 { page-break-after: avoid; }
+            footer { background: #1a3a5c !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .score-card:hover { transform: none; }
+            a { color: var(--navy); text-decoration: none; }
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 22px; }
+            .score-cards { grid-template-columns: 1fr 1fr; }
+            .expert-block { grid-template-columns: 1fr; text-align: center; }
+            .expert-score-circle { margin: 0 auto; }
+            .report-nav a { font-size: 11px; padding: 4px 8px; }
+            .vision-grid { grid-template-columns: 1fr; }
+            .results-grid { grid-template-columns: 1fr 1fr; }
+            .radar-wrap { transform: scale(0.85); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="container">
+        <div class="badge-type">Консолидиран доклад v1.0</div>
+        <h1>Комплексен анализ на уебсайта на ВВМУ „Н. Й. Вапцаров"</h1>
+        <div class="subtitle">Обобщение на 4 експертни анализа: UX/UI, Frontend архитектура, SEO и Бизнес ефективност на https://www.naval-acad.bg/</div>
+        <div class="meta">
+            <span>Дата: Март 2026</span>
+            <span>Анализирани страници: 30+</span>
+            <span>Benchmark: 18 морски академии</span>
+            <span>Експерти: 4 области</span>
+        </div>
+    </div>
+</header>
+
+<!-- NAVIGATION -->
+<nav class="report-nav">
+    <div class="container">
+        <ul>
+            <li><a href="#summary">Обобщение</a></li>
+            <li><a href="#overall">Обща оценка</a></li>
+            <li><a href="#experts">По експерт</a></li>
+            <li><a href="#problems">Критични проблеми</a></li>
+            <li><a href="#strengths">Силни страни</a></li>
+            <li><a href="#benchmark">Сравнение</a></li>
+            <li><a href="#vision">Визия</a></li>
+            <li><a href="#results">Резултати</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- ================================================================ -->
+    <!-- 1. EXECUTIVE SUMMARY -->
+    <!-- ================================================================ -->
+    <section id="summary" style="margin-top: 36px;">
+        <h2><span class="section-num">1</span> Обобщение за ръководството</h2>
+
+        <div class="exec-summary">
+            <h3 class="mt-0">Уважаеми членове на ръководството на ВВМУ,</h3>
+            <p>Уебсайтът на Висшето военноморско училище „Н. Й. Вапцаров" беше подложен на задълбочен анализ от четирима независими експерта в областите UX/UI дизайн, Frontend архитектура, SEO оптимизация и Бизнес ефективност. Допълнително бе проведен benchmark анализ на 18 водещи морски академии в света.</p>
+
+            <p><strong>Средната оценка е 4.3 от 10.</strong> Сайтът има солидна съдържателна база (40+ специалности, 60+ курса, активен пресцентър) и няколко технологично напреднали решения (PWA, интерактивен филтър). Въпреки това, критичните проблеми с производителността (38 MB тегло на начална страница), пълната липса на мета описания и структурирани данни за търсачки, разпръснатата инфраструктура от 8+ домейна и прекъснатите потребителски пътища значително ограничават ефективността на сайта.</p>
+
+            <p>В сравнение с 18 международни академии, ВВМУ се позиционира <strong>над средното ниво по визуален дизайн и функционалност</strong>, но <strong>значително изостава в производителност, SEO и конверсионна ефективност</strong>. Водещи академии като Ecole Navale (Франция), Royal Canadian Navy и скандинавските академии предлагат значително по-добро потребителско изживяване.</p>
+
+            <p><strong>Нашето предложение:</strong> Не просто нов сайт, а интегрирана дигитална платформа — модерен публичен сайт, обединен с вътрешен портал за управление на съдържание, документи и онлайн форми. Това ще консолидира разпръснатите поддомейни, ще автоматизира процесите и ще постави ВВМУ сред дигиталните лидери в сектора.</p>
+        </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 2. ОБЩА ОЦЕНКА -->
+    <!-- ================================================================ -->
+    <section id="overall">
+        <h2><span class="section-num">2</span> Обща оценка</h2>
+
+        <div class="overall-score-box">
+            <div class="big-score">4.3<span>/10</span></div>
+            <div class="verdict">Под средното ниво — необходими са значителни подобрения</div>
+            <div class="verdict-detail">Средна оценка от 4 експертни анализа (UX/UI: 5.2 | Frontend: 3.5 | SEO: 3.5 | Бизнес: 5.0)</div>
+        </div>
+
+        <div class="score-cards">
+            <div class="score-card">
+                <div class="expert-name">UX/UI Дизайн</div>
+                <div class="score-value score-orange">5.2<span>/10</span></div>
+                <div class="score-bar"><div class="score-bar-fill fill-orange" style="width: 52%"></div></div>
+                <div class="score-label">Средно ниво</div>
+            </div>
+            <div class="score-card">
+                <div class="expert-name">Frontend архитектура</div>
+                <div class="score-value score-red">3.5<span>/10</span></div>
+                <div class="score-bar"><div class="score-bar-fill fill-red" style="width: 35%"></div></div>
+                <div class="score-label">Критично ниско</div>
+            </div>
+            <div class="score-card">
+                <div class="expert-name">SEO и съдържание</div>
+                <div class="score-value score-red">3.5<span>/10</span></div>
+                <div class="score-bar"><div class="score-bar-fill fill-red" style="width: 35%"></div></div>
+                <div class="score-label">Критично ниско</div>
+            </div>
+            <div class="score-card">
+                <div class="expert-name">Бизнес ефективност</div>
+                <div class="score-value score-orange">5.0<span>/10</span></div>
+                <div class="score-bar"><div class="score-bar-fill fill-orange" style="width: 50%"></div></div>
+                <div class="score-label">Средно ниво</div>
+            </div>
+        </div>
+
+        <!-- Radar chart via SVG -->
+        <h3 class="text-center">Визуална карта на оценките</h3>
+        <div class="radar-wrap">
+            <div class="radar-chart">
+                <!-- Background circles -->
+                <div class="radar-bg r1"></div>
+                <div class="radar-bg r2"></div>
+                <div class="radar-bg r3"></div>
+                <div class="radar-bg r4"></div>
+                <!-- Labels -->
+                <div class="radar-label top">UX/UI Дизайн<br><strong>5.2</strong></div>
+                <div class="radar-label right">Frontend<br><strong>3.5</strong></div>
+                <div class="radar-label bottom">SEO<br><strong>3.5</strong></div>
+                <div class="radar-label left">Бизнес<br><strong>5.0</strong></div>
+                <!-- Polygon overlay -->
+                <div class="radar-polygon">
+                    <svg viewBox="0 0 280 280">
+                        <!-- Cross lines -->
+                        <line x1="140" y1="0" x2="140" y2="280" stroke="#c8d4e0" stroke-width="0.5"/>
+                        <line x1="0" y1="140" x2="280" y2="140" stroke="#c8d4e0" stroke-width="0.5"/>
+                        <!-- Data polygon: UX=5.2(top), Frontend=3.5(right), SEO=3.5(bottom), Business=5.0(left) -->
+                        <!-- Scale: 10=140px from center, so value * 14 = distance -->
+                        <!-- UX 5.2: y = 140 - 5.2*14 = 140 - 72.8 = 67.2 -->
+                        <!-- Frontend 3.5: x = 140 + 3.5*14 = 140 + 49 = 189 -->
+                        <!-- SEO 3.5: y = 140 + 3.5*14 = 140 + 49 = 189 -->
+                        <!-- Business 5.0: x = 140 - 5.0*14 = 140 - 70 = 70 -->
+                        <polygon
+                            points="140,67 189,140 140,189 70,140"
+                            fill="rgba(25,143,217,0.2)"
+                            stroke="var(--accent)"
+                            stroke-width="2.5"
+                        />
+                        <!-- Data points -->
+                        <circle cx="140" cy="67" r="5" fill="var(--accent)"/>
+                        <circle cx="189" cy="140" r="5" fill="var(--accent)"/>
+                        <circle cx="140" cy="189" r="5" fill="var(--accent)"/>
+                        <circle cx="70" cy="140" r="5" fill="var(--accent)"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <p class="text-center text-small text-muted">Диаграмата визуализира дисбаланса между областите. Frontend и SEO са критично изоставащи спрямо UX/UI и бизнес аспектите.</p>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 3. ОЦЕНКИ ПО ЕКСПЕРТ -->
+    <!-- ================================================================ -->
+    <section id="experts">
+        <h2><span class="section-num">3</span> Оценки по експерт</h2>
+
+        <!-- UX/UI -->
+        <div class="expert-block">
+            <div class="expert-score-circle circle-orange">5.2</div>
+            <div class="expert-info">
+                <h3>UX/UI Дизайн <span style="font-weight:400;color:var(--text-light);font-size:14px;">— 5.2 / 10</span></h3>
+                <div class="expert-subtitle">Навигация: 5 | Визуална йерархия: 5 | Responsive: 6 | Консистентност: 5 | Достъпност: 4</div>
+                <ul class="expert-findings">
+                    <li class="finding-bad">Претоварено mega-меню с 35+ елемента и 7+ категории; липса на breadcrumb навигация на повечето страници</li>
+                    <li class="finding-bad">Дублирано съдържание на страницата „За нас" — CMS грешка, вредяща на доверието</li>
+                    <li class="finding-bad">Неподходящи display шрифтове (Russo One, Poiret One) — лоша четливост при малки размери</li>
+                    <li class="finding-good">PWA имплементация, интерактивен филтър за специалности и модерна цветова палитра (navy + зелен + циан)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Frontend -->
+        <div class="expert-block">
+            <div class="expert-score-circle circle-red">3.5</div>
+            <div class="expert-info">
+                <h3>Frontend архитектура <span style="font-weight:400;color:var(--text-light);font-size:14px;">— 3.5 / 10</span></h3>
+                <div class="expert-subtitle">Page Weight: 2 | JavaScript: 3 | CSS: 3 | Изображения: 2 | Кеширане: 2 | Сигурност: 2</div>
+                <ul class="expert-findings">
+                    <li class="finding-bad">38 MB тегло на начална страница (препоръчително: под 2 MB); 36 MB неоптимизирани изображения</li>
+                    <li class="finding-bad">3 слайдер плъгина едновременно (LayerSlider + RevSlider + LightSlider); 1.7 MB JavaScript без defer/async</li>
+                    <li class="finding-bad">Пълна липса на security headers (CSP, X-Frame-Options, HSTS); PageSpeed прогноза: 15-25/100 (Mobile)</li>
+                    <li class="finding-warn">Core Web Vitals: LCP ~6.5s (цел: &lt;2.5s), FCP ~4.2s (цел: &lt;1.8s), TBT ~850ms (цел: &lt;200ms)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SEO -->
+        <div class="expert-block">
+            <div class="expert-score-circle circle-red">3.5</div>
+            <div class="expert-info">
+                <h3>SEO и съдържание <span style="font-weight:400;color:var(--text-light);font-size:14px;">— 3.5 / 10</span></h3>
+                <div class="expert-subtitle">Мета тагове: 1 | URL структура: 4 | Crawlability: 5 | Hreflang: 1 | Alt текстове: 2 | Съдържание: 6</div>
+                <ul class="expert-findings">
+                    <li class="finding-bad">Нито една страница няма meta description, Open Graph тагове, canonical URL или hreflang тагове</li>
+                    <li class="finding-bad">Тестови страници в индекса (/sample-page, /new-homepage, /kolichka, /porachka); кирилица в URL-и</li>
+                    <li class="finding-bad">80-90% от изображенията без описателни alt текстове; липса на JSON-LD structured data</li>
+                    <li class="finding-good">Богато съдържание (45+ специалности, 60+ курса), коректен robots.txt, редовно обновяване до март 2026</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Business -->
+        <div class="expert-block">
+            <div class="expert-score-circle circle-orange">5.0</div>
+            <div class="expert-info">
+                <h3>Бизнес ефективност <span style="font-weight:400;color:var(--text-light);font-size:14px;">— 5.0 / 10</span></h3>
+                <div class="expert-subtitle">Потреб. пътища: 5 | Конверсия: 4 | Инф. пълнота: 6 | Конкурентна поз.: 5 | Аудитории: 4 | Бранд: 6 | Измеримост: 4</div>
+                <ul class="expert-findings">
+                    <li class="finding-bad">Кандидатстудентски справочник = линк към Google Drive PDF; приемът на външен домейн (fees.nvna.eu)</li>
+                    <li class="finding-bad">Нито една аудитория не е обслужена на отлично ниво; алумни и работодатели — 3/10</li>
+                    <li class="finding-bad">Липсва event tracking, conversion tracking и фуниен анализ; 60+ курса без цени и онлайн записване</li>
+                    <li class="finding-good">Висока акредитация 9.07/10; уникални активи (11 симулатора, планетариум); PWA и филтър на специалности</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 4. ТОП 10 КРИТИЧНИ ПРОБЛЕМА -->
+    <!-- ================================================================ -->
+    <section id="problems">
+        <h2><span class="section-num">4</span> Топ 10 критични проблема</h2>
+        <p class="text-muted mb-sm">Обединени от всички 4 експертни анализа и подредени по тежест на въздействие.</p>
+
+        <div class="numbered-list">
+            <div class="numbered-item critical">
+                <div class="item-title">38 MB тегло на начална страница — 19x над допустимото</div>
+                <div class="item-desc">36 MB неоптимизирани изображения, 1.7 MB JavaScript, 1.1 MB CSS. LCP ~6.5s при цел &lt;2.5s. Google PageSpeed прогноза: 15-25/100 (мобилно). Директно вреди на класирането в Google и потребителското изживяване.</div>
+                <span class="item-source">Frontend</span> <span class="item-source">SEO</span>
+            </div>
+
+            <div class="numbered-item critical">
+                <div class="item-title">Пълна липса на мета описания, OG тагове, canonical и hreflang</div>
+                <div class="item-desc">Нито една от 280+ страници не съдържа meta description. WPML е инсталиран, но hreflang не е конфигуриран. Английската версия не е в sitemap-а. Потенциална загуба на 30-50% CTR от Google резултати.</div>
+                <span class="item-source">SEO</span>
+            </div>
+
+            <div class="numbered-item critical">
+                <div class="item-title">Разпръсната инфраструктура от 8+ различни домейна</div>
+                <div class="item-desc">Потребителите навигират между naval-acad.bg, nvna.eu, fees.nvna.eu, teacher.naval-acad.bg, ws.naval-acad.bg, dlc.naval-acad.bg, career.nvna.eu, scholar.nvna.eu — всеки с различен дизайн. Критичният CTA „Кандидатствай" води към fees.nvna.eu — различен домейн.</div>
+                <span class="item-source">UX/UI</span> <span class="item-source">Бизнес</span>
+            </div>
+
+            <div class="numbered-item critical">
+                <div class="item-title">Прекъснат потребителски път за кандидат-студенти</div>
+                <div class="item-desc">Справочникът за прием е един линк към Google Drive PDF. Няма вграден формуляр за кандидатстване. Приемът е на външен домейн с различен дизайн. 5-6 кликвания до цел при неясна навигация — нулева конверсия.</div>
+                <span class="item-source">Бизнес</span> <span class="item-source">UX/UI</span>
+            </div>
+
+            <div class="numbered-item critical">
+                <div class="item-title">3 слайдер плъгина и пълна липса на security headers</div>
+                <div class="item-desc">LayerSlider 7.14.0 + RevSlider 6.7.25 + LightSlider 1.1.6 работят едновременно. Липсват CSP, X-Frame-Options, HSTS, X-Content-Type-Options. 7 render-blocking скрипта. TBT ~850ms при цел &lt;200ms.</div>
+                <span class="item-source">Frontend</span>
+            </div>
+
+            <div class="numbered-item critical">
+                <div class="item-title">80-90% от изображенията без alt текстове и без lazy loading</div>
+                <div class="item-desc">33+ изображения на началната страница без lazy loading атрибут. Масово липсващи описателни alt текстове — WCAG нарушение и SEO загуба (Google Images). WordPress от v5.5 поддържа нативен lazy loading.</div>
+                <span class="item-source">SEO</span> <span class="item-source">Frontend</span> <span class="item-source">UX/UI</span>
+            </div>
+
+            <div class="numbered-item critical">
+                <div class="item-title">Тестови и дублирани страници в Google индекса</div>
+                <div class="item-desc">URL-и като /sample-page, /new-homepage, /new-homepage2, /test-new-homepage, /porachka, /kolichka, /789-2 се индексират от Google. Users sitemap разкрива потребителски профили — риск за сигурността.</div>
+                <span class="item-source">SEO</span>
+            </div>
+
+            <div class="numbered-item critical">
+                <div class="item-title">Непълна английска версия — бариера за международни студенти</div>
+                <div class="item-desc">EN версията е силно изоставаща с непълни преводи и остарели новини. Erasmus+ документите са в Google Drive. Липсва информация за виза, настаняване и град Варна. Международните студенти и алумни са оценени на 3/10.</div>
+                <span class="item-source">Бизнес</span> <span class="item-source">SEO</span>
+            </div>
+
+            <div class="numbered-item critical">
+                <div class="item-title">Претоварена навигация и липса на breadcrumbs</div>
+                <div class="item-desc">Mega-менюто съдържа 35+ линка в 7+ категории (за сравнение, лидерът Ecole Navale използва 5). Няма breadcrumb навигация. Няма визуална индикация за активна секция. Външни линкове не се разграничават от вътрешни.</div>
+                <span class="item-source">UX/UI</span>
+            </div>
+
+            <div class="numbered-item critical">
+                <div class="item-title">60+ курса без цени, графици и онлайн записване</div>
+                <div class="item-desc">Морските курсове за квалификация са силен приходен поток, но страницата показва само таблица без цени и дати. Потребителят не може да вземе решение без допълнително запитване — значителна бариера за конверсия.</div>
+                <span class="item-source">Бизнес</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 5. ТОП 10 СИЛНИ СТРАНИ -->
+    <!-- ================================================================ -->
+    <section id="strengths">
+        <h2><span class="section-num">5</span> Топ 10 силни страни</h2>
+        <p class="text-muted mb-sm">Какво работи добре и трябва да се запази или надгради в новата платформа.</p>
+
+        <div class="numbered-list">
+            <div class="numbered-item strength">
+                <div class="item-title">PWA имплементация (Service Worker + Workbox 7.3.0)</div>
+                <div class="item-desc">Напреднала функционалност, рядко срещана сред конкурентите. Само ВВМУ и Royal Canadian Navy имат подобна технология. Позволява офлайн достъп и подобрено кеширане.</div>
+                <span class="item-source">UX/UI</span> <span class="item-source">Бизнес</span>
+            </div>
+
+            <div class="numbered-item strength">
+                <div class="item-title">Интерактивна система за филтриране на специалности</div>
+                <div class="item-desc">Уникален за сектора филтър по квалификационна степен, форма на обучение, тематика и продължителност. Card-based визуализация с hover анимации. Логиката за скриване на нерелевантни филтри е отлично UX решение.</div>
+                <span class="item-source">UX/UI</span> <span class="item-source">Бизнес</span>
+            </div>
+
+            <div class="numbered-item strength">
+                <div class="item-title">Богат каталог от 40+ специалности и 60+ морски курса</div>
+                <div class="item-desc">Бакалавър, магистър, курсантски програми, професионални квалификации — повечето конкурентни академии не предлагат подобна гама. Силен потенциал за приходи и привличане на аудитории.</div>
+                <span class="item-source">Бизнес</span> <span class="item-source">SEO</span>
+            </div>
+
+            <div class="numbered-item strength">
+                <div class="item-title">Висока акредитационна оценка — 9.07/10</div>
+                <div class="item-desc">Над средната за сектора. Значително конкурентно предимство, което заслужава по-видимо представяне на сайта — animated counters, hero секция, testimonials.</div>
+                <span class="item-source">Бизнес</span>
+            </div>
+
+            <div class="numbered-item strength">
+                <div class="item-title">Уникални физически активи: 11 симулатора и планетариум</div>
+                <div class="item-desc">Корабоводни симулатори, тренажори и планетариум — отличителни активи, които малко морски академии притежават. Потенциал за виртуални турове и видео съдържание.</div>
+                <span class="item-source">Бизнес</span>
+            </div>
+
+            <div class="numbered-item strength">
+                <div class="item-title">Активен пресцентър с регулярни публикации</div>
+                <div class="item-desc">Новините се обновяват до март 2026. Покриват конференции, спортни събития, академичен живот. Добра база за SEO оптимизация и социално споделяне.</div>
+                <span class="item-source">SEO</span> <span class="item-source">Бизнес</span>
+            </div>
+
+            <div class="numbered-item strength">
+                <div class="item-title">Модерна цветова палитра — отличима и подходяща</div>
+                <div class="item-desc">Navy Blue (#1a488e) + зелен акцент (#65bd7d) + циан (#198fd9) надграждат над стандартната navy-бяла палитра. Различава се от конкурентите, запазвайки институционална авторитетност.</div>
+                <span class="item-source">UX/UI</span>
+            </div>
+
+            <div class="numbered-item strength">
+                <div class="item-title">Двуезичност (БГ/EN) чрез WPML</div>
+                <div class="item-desc">Важно за международни партньорства и Erasmus+ програмата. Техническата инфраструктура е налице — нужна е пълна конфигурация на hreflang и завършване на EN превода.</div>
+                <span class="item-source">SEO</span> <span class="item-source">UX/UI</span>
+            </div>
+
+            <div class="numbered-item strength">
+                <div class="item-title">Google Analytics активен + WordPress платформа</div>
+                <div class="item-desc">GA4 (G-PS67DMR7KR) е инсталиран чрез Google Site Kit. WordPress позволява бързо внедряване на SEO плъгини (Yoast/Rank Math), кеширане и оптимизации без смяна на платформата.</div>
+                <span class="item-source">SEO</span> <span class="item-source">Frontend</span>
+            </div>
+
+            <div class="numbered-item strength">
+                <div class="item-title">Erasmus+ и BIP програми — международна мрежа</div>
+                <div class="item-desc">Партньорства с европейски университети, мобилност на студенти и преподаватели. Силна база за привличане на международни студенти при подобряване на EN версията.</div>
+                <span class="item-source">Бизнес</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 6. СРАВНЕНИЕ С МЕЖДУНАРОДНИ АКАДЕМИИ -->
+    <!-- ================================================================ -->
+    <section id="benchmark">
+        <h2><span class="section-num">6</span> Сравнение с международни академии</h2>
+        <p>Benchmark анализ на 18 морски академии от целия свят. ВВМУ е позиционирано спрямо лидерите и регионалните конкуренти.</p>
+
+        <h3>Глобално класиране (топ 6 + ВВМУ)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Позиция</th>
+                    <th>Академия</th>
+                    <th>Страна</th>
+                    <th>Дизайн</th>
+                    <th>Модерност</th>
+                    <th>Функц.</th>
+                    <th>UX</th>
+                    <th>Средно</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-gold">1</span></td>
+                    <td class="td-highlight">Ecole Navale</td>
+                    <td>Франция</td>
+                    <td class="status-good">5/5</td>
+                    <td class="status-good">5/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good"><strong>4.5</strong></td>
+                </tr>
+                <tr>
+                    <td><span class="badge-silver">2</span></td>
+                    <td class="td-highlight">Royal Canadian Navy</td>
+                    <td>Канада</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">5/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good"><strong>4.25</strong></td>
+                </tr>
+                <tr>
+                    <td><span class="badge-bronze">3-4</span></td>
+                    <td class="td-highlight">Норвежка военна академия</td>
+                    <td>Норвегия</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good"><strong>4.0</strong></td>
+                </tr>
+                <tr>
+                    <td><span class="badge-bronze">3-4</span></td>
+                    <td class="td-highlight">Шведски морски център</td>
+                    <td>Швеция</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good"><strong>4.0</strong></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td class="td-highlight">Escola Naval</td>
+                    <td>Португалия</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-mid">3/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-mid">3/5</td>
+                    <td class="status-mid"><strong>3.5</strong></td>
+                </tr>
+                <tr style="background: #e8f4fd;">
+                    <td><strong>6-7</strong></td>
+                    <td class="td-highlight" style="color: var(--accent);">ВВМУ „Н. Й. Вапцаров"</td>
+                    <td><strong>България</strong></td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-mid">3/5</td>
+                    <td class="status-mid"><strong>3.75</strong></td>
+                </tr>
+                <tr>
+                    <td>6-7</td>
+                    <td>ROC Naval Academy</td>
+                    <td>Тайван</td>
+                    <td class="status-mid">3/5</td>
+                    <td class="status-mid">3/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-good">4/5</td>
+                    <td class="status-mid"><strong>3.5</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note-box">
+            <strong>Позиция на ВВМУ:</strong> По визуален дизайн и функционалност сайтът е в горната третина (6-7 от 18). Основните изоставания са в UX (потребителски пътища), производителност (38 MB) и SEO (липсващи мета данни). При реализиране на предложените подобрения, ВВМУ може да се изкачи в топ 3-4.
+        </div>
+
+        <h3>Сравнение с регионални конкуренти</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Критерий</th>
+                    <th>ВВМУ (България)</th>
+                    <th>HNA (Гърция)</th>
+                    <th>DHO (Турция)</th>
+                    <th>Escola Naval (Португалия)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="td-highlight">Онлайн кандидатстване</td>
+                    <td class="status-mid">Частично (външен домейн)</td>
+                    <td class="status-mid">e-Services портал</td>
+                    <td class="status-bad">Не</td>
+                    <td class="status-mid">Частично</td>
+                </tr>
+                <tr>
+                    <td class="td-highlight">Многоезичност</td>
+                    <td class="status-mid">BG/EN (EN непълен)</td>
+                    <td class="status-good">EL/EN (пълен)</td>
+                    <td class="status-bad">Само TR</td>
+                    <td class="status-mid">PT основно</td>
+                </tr>
+                <tr>
+                    <td class="td-highlight">Мобилна версия</td>
+                    <td class="status-good">Responsive + PWA</td>
+                    <td class="status-mid">Responsive</td>
+                    <td class="status-bad">Desktop-centric</td>
+                    <td class="status-mid">Responsive</td>
+                </tr>
+                <tr>
+                    <td class="td-highlight">Курсове за квалификация</td>
+                    <td class="status-good">60+ курса</td>
+                    <td class="status-bad">Малко</td>
+                    <td class="status-bad">Малко</td>
+                    <td class="status-mid">Умерено</td>
+                </tr>
+                <tr>
+                    <td class="td-highlight">Кариерен център</td>
+                    <td class="status-mid">Външен (career.nvna.eu)</td>
+                    <td class="status-bad">Липсва</td>
+                    <td class="status-bad">Липсва</td>
+                    <td class="status-bad">Липсва</td>
+                </tr>
+                <tr>
+                    <td class="td-highlight">Structured data (SEO)</td>
+                    <td class="status-bad">Липсва</td>
+                    <td class="status-bad">Липсва</td>
+                    <td class="status-bad">Липсва</td>
+                    <td class="status-bad">Липсва</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note-box">
+            <strong>Регионални предимства на ВВМУ:</strong> Лидер по мобилна версия (PWA), брой курсове и наличие на кариерен център. Изоставане в пълнотата на английската версия спрямо Гърция. Значителна възможност за отличаване чрез SEO structured data — никой в региона не го прави.
+        </div>
+
+        <h3>Какво правят лидерите, а ВВМУ — не</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Функционалност</th>
+                    <th>Лидер</th>
+                    <th>ВВМУ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hero видео на началната страница</td>
+                    <td>Ecole Navale (Франция)</td>
+                    <td class="status-bad">Статичен слайдер</td>
+                </tr>
+                <tr>
+                    <td>Augmented Reality / виртуален тур</td>
+                    <td>Royal Canadian Navy</td>
+                    <td class="status-bad">Липсва</td>
+                </tr>
+                <tr>
+                    <td>Студентски testimonials с карти</td>
+                    <td>Royal Canadian Navy</td>
+                    <td class="status-bad">Липсва</td>
+                </tr>
+                <tr>
+                    <td>Custom типография (уникален шрифт)</td>
+                    <td>Ecole Navale (шрифт „Mariane")</td>
+                    <td class="status-bad">Шаблонен (Russo One)</td>
+                </tr>
+                <tr>
+                    <td>JSON-LD Schema.org markup</td>
+                    <td>Ecole Navale, Чили</td>
+                    <td class="status-bad">Липсва</td>
+                </tr>
+                <tr>
+                    <td>Animated statistics (counterUp)</td>
+                    <td>Escola Naval (Португалия)</td>
+                    <td class="status-bad">Липсва</td>
+                </tr>
+                <tr>
+                    <td>Достъпност (font resize, high contrast)</td>
+                    <td>Тайван, Швеция, Норвегия</td>
+                    <td class="status-bad">Минимална</td>
+                </tr>
+                <tr>
+                    <td>Full-screen search overlay</td>
+                    <td>Ecole Navale</td>
+                    <td class="status-bad">Стандартно WP търсене</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 7. ВИЗИЯ ЗА ПОДОБРЕНИЕ -->
+    <!-- ================================================================ -->
+    <section id="vision">
+        <h2><span class="section-num">7</span> Визия за подобрение</h2>
+
+        <div class="exec-summary" style="border-left-color: var(--accent);">
+            <h3 class="mt-0">Не просто сайт — интегрирана дигитална платформа</h3>
+            <p>Предлагаме трансформация от текущия разпръснат модел (8+ домейна, шаблонна тема, липсваща оптимизация) към <strong>единна платформа с два слоя</strong>: модерен публичен сайт за всички аудитории и защитен вътрешен портал за администриране на съдържание, документи и процеси.</p>
+        </div>
+
+        <div class="vision-grid">
+            <div class="vision-card">
+                <h4>Публичен сайт (Frontend)</h4>
+                <ul>
+                    <li>Custom тема (не Avada) с уникална морска идентичност</li>
+                    <li>Hero видео секция (симулатори, тренировки, Черно море)</li>
+                    <li>Animated statistics (17 зали, 11 симулатора, 9.07 акредитация)</li>
+                    <li>Full-screen search с autocomplete</li>
+                    <li>Mega-menu с 5 категории + описания</li>
+                    <li>Breadcrumb навигация на всички страници</li>
+                    <li>Пълна EN версия с hreflang тагове</li>
+                    <li>Testimonials от студенти и възпитаници</li>
+                    <li>Виртуален тур на кампуса</li>
+                    <li>Достъпност: font resize, high contrast, skip-to-content</li>
+                </ul>
+            </div>
+            <div class="vision-card">
+                <h4>Вътрешен портал (Backend)</h4>
+                <ul>
+                    <li>Единна система за управление на съдържание</li>
+                    <li>Онлайн кандидатстване с вградени форми</li>
+                    <li>Онлайн записване за курсове с календар и плащане</li>
+                    <li>Документен портал (вместо Google Drive)</li>
+                    <li>Управление на Erasmus+ мобилност</li>
+                    <li>Алумни портал с менторска програма</li>
+                    <li>Кариерен център интегриран в основния сайт</li>
+                    <li>Event tracking и conversion funnels</li>
+                    <li>Dashboard с KPI метрики в реално време</li>
+                    <li>Ролева система (студенти, преподаватели, админ)</li>
+                </ul>
+            </div>
+            <div class="vision-card">
+                <h4>Техническа архитектура</h4>
+                <ul>
+                    <li>Custom WordPress тема или Headless CMS (Next.js + WP)</li>
+                    <li>WebP/AVIF изображения с lazy loading</li>
+                    <li>Под 2 MB тегло на страница</li>
+                    <li>CDN за статични ресурси</li>
+                    <li>Един слайдер (или видео hero) вместо три</li>
+                    <li>Пълни security headers (CSP, HSTS, X-Frame)</li>
+                    <li>JSON-LD structured data (EducationalOrganization)</li>
+                    <li>Yoast SEO / Rank Math за мета управление</li>
+                    <li>Google Tag Manager + Matomo (GDPR)</li>
+                    <li>Консолидация под единен домейн</li>
+                </ul>
+            </div>
+            <div class="vision-card">
+                <h4>Съдържателна стратегия</h4>
+                <ul>
+                    <li>Професионална морска фотография (не stock)</li>
+                    <li>Видео съдържание: симулации, тренировки, кампус</li>
+                    <li>Програмни страници с outcomes и кариерни пътища</li>
+                    <li>FAQ секция за кандидат-студенти</li>
+                    <li>Блог за SEO (морски новини, кариера, наука)</li>
+                    <li>Курсове с цени, графици и онлайн записване</li>
+                    <li>Профили на преподаватели с публикации</li>
+                    <li>Алумни истории на успеха</li>
+                    <li>Медиа кит за журналисти</li>
+                    <li>Тристепенна езикова поддръжка: BG/EN/RU</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 8. ОЧАКВАНИ РЕЗУЛТАТИ -->
+    <!-- ================================================================ -->
+    <section id="results">
+        <h2><span class="section-num">8</span> Очаквани резултати</h2>
+        <p>Конкретни, измерими подобрения при пълно изпълнение на препоръките в рамките на 3-6 месеца.</p>
+
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-before">38 MB</div>
+                <div class="result-arrow">&#8595;</div>
+                <div class="result-after">&lt;2 MB</div>
+                <div class="result-label">Тегло на страница</div>
+            </div>
+            <div class="result-card">
+                <div class="result-before">15-25/100</div>
+                <div class="result-arrow">&#8595;</div>
+                <div class="result-after">85-95</div>
+                <div class="result-label">PageSpeed (Mobile)</div>
+            </div>
+            <div class="result-card">
+                <div class="result-before">~6.5s</div>
+                <div class="result-arrow">&#8595;</div>
+                <div class="result-after">&lt;2.5s</div>
+                <div class="result-label">LCP (Largest Paint)</div>
+            </div>
+            <div class="result-card">
+                <div class="result-before">3.5/10</div>
+                <div class="result-arrow">&#8595;</div>
+                <div class="result-after">7-8/10</div>
+                <div class="result-label">SEO оценка</div>
+            </div>
+            <div class="result-card">
+                <div class="result-before">0 мета</div>
+                <div class="result-arrow">&#8595;</div>
+                <div class="result-after">100%</div>
+                <div class="result-label">Мета описания</div>
+            </div>
+            <div class="result-card">
+                <div class="result-before">8+ домейна</div>
+                <div class="result-arrow">&#8595;</div>
+                <div class="result-after">1 портал</div>
+                <div class="result-label">Единна платформа</div>
+            </div>
+            <div class="result-card">
+                <div class="result-before">0 форми</div>
+                <div class="result-arrow">&#8595;</div>
+                <div class="result-after">Онлайн</div>
+                <div class="result-label">Кандидатстване</div>
+            </div>
+            <div class="result-card">
+                <div class="result-before">5-6 клика</div>
+                <div class="result-arrow">&#8595;</div>
+                <div class="result-after">2-3 клика</div>
+                <div class="result-label">Път до кандидатстване</div>
+            </div>
+        </div>
+
+        <h3>Очаквано въздействие по области</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Област</th>
+                    <th>Текущо</th>
+                    <th>След подобрения</th>
+                    <th>Очакван ефект</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="td-highlight">Производителност (Performance)</td>
+                    <td class="status-bad">38 MB, LCP 6.5s, PageSpeed 15-25</td>
+                    <td class="status-good">&lt;2 MB, LCP &lt;2.5s, PageSpeed 85+</td>
+                    <td>19x по-лека страница; зелена зона на Core Web Vitals; подобрено класиране в Google</td>
+                </tr>
+                <tr>
+                    <td class="td-highlight">SEO</td>
+                    <td class="status-bad">3.5/10, 0 мета описания, 0 hreflang</td>
+                    <td class="status-good">7-8/10, 100% покритие на мета данни</td>
+                    <td>+30-50% CTR от Google; коректна индексация на BG/EN; видимост в Google Images</td>
+                </tr>
+                <tr>
+                    <td class="td-highlight">UX/UI</td>
+                    <td class="status-mid">5.2/10, 35+ менюта, без breadcrumbs</td>
+                    <td class="status-good">8+/10, 5 категории, пълна навигация</td>
+                    <td>Намалено когнитивно натоварване; ясен потребителски път; по-дълги сесии</td>
+                </tr>
+                <tr>
+                    <td class="td-highlight">Бизнес ефективност</td>
+                    <td class="status-mid">5/10, разпръснати домейни, PDF справочник</td>
+                    <td class="status-good">8+/10, единен портал, онлайн форми</td>
+                    <td>Повишена конверсия на кандидат-студенти; онлайн приходи от курсове; подобрен международен имидж</td>
+                </tr>
+                <tr>
+                    <td class="td-highlight">Сигурност</td>
+                    <td class="status-bad">2/10, 0 security headers, HTTP линкове</td>
+                    <td class="status-good">9/10, пълни headers, HTTPS навсякъде</td>
+                    <td>Защита от XSS, clickjacking; доверие от браузърите; съответствие с EU стандарти</td>
+                </tr>
+                <tr>
+                    <td class="td-highlight">Достъпност (A11y)</td>
+                    <td class="status-bad">4/10, без alt, без skip-link, слаб контраст</td>
+                    <td class="status-good">8+/10, WCAG 2.1 AA съответствие</td>
+                    <td>Достъпност за всички потребители; съответствие с нормативни изисквания; SEO предимство</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="warn-box">
+            <strong>Важно:</strong> Без предприемане на действия, текущите проблеми ще продължат да се задълбочават. Google все по-агресивно наказва бавни сайтове без Core Web Vitals. Конкурентните академии активно модернизират своето онлайн присъствие. Всеки месец забавяне означава загуба на потенциални кандидат-студенти и международни партньорства.
+        </div>
+    </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <strong>Комплексен анализ на уебсайта на ВВМУ „Н. Й. Вапцаров"</strong><br>
+        Изготвен от <strong>Деян Стоянов Стоянов</strong> | Факултетен № <strong>001114</strong> | <strong>Март 2026</strong>
+    </div>
+</footer>
+
+</body>
+</html>

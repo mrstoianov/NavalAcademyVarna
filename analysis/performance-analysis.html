@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance анализ — naval-acad.bg</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #fafafa;
+            color: #2d2d2d;
+            line-height: 1.7;
+            padding: 2rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        h1 { font-size: 1.8rem; color: #1a3a5c; border-bottom: 3px solid #1a3a5c; padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
+        .subtitle { color: #666; font-size: 0.95rem; margin-bottom: 2rem; }
+        h2 { font-size: 1.3rem; color: #1a3a5c; margin-top: 2.5rem; margin-bottom: 1rem; border-left: 4px solid #2980b9; padding-left: 0.75rem; }
+        h3 { font-size: 1.05rem; color: #444; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+        th { background: #1a3a5c; color: white; padding: 0.6rem 0.8rem; text-align: left; }
+        td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e0e0; }
+        tr:nth-child(even) { background: #f5f7fa; }
+        code { background: #e8eef4; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; color: #c0392b; }
+        .verdict-box {
+            background: #fff3f3; border: 2px solid #e74c3c; border-radius: 10px;
+            padding: 1.5rem; margin: 1.5rem 0; text-align: center;
+        }
+        .verdict-box h3 { color: #e74c3c; font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .culprit {
+            display: flex; align-items: center; gap: 1rem;
+            background: white; border: 1px solid #e0e0e0; border-radius: 8px;
+            padding: 1rem 1.2rem; margin: 0.7rem 0;
+        }
+        .culprit-rank {
+            background: #e74c3c; color: white; font-weight: 700;
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .culprit-rank.medium { background: #f39c12; }
+        .culprit-rank.low { background: #95a5a6; }
+        .culprit-info { flex: 1; }
+        .culprit-info strong { display: block; margin-bottom: 0.2rem; }
+        .culprit-info span { font-size: 0.85rem; color: #666; }
+        .culprit-weight { font-size: 1.1rem; font-weight: 700; color: #e74c3c; white-space: nowrap; }
+        .comparison {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;
+        }
+        .comparison-card {
+            background: white; border-radius: 10px; padding: 1.5rem;
+            border: 2px solid #e0e0e0; text-align: center;
+        }
+        .comparison-card.current { border-color: #e74c3c; }
+        .comparison-card.target { border-color: #27ae60; }
+        .comparison-card h4 { margin-bottom: 1rem; font-size: 1.1rem; }
+        .comparison-card.current h4 { color: #e74c3c; }
+        .comparison-card.target h4 { color: #27ae60; }
+        .metric-row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; }
+        .metric-row .val { font-weight: 700; }
+        .issue-critical { background: #fdf0f0; border-left: 4px solid #e74c3c; padding: 0.8rem 1rem; margin: 0.5rem 0; border-radius: 0 4px 4px 0; }
+        .issue-positive { background: #eafaf1; border-left: 4px solid #27ae60; padding: 0.8rem 1rem; margin: 0.5rem 0; border-radius: 0 4px 4px 0; }
+        .tech-badge { display: inline-block; background: #e8eef4; color: #1a3a5c; padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.85rem; margin: 0.2rem; }
+        .tech-badge.bad { background: #fde8e8; color: #c0392b; }
+        .tech-badge.good { background: #e8fae8; color: #27ae60; }
+        ul { padding-left: 1.5rem; margin: 0.5rem 0; }
+        li { margin-bottom: 0.3rem; }
+    </style>
+</head>
+<body>
+
+<h1>Performance анализ: naval-acad.bg</h1>
+<p class="subtitle">Технически доклад за производителността — 22 март 2026</p>
+
+<div class="verdict-box">
+    <h3>Основен проблем: Прекомерно тежка страница</h3>
+    <p>Двоен слайдер + Avada framework + неоптимизирани изображения = <strong>3-5MB на страница, 50-80 заявки</strong></p>
+</div>
+
+<h2>Топ 6 виновника за бавното зареждане</h2>
+
+<div class="culprit">
+    <div class="culprit-rank">1</div>
+    <div class="culprit-info">
+        <strong>Двоен слайдер — LayerSlider 7.14.0 + Revolution Slider</strong>
+        <span>Зареждат се ЕДНОВРЕМЕННО два тежки слайдер плъгина. Revolution Slider инициализира <code>setREVStartSize()</code> на ВСЯКА страница, дори вътрешни.</span>
+    </div>
+    <div class="culprit-weight">~800KB</div>
+</div>
+
+<div class="culprit">
+    <div class="culprit-rank">2</div>
+    <div class="culprit-info">
+        <strong>Avada 7.11.13 inline CSS</strong>
+        <span>~20KB inline CSS в &lt;head&gt; на всяка страница. 40+ page-specific стила (за други страници!) зареждани навсякъде. Не може да се кешира.</span>
+    </div>
+    <div class="culprit-weight">~20KB/стр.</div>
+</div>
+
+<div class="culprit">
+    <div class="culprit-rank">3</div>
+    <div class="culprit-info">
+        <strong>Неоптимизирани изображения</strong>
+        <span>Всичко е JPEG/PNG, без WebP/AVIF. Логото е 136KB PNG (вместо ~5KB SVG). Липсва lazy loading — дори има <code>loading="eager"</code> на /specialties.</span>
+    </div>
+    <div class="culprit-weight">+300-500KB</div>
+</div>
+
+<div class="culprit">
+    <div class="culprit-rank medium">4</div>
+    <div class="culprit-info">
+        <strong>WPML overhead</strong>
+        <span>Многоезичният плъгин зарежда cookie management + UI скриптове на всяка страница.</span>
+    </div>
+    <div class="culprit-weight">~50-100KB</div>
+</div>
+
+<div class="culprit">
+    <div class="culprit-rank medium">5</div>
+    <div class="culprit-info">
+        <strong>Fusion Builder DOM complexity</strong>
+        <span>5-6 нива wrapper div-ове: <code>.fusion-builder-row > .fusion-flex-container > .fusion-builder-column > .fusion-column-wrapper</code>. Забавя layout/paint.</span>
+    </div>
+    <div class="culprit-weight">DOM bloat</div>
+</div>
+
+<div class="culprit">
+    <div class="culprit-rank low">6</div>
+    <div class="culprit-info">
+        <strong>WordPress emoji система</strong>
+        <span>Напълно ненужна за академичен сайт. Зарежда emoji detection + SVG набори.</span>
+    </div>
+    <div class="culprit-weight">~8KB</div>
+</div>
+
+<h2>Проблемни анимации</h2>
+
+<table>
+    <tr><th>Технология</th><th>Проблем</th><th>Тежест</th></tr>
+    <tr><td><span class="tech-badge bad">LayerSlider 7.14.0</span></td><td>Тежък JS слайдер с множество skin assets</td><td>Критична</td></tr>
+    <tr><td><span class="tech-badge bad">Revolution Slider</span></td><td>Втори слайдер, зарежда се на ВСЯКА страница</td><td>Критична</td></tr>
+    <tr><td><span class="tech-badge bad">transition: all</span></td><td>Масово използване — анимира всички CSS свойства вместо конкретни</td><td>Средна</td></tr>
+    <tr><td><span class="tech-badge bad">backdrop-filter: blur()</span></td><td>Тежка GPU операция на мобилен overlay</td><td>Средна</td></tr>
+    <tr><td><span class="tech-badge bad">4x lightSlider</span></td><td>4 карусел инстанции на /presscenter</td><td>Средна</td></tr>
+    <tr><td><span class="tech-badge">CSS fadeIn/scale</span></td><td>Приемливо, но може да се оптимизира</td><td>Ниска</td></tr>
+</table>
+
+<h2>Сравнение: Сега vs Next.js</h2>
+
+<div class="comparison">
+    <div class="comparison-card current">
+        <h4>Сега (WordPress + Avada)</h4>
+        <div class="metric-row"><span>First Contentful Paint</span><span class="val">3-5s</span></div>
+        <div class="metric-row"><span>Largest Contentful Paint</span><span class="val">5-8s</span></div>
+        <div class="metric-row"><span>Total Blocking Time</span><span class="val">500-1000ms</span></div>
+        <div class="metric-row"><span>Layout Shift</span><span class="val">0.2-0.5</span></div>
+        <div class="metric-row"><span>Тегло на страница</span><span class="val">3-5MB</span></div>
+        <div class="metric-row"><span>HTTP заявки</span><span class="val">50-80+</span></div>
+    </div>
+    <div class="comparison-card target">
+        <h4>Цел (Next.js)</h4>
+        <div class="metric-row"><span>First Contentful Paint</span><span class="val">&lt;1.5s</span></div>
+        <div class="metric-row"><span>Largest Contentful Paint</span><span class="val">&lt;2.5s</span></div>
+        <div class="metric-row"><span>Total Blocking Time</span><span class="val">&lt;200ms</span></div>
+        <div class="metric-row"><span>Layout Shift</span><span class="val">&lt;0.1</span></div>
+        <div class="metric-row"><span>Тегло на страница</span><span class="val">&lt;800KB</span></div>
+        <div class="metric-row"><span>HTTP заявки</span><span class="val">15-25</span></div>
+    </div>
+</div>
+
+<h2>Решения за Next.js сайта</h2>
+
+<div class="issue-positive">
+    <strong>Слайдер:</strong> CSS-only hero секция или лек компонент (Swiper, ~40KB) вместо 800KB двоен слайдер
+</div>
+<div class="issue-positive">
+    <strong>Изображения:</strong> <code>next/image</code> — автоматичен WebP/AVIF, responsive srcset, lazy loading. Лого като SVG.
+</div>
+<div class="issue-positive">
+    <strong>CSS:</strong> CSS Modules или Tailwind — автоматично tree-shaking, минификация, кеширане. Без inline bloat.
+</div>
+<div class="issue-positive">
+    <strong>Шрифтове:</strong> <code>next/font</code> за self-hosted fonts с <code>font-display: swap</code>
+</div>
+<div class="issue-positive">
+    <strong>i18n:</strong> Next.js вграден i18n routing вместо WPML (~50-100KB спестени)
+</div>
+<div class="issue-positive">
+    <strong>Аналитика:</strong> <code>@next/third-parties/google</code> с afterInteractive стратегия
+</div>
+<div class="issue-positive">
+    <strong>DOM:</strong> Чисти React компоненти с макс. 2-3 нива вместо 5-6 Fusion Builder wrapper-а
+</div>
+
+</body>
+</html>

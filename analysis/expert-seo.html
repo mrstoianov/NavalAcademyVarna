@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO &amp; Content анализ - ВВМУ "Н. Й. Вапцаров"</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+            line-height: 1.7;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 30px; }
+
+        header {
+            background: linear-gradient(135deg, #1a3a5c 0%, #2c5282 100%);
+            color: #fff;
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+        header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        header .subtitle { font-size: 1.1rem; opacity: 0.85; margin-bottom: 4px; }
+        header .date { font-size: 0.9rem; opacity: 0.7; }
+
+        .score-banner {
+            background: #fff;
+            border-left: 6px solid #1a3a5c;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .score-circle {
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c53030, #e53e3e);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: 800;
+            flex-shrink: 0;
+        }
+        .score-circle.medium { background: linear-gradient(135deg, #c05621, #dd6b20); }
+        .score-circle.good { background: linear-gradient(135deg, #276749, #38a169); }
+        .score-text h2 { font-size: 1.4rem; color: #1a3a5c; margin-bottom: 4px; }
+        .score-text p { color: #718096; }
+
+        section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        section h2 {
+            color: #1a3a5c;
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        section h3 {
+            color: #2c5282;
+            font-size: 1.15rem;
+            margin: 20px 0 10px;
+        }
+        section h4 {
+            color: #1a3a5c;
+            font-size: 1rem;
+            margin: 16px 0 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0 20px;
+            font-size: 0.92rem;
+        }
+        th {
+            background: #1a3a5c;
+            color: #fff;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tr:nth-child(even) td { background: #f7fafc; }
+        tr:hover td { background: #edf2f7; }
+
+        .status-ok { color: #276749; font-weight: 600; }
+        .status-warn { color: #c05621; font-weight: 600; }
+        .status-fail { color: #c53030; font-weight: 600; }
+        .status-missing { color: #c53030; font-weight: 600; }
+
+        .priority-high {
+            display: inline-block;
+            background: #fed7d7;
+            color: #c53030;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .priority-medium {
+            display: inline-block;
+            background: #fefcbf;
+            color: #975a16;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .priority-low {
+            display: inline-block;
+            background: #c6f6d5;
+            color: #276749;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        ul, ol { padding-left: 24px; margin: 8px 0 14px; }
+        li { margin-bottom: 6px; }
+
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+        .highlight-box {
+            background: #ebf8ff;
+            border-left: 4px solid #2c5282;
+            padding: 14px 18px;
+            margin: 14px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .warning-box {
+            background: #fff5f5;
+            border-left: 4px solid #c53030;
+            padding: 14px 18px;
+            margin: 14px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .success-box {
+            background: #f0fff4;
+            border-left: 4px solid #38a169;
+            padding: 14px 18px;
+            margin: 14px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .subscore {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .subscore .bar {
+            width: 100px; height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .subscore .bar .fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+        .fill-red { background: #e53e3e; }
+        .fill-orange { background: #dd6b20; }
+        .fill-yellow { background: #d69e2e; }
+        .fill-green { background: #38a169; }
+
+        code {
+            background: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88rem;
+            color: #1a3a5c;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #718096;
+            font-size: 0.88rem;
+            border-top: 2px solid #1a3a5c;
+            margin-top: 30px;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>SEO &amp; Content анализ</h1>
+        <div class="subtitle">ВВМУ "Н. Й. Вапцаров" &mdash; https://www.naval-acad.bg/</div>
+        <div class="date">Дата на анализа: 23 март 2026 г.</div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- ОБЩА ОЦЕНКА -->
+    <div class="score-banner">
+        <div class="score-circle">3.5</div>
+        <div class="score-text">
+            <h2>Обща SEO оценка: 3.5 / 10</h2>
+            <p>Сайтът има сериозни пропуски в техническото SEO, липсват мета описания, структурирани данни и hreflang тагове. Съдържанието е богато, но не е оптимизирано за търсачки. Необходими са незабавни действия.</p>
+        </div>
+    </div>
+
+    <!-- 1. ТЕХНИЧЕСКИ SEO -->
+    <section>
+        <h2>1. Технически SEO</h2>
+
+        <h3>1.1. Одит на мета тагове по страници</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Страница</th>
+                    <th>Title таг</th>
+                    <th>Meta Description</th>
+                    <th>OG тагове</th>
+                    <th>Canonical</th>
+                    <th>Hreflang</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Начална страница <code>/</code></td>
+                    <td class="status-warn">Nikola Vaptsarov Naval Academy &mdash; oficialen sayt na VVMU<br><small>(транслитерация, не на кирилица)</small></td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                </tr>
+                <tr>
+                    <td>Специалности <code>/specialties</code></td>
+                    <td class="status-warn">Специалности и специализации &ndash; Nikola Vaptsarov Naval Academy</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                </tr>
+                <tr>
+                    <td>Пресцентър <code>/university/presscenter</code></td>
+                    <td class="status-warn">Пресцентър &ndash; Nikola Vaptsarov Naval Academy</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                </tr>
+                <tr>
+                    <td>За нас <code>/university/about-us/</code></td>
+                    <td class="status-warn">За нас &ndash; Nikola Vaptsarov Naval Academy</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                </tr>
+                <tr>
+                    <td>About Us (EN) <code>/en/university/about-us/</code></td>
+                    <td class="status-warn">About Us &ndash; (без марка)</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="warning-box">
+            <strong>Критичен проблем:</strong> Нито една от проверените страници не съдържа meta description, Open Graph тагове, canonical URL или hreflang тагове. Това е изключително сериозен пропуск, който засяга директно видимостта в Google, социалните мрежи и коректната индексация на двуезичния сайт.
+        </div>
+
+        <h3>1.2. Robots.txt</h3>
+        <table>
+            <thead>
+                <tr><th>Елемент</th><th>Статус</th><th>Детайли</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Наличие</td>
+                    <td class="status-ok">НАЛИЦЕ</td>
+                    <td>Стандартен WordPress robots.txt</td>
+                </tr>
+                <tr>
+                    <td>Disallow правила</td>
+                    <td class="status-ok">КОРЕКТНИ</td>
+                    <td><code>/wp-admin/</code> блокиран, <code>admin-ajax.php</code> разрешен</td>
+                </tr>
+                <tr>
+                    <td>WPForms защита</td>
+                    <td class="status-ok">НАЛИЦЕ</td>
+                    <td><code>/wp-content/uploads/wpforms/</code> блокиран</td>
+                </tr>
+                <tr>
+                    <td>Sitemap декларация</td>
+                    <td class="status-ok">НАЛИЦЕ</td>
+                    <td>Сочи към <code>wp-sitemap.xml</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>1.3. Sitemap анализ</h3>
+        <table>
+            <thead>
+                <tr><th>Елемент</th><th>Статус</th><th>Проблем / Коментар</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Формат</td>
+                    <td class="status-ok">XML Sitemap Index</td>
+                    <td>5 подкартни файла (posts, pages, categories, tags, users)</td>
+                </tr>
+                <tr>
+                    <td>Брой URL-и (pages)</td>
+                    <td class="status-ok">~280+ URL-а</td>
+                    <td>Добро покритие на страниците</td>
+                </tr>
+                <tr>
+                    <td>lastmod дати</td>
+                    <td class="status-ok">НАЛИЦЕ</td>
+                    <td>Присъстват за всички URL-и</td>
+                </tr>
+                <tr>
+                    <td>changefreq / priority</td>
+                    <td class="status-warn">ЛИПСВА</td>
+                    <td>Не са зададени приоритети и честота на промяна</td>
+                </tr>
+                <tr>
+                    <td>Английски версии</td>
+                    <td class="status-fail">ЛИПСВАТ</td>
+                    <td>Sitemap-ът не включва /en/ URL-и &mdash; английската версия не се подава на Google</td>
+                </tr>
+                <tr>
+                    <td>Тестови/дублирани страници</td>
+                    <td class="status-fail">ПРИСЪСТВАТ</td>
+                    <td>URL-и като <code>/sample-page</code>, <code>/new-homepage</code>, <code>/new-homepage2</code>, <code>/test-new-homepage</code>, <code>/789-2</code>, <code>/9640-2</code>, <code>/porachka</code>, <code>/kolichka</code> &mdash; вероятно тестови</td>
+                </tr>
+                <tr>
+                    <td>Users sitemap</td>
+                    <td class="status-warn">ИЗЛИШЕН</td>
+                    <td><code>wp-sitemap-users-1.xml</code> &mdash; потенциален риск за сигурността (разкрива потребители)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="warning-box">
+            <strong>Проблем:</strong> В sitemap-а се намират тестови и недовършени страници (<code>/sample-page</code>, <code>/new-homepage</code>, <code>/kolichka</code>, <code>/porachka</code>), които се индексират от Google. Тези URL-и трябва незабавно да бъдат премахнати или маркирани с <code>noindex</code>.
+        </div>
+
+        <h3>1.4. URL структура</h3>
+        <table>
+            <thead>
+                <tr><th>Аспект</th><th>Статус</th><th>Примери и коментари</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Чисти URL-и</td>
+                    <td class="status-warn">ЧАСТИЧНО</td>
+                    <td>Повечето са добри (<code>/university/about-us/</code>), но има и проблемни (<code>/789-2</code>, <code>/9640-2</code>, <code>/12039-2</code>)</td>
+                </tr>
+                <tr>
+                    <td>Кирилица в URL</td>
+                    <td class="status-fail">ПРОБЛЕМ</td>
+                    <td>Множество URL-и с кирилица: <code>/приём</code>, <code>/обучение</code>, <code>/примерен-профил</code>, <code>/асоциация-на-възпитаниците</code>, <code>/структура-уцко</code>, <code>/учебници-и-учебни-пособия</code></td>
+                </tr>
+                <tr>
+                    <td>Консистентност</td>
+                    <td class="status-fail">ПРОБЛЕМ</td>
+                    <td>Смесени формати: <code>/application/majors/master/cs</code> vs <code>/specialties/cybersecurity</code>; <code>/department-it/</code> vs <code>/university/organization/navigation-faculty/</code></td>
+                </tr>
+                <tr>
+                    <td>Дълбочина</td>
+                    <td class="status-warn">ДО 6 НИВА</td>
+                    <td>Някои URL-и са прекалено дълбоки: <code>/university/organization/navigation-faculty/naval-tactics-department/nikola-stoyanov</code></td>
+                </tr>
+                <tr>
+                    <td>Trailing slash</td>
+                    <td class="status-warn">НЕКОСИСТЕНТНО</td>
+                    <td>Някои URL-и завършват с <code>/</code>, други &mdash; не</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>1.5. HTTPS и сигурност</h3>
+        <table>
+            <thead>
+                <tr><th>Елемент</th><th>Статус</th><th>Детайли</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Основен домейн</td>
+                    <td class="status-ok">HTTPS</td>
+                    <td><code>https://www.naval-acad.bg</code></td>
+                </tr>
+                <tr>
+                    <td>Поддомейни</td>
+                    <td class="status-fail">СМЕСЕНО</td>
+                    <td>HTTP: <code>ws.naval-acad.bg</code>, <code>projects.nvna.eu</code>, <code>studentcouncil.naval-acad.bg</code></td>
+                </tr>
+                <tr>
+                    <td>Mixed content</td>
+                    <td class="status-warn">ВЕРОЯТНО</td>
+                    <td>HTTP линкове от HTTPS страниците могат да предизвикат mixed content предупреждения</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 2. HEADING СТРУКТУРА -->
+    <section>
+        <h2>2. Heading структура (H1-H6 йерархия)</h2>
+
+        <h3>2.1. Одит на heading-и по страници</h3>
+        <table>
+            <thead>
+                <tr><th>Страница</th><th>H1</th><th>Йерархия</th><th>Проблеми</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Начална <code>/</code></td>
+                    <td class="status-fail">ЛИПСВА H1</td>
+                    <td class="status-fail">H3 &rarr; H4 &rarr; H5 &rarr; H6<br>(без H1, без H2)</td>
+                    <td>Няма H1 на началната страница! Заглавията започват от H3. H5/H6 се използват за футър секции. Новините са маркирани като H6 вместо H2/H3.</td>
+                </tr>
+                <tr>
+                    <td>Специалности <code>/specialties</code></td>
+                    <td class="status-fail">ЛИПСВА H1</td>
+                    <td class="status-fail">H3, H6</td>
+                    <td>Няма H1. Специалностите са H3, а новините &mdash; H6. Пропуснати са H2 нива.</td>
+                </tr>
+                <tr>
+                    <td>Пресцентър <code>/presscenter</code></td>
+                    <td class="status-warn">НЕЯСНО</td>
+                    <td class="status-fail">Смесена</td>
+                    <td>"Пресцентър" може да е H1, но категориите и новините са с хаотична йерархия.</td>
+                </tr>
+                <tr>
+                    <td>About Us (EN) <code>/en/</code></td>
+                    <td class="status-ok">"About us"</td>
+                    <td class="status-warn">H1 &rarr; H2 &rarr; H3 &rarr; H4</td>
+                    <td>Единствената страница с коректен H1. Все пак менюто генерира излишни H3 тагове.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="warning-box">
+            <strong>Критичен проблем:</strong> Началната страница и страницата за специалности &mdash; двете най-важни за SEO &mdash; нямат H1 таг. Google използва H1 за разбиране на основната тема на страницата. Липсата му директно вреди на класирането.
+        </div>
+
+        <h3>2.2. Типични нарушения на йерархията</h3>
+        <ul>
+            <li><strong>Прескачане на нива:</strong> H3 се използва директно без предходен H2 (множество страници)</li>
+            <li><strong>H5/H6 за навигация:</strong> Футър секциите ("Пресцентър", "Структури", "Контакти") използват H5, което замърсява heading структурата</li>
+            <li><strong>Новини като H6:</strong> Заглавията на новини на началната страница са H6 &mdash; най-ниското ниво, сигнализиращо на Google минимална важност</li>
+            <li><strong>Меню като heading:</strong> Навигационните елементи генерират H3/H4 тагове чрез Avada темата</li>
+        </ul>
+    </section>
+
+    <!-- 3. STRUCTURED DATA -->
+    <section>
+        <h2>3. Структурирани данни (Structured Data)</h2>
+
+        <div class="warning-box">
+            <strong>Пълна липса на структурирани данни:</strong> На нито една от проверените страници не бяха открити JSON-LD, microdata или RDFa маркировки. Това е сериозен пропуск за образователна институция.
+        </div>
+
+        <h3>3.1. Необходими Schema.org типове</h3>
+        <table>
+            <thead>
+                <tr><th>Schema тип</th><th>Приложение</th><th>Текущ статус</th><th>Приоритет</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>EducationalOrganization</code></td>
+                    <td>Основна информация за ВВМУ &mdash; име, адрес, лого, контакти</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td><span class="priority-high">Критичен</span></td>
+                </tr>
+                <tr>
+                    <td><code>Course</code></td>
+                    <td>60+ морски курса, ИТ курсове, езикови курсове</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td><span class="priority-high">Критичен</span></td>
+                </tr>
+                <tr>
+                    <td><code>Program</code> / <code>EducationalOccupationalProgram</code></td>
+                    <td>Бакалавърски, магистърски и докторски програми</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td><span class="priority-high">Критичен</span></td>
+                </tr>
+                <tr>
+                    <td><code>BreadcrumbList</code></td>
+                    <td>Навигационна пътека за дълбоки URL-и</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td><span class="priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td><code>Event</code></td>
+                    <td>Конференции, церемонии, дни на отворени врати</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td><span class="priority-medium">Среден</span></td>
+                </tr>
+                <tr>
+                    <td><code>Article</code> / <code>NewsArticle</code></td>
+                    <td>Новини от пресцентъра</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td><span class="priority-medium">Среден</span></td>
+                </tr>
+                <tr>
+                    <td><code>Person</code></td>
+                    <td>Преподаватели, ръководство (200+ профила)</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td><span class="priority-low">Нисък</span></td>
+                </tr>
+                <tr>
+                    <td><code>FAQPage</code></td>
+                    <td>Често задавани въпроси за кандидатстване</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td><span class="priority-medium">Среден</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 4. МНОГОЕЗИЧНОСТ -->
+    <section>
+        <h2>4. Многоезичност и hreflang</h2>
+
+        <div class="warning-box">
+            <strong>Критичен проблем:</strong> Въпреки че сайтът използва WPML за двуезична поддръжка (BG/EN), не са открити hreflang тагове на нито една страница. Това означава, че Google не може да разбере връзката между българската и английската версия.
+        </div>
+
+        <table>
+            <thead>
+                <tr><th>Аспект</th><th>Статус</th><th>Въздействие</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hreflang тагове</td>
+                    <td class="status-fail">ЛИПСВАТ НАПЪЛНО</td>
+                    <td>Google може да показва BG страница на EN потребител и обратно; дублирано съдържание</td>
+                </tr>
+                <tr>
+                    <td>Canonical URL-и</td>
+                    <td class="status-fail">ЛИПСВАТ</td>
+                    <td>Потенциално дублирано индексиране на <code>/university/about-us/</code> и <code>/en/university/about-us/</code></td>
+                </tr>
+                <tr>
+                    <td>EN версия в Sitemap</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td>Английските страници не се подават на Google за индексиране</td>
+                </tr>
+                <tr>
+                    <td>Покритие на EN версия</td>
+                    <td class="status-fail">ЧАСТИЧНО (~30%)</td>
+                    <td>Само 7 менюта в EN навигацията срещу 15+ на BG; новини липсват на EN</td>
+                </tr>
+                <tr>
+                    <td>Актуалност на EN версия</td>
+                    <td class="status-fail">НЕАКТУАЛНА</td>
+                    <td>Английската версия изостава значително &mdash; новини от 2023-2025 не са преведени</td>
+                </tr>
+                <tr>
+                    <td>HTML lang атрибут</td>
+                    <td class="status-warn">НЕЯСНО</td>
+                    <td>Не беше потвърдено наличието на <code>lang="bg"</code> / <code>lang="en"</code> в HTML тага</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>4.1. Препоръчителна hreflang имплементация</h3>
+        <div class="highlight-box">
+            За всяка страница с превод трябва да се добавят следните тагове в <code>&lt;head&gt;</code>:
+            <br><br>
+            <code>&lt;link rel="alternate" hreflang="bg" href="https://www.naval-acad.bg/university/about-us/" /&gt;</code><br>
+            <code>&lt;link rel="alternate" hreflang="en" href="https://www.naval-acad.bg/en/university/about-us/" /&gt;</code><br>
+            <code>&lt;link rel="alternate" hreflang="x-default" href="https://www.naval-acad.bg/university/about-us/" /&gt;</code>
+        </div>
+    </section>
+
+    <!-- 5. ALT ТЕКСТОВЕ И ИЗОБРАЖЕНИЯ -->
+    <section>
+        <h2>5. Alt текстове и оптимизация на изображения</h2>
+
+        <table>
+            <thead>
+                <tr><th>Аспект</th><th>Статус</th><th>Детайли</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alt текст на логото</td>
+                    <td class="status-warn">ЧАСТИЧНО</td>
+                    <td>"logo_NVNA" &mdash; неописателен. Трябва: "Лого на ВВМУ Н. Й. Вапцаров - Висше военноморско училище Варна"</td>
+                </tr>
+                <tr>
+                    <td>Alt текст на футър лого</td>
+                    <td class="status-warn">ЧАСТИЧНО</td>
+                    <td>"logo-small-caps" &mdash; техническо име на файл, не описание</td>
+                </tr>
+                <tr>
+                    <td>Слайдер изображения</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td>5+ слайдер изображения без alt текст</td>
+                </tr>
+                <tr>
+                    <td>Новинарски снимки</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td>Снимките в пресцентъра са без alt текстове</td>
+                </tr>
+                <tr>
+                    <td>Специалности карти</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td>Изображенията на специалностите нямат alt, само CSS класове с описания</td>
+                </tr>
+                <tr>
+                    <td>Имена на файлове</td>
+                    <td class="status-warn">ЧАСТИЧНО</td>
+                    <td>Смесени: <code>rsz_slider1_3.jpg</code> (лошо) vs <code>Planetarium_menu.jpg</code> (по-добре)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="warning-box">
+            <strong>Оценка:</strong> Приблизително 80-90% от изображенията на сайта нямат описателни alt текстове. Това вреди както на SEO (Google Images), така и на достъпността за незрящи потребители (WCAG 2.1 нарушение).
+        </div>
+    </section>
+
+    <!-- 6. TITLE TAG АНАЛИЗ -->
+    <section>
+        <h2>6. Title тагове &mdash; детайлен анализ</h2>
+
+        <table>
+            <thead>
+                <tr><th>Страница</th><th>Текущ Title</th><th>Проблеми</th><th>Препоръчан Title</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Начална</td>
+                    <td>Nikola Vaptsarov Naval Academy &mdash; oficialen sayt na VVMU</td>
+                    <td>
+                        <ul>
+                            <li>Транслитерация вместо кирилица</li>
+                            <li>Не съдържа "ВВМУ" или "Висше военноморско училище"</li>
+                            <li>"oficialen sayt" е безполезна фраза</li>
+                        </ul>
+                    </td>
+                    <td>ВВМУ "Н. Й. Вапцаров" &mdash; Висше военноморско училище Варна | Специалности, курсове, прием</td>
+                </tr>
+                <tr>
+                    <td>Специалности</td>
+                    <td>Специалности и специализации &ndash; Nikola Vaptsarov Naval Academy</td>
+                    <td>
+                        <ul>
+                            <li>Липсват ключови думи като "бакалавър", "магистър"</li>
+                            <li>Името на организацията е на латиница</li>
+                        </ul>
+                    </td>
+                    <td>Специалности и програми 2026 | Бакалавър, Магистър, Курсант &mdash; ВВМУ Варна</td>
+                </tr>
+                <tr>
+                    <td>Пресцентър</td>
+                    <td>Пресцентър &ndash; Nikola Vaptsarov Naval Academy</td>
+                    <td>Твърде кратък, не описва съдържание</td>
+                    <td>Новини и събития | Пресцентър на ВВМУ "Н. Й. Вапцаров" Варна</td>
+                </tr>
+                <tr>
+                    <td>За нас</td>
+                    <td>За нас &ndash; Nikola Vaptsarov Naval Academy</td>
+                    <td>Липсват ключови думи за историята и мисията</td>
+                    <td>За ВВМУ | 145 години морско образование | Висше военноморско училище Варна</td>
+                </tr>
+                <tr>
+                    <td>About Us (EN)</td>
+                    <td>About Us &ndash; [непълен]</td>
+                    <td>Липсва бранд името</td>
+                    <td>About Nikola Vaptsarov Naval Academy | Bulgarian Naval Education Since 1881</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box">
+            <strong>Шаблон:</strong> Всички title тагове следват формата "[Страница] &ndash; Nikola Vaptsarov Naval Academy", което означава, че идват от WordPress/Avada настройката по подразбиране. Необходима е ръчна оптимизация с Yoast SEO или подобен плъгин.
+        </div>
+    </section>
+
+    <!-- 7. KEYWORD АНАЛИЗ -->
+    <section>
+        <h2>7. Keyword анализ и покритие</h2>
+
+        <h3>7.1. Целеви аудитории и техните търсения</h3>
+        <table>
+            <thead>
+                <tr><th>Аудитория</th><th>Search Intent</th><th>Ключови думи</th><th>Покритие в сайта</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Кандидат-студенти (BG)</td>
+                    <td>Искат да учат морски специалности</td>
+                    <td>"военноморско училище варна", "морско училище прием", "ВВМУ специалности", "кандидатстване ВВМУ"</td>
+                    <td class="status-warn">ЧАСТИЧНО &mdash; съдържанието е налично, но title/meta не са оптимизирани за тези фрази</td>
+                </tr>
+                <tr>
+                    <td>Кандидат-студенти (EN)</td>
+                    <td>International students looking for maritime studies</td>
+                    <td>"naval academy bulgaria", "maritime university varna", "study navigation bulgaria"</td>
+                    <td class="status-fail">СЛАБО &mdash; английската версия е непълна и неактуална</td>
+                </tr>
+                <tr>
+                    <td>Моряци (курсове)</td>
+                    <td>Търсят STCW курсове и квалификация</td>
+                    <td>"морски курсове варна", "STCW курсове", "курс GMDSS", "курс за капитан далечно плаване"</td>
+                    <td class="status-warn">ЧАСТИЧНО &mdash; 60+ курса налични, но без SEO оптимизация на отделните курсове</td>
+                </tr>
+                <tr>
+                    <td>ИТ специалисти</td>
+                    <td>Търсят ИТ обучение</td>
+                    <td>"IT курсове варна", "киберсигурност обучение", "специалност софтуерни технологии"</td>
+                    <td class="status-warn">ЧАСТИЧНО &mdash; съдържание за 7+ ИТ специалности, но без целенасочено SEO</td>
+                </tr>
+                <tr>
+                    <td>Родители</td>
+                    <td>Проучват възможности за децата си</td>
+                    <td>"морско училище варна условия", "стипендии военно училище", "общежитие ВВМУ"</td>
+                    <td class="status-warn">ЧАСТИЧНО &mdash; информацията е налична, но разпръсната</td>
+                </tr>
+                <tr>
+                    <td>Работодатели / Морска индустрия</td>
+                    <td>Партньорства и наемане на кадри</td>
+                    <td>"морско образование българия", "ВВМУ сътрудничество", "кариерен център"</td>
+                    <td class="status-fail">СЛАБО &mdash; кариерният център е на отделен домейн</td>
+                </tr>
+                <tr>
+                    <td>Изследователи</td>
+                    <td>Научни конференции и публикации</td>
+                    <td>"ВВМУ конференции", "морска сигурност изследвания", "naval academy research"</td>
+                    <td class="status-ok">ДОБРО &mdash; конференциите са добре документирани</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>7.2. Липсващи ключови думи в мета данните</h3>
+        <div class="two-col">
+            <div>
+                <h4>Ключови фрази, които трябва да присъстват:</h4>
+                <ul>
+                    <li>"ВВМУ" / "Военноморско училище"</li>
+                    <li>"Варна" (град)</li>
+                    <li>"морско образование"</li>
+                    <li>"прием 2026"</li>
+                    <li>"бакалавър" / "магистър"</li>
+                    <li>"курсант" / "офицер"</li>
+                    <li>"морски курсове" / "STCW"</li>
+                    <li>"киберсигурност"</li>
+                    <li>"корабоводене"</li>
+                    <li>"навигация"</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Ключови фрази за EN версията:</h4>
+                <ul>
+                    <li>"naval academy bulgaria"</li>
+                    <li>"maritime university varna"</li>
+                    <li>"Nikola Vaptsarov"</li>
+                    <li>"study maritime bulgaria"</li>
+                    <li>"STCW courses bulgaria"</li>
+                    <li>"Erasmus+ maritime"</li>
+                    <li>"cybersecurity degree bulgaria"</li>
+                    <li>"navigation officer training"</li>
+                    <li>"maritime engineering"</li>
+                    <li>"Black Sea maritime education"</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. CONTENT QUALITY -->
+    <section>
+        <h2>8. Качество и покритие на съдържанието</h2>
+
+        <h3>8.1. Покрити теми</h3>
+        <div class="success-box">
+            <strong>Силни страни на съдържанието:</strong>
+            <ul>
+                <li>Изчерпателен списък на специалности (15 бакалавър, 23 магистър, 7 курсантски)</li>
+                <li>60+ морски курса с кодове и описания</li>
+                <li>Подробна организационна структура с контактна информация</li>
+                <li>Добра документация на научната дейност и конференции (2016-2026)</li>
+                <li>Информация за Еразъм+ с пълна навигация</li>
+                <li>11 симулатора с описания</li>
+                <li>Акредитационни оценки за всички направления</li>
+                <li>Новини от пресцентъра се обновяват редовно (последна: март 2026)</li>
+            </ul>
+        </div>
+
+        <h3>8.2. Липсващи или слаби теми</h3>
+        <table>
+            <thead>
+                <tr><th>Тема</th><th>Статус</th><th>Въздействие</th><th>Приоритет</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>FAQ секция (Често задавани въпроси)</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td>Кандидат-студентите нямат бърз достъп до отговори; пропусната възможност за featured snippets в Google</td>
+                    <td><span class="priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Студентски истории / Testimonials</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td>Потенциалните студенти не виждат реални опитности; липсва social proof</td>
+                    <td><span class="priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Виртуална обиколка</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td>Кандидатите от други градове не могат да видят кампуса</td>
+                    <td><span class="priority-medium">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Блог / Образователни статии</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td>Пропусната възможност за long-tail SEO трафик</td>
+                    <td><span class="priority-medium">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Подробности за такси и финансиране</td>
+                    <td class="status-warn">ЧАСТИЧНО</td>
+                    <td>Таксите са на отделна страница, но не са лесно достъпни от менюто</td>
+                    <td><span class="priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Календар на събития</td>
+                    <td class="status-fail">ЛИПСВА</td>
+                    <td>Предстоящите събития (дни на отворени врати, конференции) не са в структуриран формат</td>
+                    <td><span class="priority-medium">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Кандидатстудентски справочник онлайн</td>
+                    <td class="status-fail">САМО PDF</td>
+                    <td>Цялото съдържание е в Google Drive PDF &mdash; невидимо за Google</td>
+                    <td><span class="priority-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Алумни секция</td>
+                    <td class="status-warn">ЧАСТИЧНО</td>
+                    <td>Прехвърлена на <code>career.nvna.eu</code> &mdash; отделен домейн</td>
+                    <td><span class="priority-low">Нисък</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>8.3. Остаряло съдържание</h3>
+        <ul>
+            <li><strong>Докторски програми:</strong> 5 от 13 програми имат изтекла акредитация (2022 г.) &mdash; информацията е подвеждаща</li>
+            <li><strong>Sitemap URL-и от 2022:</strong> <code>/sample-page</code>, <code>/porachka</code>, <code>/kolichka</code>, <code>/moyat-profil</code> &mdash; изглеждат като тестови WooCommerce страници</li>
+            <li><strong>Стратегия за развитие 2016-2030:</strong> Свързана с Google Drive, не е публикувана директно на сайта</li>
+            <li><strong>Библиотечен каталог:</strong> Линкът <code>library.naval-acad.bg:8081</code> използва нестандартен порт и HTTP</li>
+        </ul>
+    </section>
+
+    <!-- 9. ВЪТРЕШНИ ЛИНКОВЕ -->
+    <section>
+        <h2>9. Вътрешни линкове и навигация за SEO</h2>
+
+        <table>
+            <thead>
+                <tr><th>Аспект</th><th>Оценка</th><th>Детайли</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Breadcrumbs</td>
+                    <td class="status-warn">НЕ Е ПОТВЪРДЕНО</td>
+                    <td>Avada поддържа breadcrumbs, но в heading структурата не бяха открити breadcrumb маркировки</td>
+                </tr>
+                <tr>
+                    <td>Anchor текст</td>
+                    <td class="status-warn">ЧАСТИЧНО</td>
+                    <td>Навигационните линкове използват описателен текст; вътрешните линкове в съдържанието са по-слаби</td>
+                </tr>
+                <tr>
+                    <td>Orphan pages</td>
+                    <td class="status-fail">ВЕРОЯТНИ</td>
+                    <td>Страниците с нечетливи URL-и (<code>/789-2</code>, <code>/9640-2</code>) вероятно нямат вътрешни линкове</td>
+                </tr>
+                <tr>
+                    <td>Кръстосани линкове</td>
+                    <td class="status-warn">СЛАБИ</td>
+                    <td>Специалностите не линкват към свързани курсове; курсовете не линкват към специалности</td>
+                </tr>
+                <tr>
+                    <td>Разпръснат домейн</td>
+                    <td class="status-fail">ПРОБЛЕМ</td>
+                    <td>8+ различни домейна/поддомейна: <code>naval-acad.bg</code>, <code>nvna.eu</code>, <code>career.nvna.eu</code>, <code>fees.nvna.eu</code>, <code>teacher.naval-acad.bg</code> и др. Link equity се разпръсква.</td>
+                </tr>
+                <tr>
+                    <td>Google Drive документи</td>
+                    <td class="status-fail">ПРОБЛЕМ</td>
+                    <td>Критични документи (кандидатстудентски справочник, стратегия, регламенти) са на Google Drive &mdash; невидими за SEO</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 10. ПОДРОБНИ ОЦЕНКИ -->
+    <section>
+        <h2>10. Подробни оценки по категории</h2>
+
+        <table>
+            <thead>
+                <tr><th>Категория</th><th>Оценка</th><th>Визуализация</th><th>Коментар</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Мета тагове (title, description, OG)</strong></td>
+                    <td>2 / 10</td>
+                    <td><span class="subscore"><span class="bar"><span class="fill fill-red" style="width:20%"></span></span></span></td>
+                    <td>Title шаблонен, description и OG тагове липсват навсякъде</td>
+                </tr>
+                <tr>
+                    <td><strong>Heading структура</strong></td>
+                    <td>2 / 10</td>
+                    <td><span class="subscore"><span class="bar"><span class="fill fill-red" style="width:20%"></span></span></span></td>
+                    <td>Липсват H1 на ключови страници; хаотична йерархия; менюто замърсява headings</td>
+                </tr>
+                <tr>
+                    <td><strong>URL структура</strong></td>
+                    <td>4 / 10</td>
+                    <td><span class="subscore"><span class="bar"><span class="fill fill-orange" style="width:40%"></span></span></span></td>
+                    <td>Смесица от добри и лоши URL-и; кирилица; непоследователност</td>
+                </tr>
+                <tr>
+                    <td><strong>Structured Data</strong></td>
+                    <td>0 / 10</td>
+                    <td><span class="subscore"><span class="bar"><span class="fill fill-red" style="width:2%"></span></span></span></td>
+                    <td>Пълна липса на каквито и да е структурирани данни</td>
+                </tr>
+                <tr>
+                    <td><strong>Sitemap &amp; Robots.txt</strong></td>
+                    <td>5 / 10</td>
+                    <td><span class="subscore"><span class="bar"><span class="fill fill-yellow" style="width:50%"></span></span></span></td>
+                    <td>Robots.txt е коректен; sitemap съществува, но съдържа тестови URL-и и липсва EN</td>
+                </tr>
+                <tr>
+                    <td><strong>Многоезичност (hreflang)</strong></td>
+                    <td>1 / 10</td>
+                    <td><span class="subscore"><span class="bar"><span class="fill fill-red" style="width:10%"></span></span></span></td>
+                    <td>WPML е инсталиран, но hreflang тагове и canonical URL-и не са конфигурирани</td>
+                </tr>
+                <tr>
+                    <td><strong>Alt текстове</strong></td>
+                    <td>2 / 10</td>
+                    <td><span class="subscore"><span class="bar"><span class="fill fill-red" style="width:20%"></span></span></span></td>
+                    <td>80-90% от изображенията нямат описателни alt текстове</td>
+                </tr>
+                <tr>
+                    <td><strong>Content Quality</strong></td>
+                    <td>6 / 10</td>
+                    <td><span class="subscore"><span class="bar"><span class="fill fill-yellow" style="width:60%"></span></span></span></td>
+                    <td>Богато съдържание, но липсват FAQ, блог, testimonials; критични документи са извън сайта</td>
+                </tr>
+                <tr>
+                    <td><strong>Keyword Coverage</strong></td>
+                    <td>3 / 10</td>
+                    <td><span class="subscore"><span class="bar"><span class="fill fill-red" style="width:30%"></span></span></span></td>
+                    <td>Съдържанието покрива темите, но мета данните не са оптимизирани за целеви ключови думи</td>
+                </tr>
+                <tr>
+                    <td><strong>Вътрешни линкове</strong></td>
+                    <td>4 / 10</td>
+                    <td><span class="subscore"><span class="bar"><span class="fill fill-orange" style="width:40%"></span></span></span></td>
+                    <td>Основната навигация е добра, но липсват кръстосани линкове и breadcrumbs markup</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box">
+            <strong>Среднопретеглена обща оценка: 3.5 / 10</strong> &mdash; Сайтът има добро съдържание като база, но техническото SEO е на критично ниско ниво. Без мета описания, structured data и hreflang тагове, потенциалът за органичен трафик е силно ограничен.
+        </div>
+    </section>
+
+    <!-- 11. СИЛНИ СТРАНИ -->
+    <section>
+        <h2>11. Силни страни</h2>
+        <ul>
+            <li><strong>Богато и разнообразно съдържание:</strong> 45+ специалности, 60+ курса, детайлна организационна информация</li>
+            <li><strong>Редовно обновяване:</strong> Новините от пресцентъра се публикуват до март 2026</li>
+            <li><strong>Коректен robots.txt:</strong> Правилно конфигуриран с referenceк sitemap</li>
+            <li><strong>WordPress платформа:</strong> Лесно се имплементират SEO подобрения чрез плъгини (Yoast SEO, Rank Math)</li>
+            <li><strong>Google Analytics:</strong> Вече е инсталиран (G-PS67DMR7KR), което позволява мониторинг</li>
+            <li><strong>Service Worker:</strong> PWA поддръжка за по-бързо зареждане при повторни посещения</li>
+            <li><strong>Филтрираща система за специалности:</strong> По ОКС, форма, област, продължителност, език</li>
+            <li><strong>Социални мрежи:</strong> Интеграция с Facebook, X, Instagram, LinkedIn</li>
+        </ul>
+    </section>
+
+    <!-- 12. ПРЕПОРЪКИ ПО ПРИОРИТЕТ -->
+    <section>
+        <h2>12. Препоръки по приоритет</h2>
+
+        <h3>12.1. Критични &mdash; блокиращи индексиране и класиране</h3>
+        <table>
+            <thead>
+                <tr><th>#</th><th>Действие</th><th>Детайли</th><th>Очакван ефект</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><strong>Инсталиране на SEO плъгин</strong></td>
+                    <td>Yoast SEO или Rank Math &mdash; ще позволи управление на title, meta description, OG тагове, canonical URL-и, sitemap и structured data от едно място</td>
+                    <td>Основа за всички останали подобрения</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>Добавяне на meta description</strong></td>
+                    <td>Уникално описание (150-160 символа) за всяка страница. Приоритет: начална, специалности, курсове, прием, за нас</td>
+                    <td>+30-50% CTR от Google резултати</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><strong>Коригиране на H1 тагове</strong></td>
+                    <td>Всяка страница трябва да има точно един H1 таг, описващ основната тема. Начална: "Висше военноморско училище &laquo;Н. Й. Вапцаров&raquo; &mdash; Варна"</td>
+                    <td>Подобрено тематично разбиране от Google</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><strong>Конфигуриране на hreflang тагове в WPML</strong></td>
+                    <td>WPML Settings &rarr; SEO Options &rarr; "Use hreflang for languages" &mdash; активиране. Добавяне и на canonical URL-и.</td>
+                    <td>Коректно индексиране на двуезичния сайт; спиране на дублирането</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><strong>Премахване на тестови URL-и от индекса</strong></td>
+                    <td>Маркиране с <code>noindex</code> или изтриване на: <code>/sample-page</code>, <code>/new-homepage</code>, <code>/new-homepage2</code>, <code>/test-new-homepage</code>, <code>/porachka</code>, <code>/kolichka</code>, <code>/moyat-profil</code>, <code>/789-2</code>, <code>/9640-2</code></td>
+                    <td>Намаляване на crawl budget wastage; по-чист индекс</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>12.2. Високи &mdash; влияещи на класиране и видимост</h3>
+        <table>
+            <thead>
+                <tr><th>#</th><th>Действие</th><th>Детайли</th><th>Очакван ефект</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>6</td>
+                    <td><strong>Имплементиране на Schema.org structured data</strong></td>
+                    <td>JSON-LD за <code>EducationalOrganization</code>, <code>Course</code>, <code>BreadcrumbList</code> поне на ключови страници</td>
+                    <td>Rich snippets в Google; подобрена видимост; по-високо CTR</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td><strong>Добавяне на Open Graph тагове</strong></td>
+                    <td><code>og:title</code>, <code>og:description</code>, <code>og:image</code>, <code>og:url</code> за споделяне в социални мрежи</td>
+                    <td>Професионално представяне при споделяне във Facebook, LinkedIn</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td><strong>Оптимизация на title тагове</strong></td>
+                    <td>Добавяне на ключови думи, "ВВМУ Варна" в бранд суфикса, премахване на транслитерацията от началната страница</td>
+                    <td>Подобрено класиране по целеви ключови фрази</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td><strong>Публикуване на кандидатстудентския справочник онлайн</strong></td>
+                    <td>Вместо Google Drive PDF &mdash; пълно HTML съдържание на сайта с отделни секции</td>
+                    <td>Индексируемо съдържание; потенциален трафик от "прием ВВМУ", "кандидатстване морско училище"</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td><strong>Добавяне на EN URLs в sitemap</strong></td>
+                    <td>WPML трябва да генерира sitemap с всички езикови версии</td>
+                    <td>Индексиране на английската версия в Google</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td><strong>Alt текстове на всички изображения</strong></td>
+                    <td>Описателни alt текстове на кирилица/латиница за всяко изображение</td>
+                    <td>Подобрена достъпност + трафик от Google Images</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>12.3. Средни &mdash; подобряващи видимост и трафик</h3>
+        <table>
+            <thead>
+                <tr><th>#</th><th>Действие</th><th>Детайли</th><th>Очакван ефект</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>12</td>
+                    <td><strong>Създаване на FAQ секция</strong></td>
+                    <td>Страница с често задавани въпроси за кандидатстване, с <code>FAQPage</code> schema markup</td>
+                    <td>Featured snippets в Google; намалено натоварване на администрацията</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td><strong>Коригиране на heading йерархията</strong></td>
+                    <td>Премахване на H тагове от навигацията (Avada theme settings); логична H1&rarr;H2&rarr;H3 структура</td>
+                    <td>По-добро тематично разбиране от Google</td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td><strong>Кръстосани вътрешни линкове</strong></td>
+                    <td>Специалности &rarr; свързани курсове; курсове &rarr; кандидатстване; новини &rarr; свързани специалности</td>
+                    <td>По-добро разпределение на link equity; повишено време на сайта</td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td><strong>Почистване на URL структурата</strong></td>
+                    <td>Преименуване на кирилични URL-и; 301 redirect за стари; консистентни trailing slashes</td>
+                    <td>По-чиста индексация; по-малко 404 грешки</td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td><strong>Блог / Образователен раздел</strong></td>
+                    <td>Статии за кариери в морския сектор, технологични тенденции, студентски живот</td>
+                    <td>Long-tail SEO трафик; позициониране като thought leader</td>
+                </tr>
+                <tr>
+                    <td>17</td>
+                    <td><strong>Премахване на users sitemap</strong></td>
+                    <td>Деактивиране на <code>wp-sitemap-users-1.xml</code> за сигурност</td>
+                    <td>Защита от user enumeration атаки</td>
+                </tr>
+                <tr>
+                    <td>18</td>
+                    <td><strong>Миграция на HTTP поддомейни към HTTPS</strong></td>
+                    <td><code>ws.naval-acad.bg</code>, <code>projects.nvna.eu</code>, <code>studentcouncil.naval-acad.bg</code></td>
+                    <td>Подобрена сигурност; без mixed content предупреждения</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ОБОБЩЕНИЕ -->
+    <section>
+        <h2>13. Обобщение</h2>
+        <p>
+            Сайтът на ВВМУ "Н. Й. Вапцаров" притежава <strong>солидна база от съдържание</strong> &mdash; 45+ специалности, 60+ курса, подробна организационна информация, активен пресцентър и Еразъм+ секция. Въпреки това, техническото SEO е в <strong>критично състояние</strong>. Липсата на мета описания, structured data, hreflang тагове, коректна heading йерархия и alt текстове означава, че Google не може ефективно да разбере, индексира и класира богатото съдържание на сайта.
+        </p>
+        <p>
+            Най-спешните мерки &mdash; инсталирането на SEO плъгин, добавянето на мета описания и коригирането на H1 тагове &mdash; могат да бъдат изпълнени в рамките на <strong>1-2 седмици</strong> и ще имат незабавен положителен ефект. Имплементирането на Schema.org structured data за образователни програми и курсове ще позволи показване на rich snippets в Google, значително повишавайки видимостта и CTR.
+        </p>
+        <p>
+            При пълно изпълнение на препоръките, реалистичната цел е повишаване на SEO оценката от <strong>3.5/10 до 7-8/10</strong> в рамките на 3-6 месеца.
+        </p>
+    </section>
+
+</div>
+
+<footer>
+    SEO &amp; Content анализ | Изготвен от Деян Стоянов Стоянов | Факултетен № 001114 | ВВМУ &bdquo;Н. Й. Вапцаров&ldquo; | Март 2026
+</footer>
+
+</body>
+</html>

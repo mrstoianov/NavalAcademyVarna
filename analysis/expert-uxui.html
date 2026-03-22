@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX/UI Анализ — ВВМУ „Н. Й. Вапцаров"</title>
+    <style>
+        :root {
+            --navy: #1a3a5c;
+            --navy-light: #2a5a8c;
+            --navy-dark: #0e2240;
+            --accent: #198fd9;
+            --green: #28a745;
+            --orange: #e8850c;
+            --red: #dc3545;
+            --bg: #ffffff;
+            --bg-alt: #f4f6f8;
+            --bg-card: #ffffff;
+            --text: #2c3e50;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            color: white;
+            padding: 48px 0 40px;
+            border-bottom: 4px solid var(--accent);
+        }
+        header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+        header .subtitle { font-size: 16px; opacity: 0.85; font-weight: 400; }
+        header .meta { margin-top: 16px; font-size: 13px; opacity: 0.7; }
+
+        /* Score overview */
+        .score-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: -32px 0 40px;
+            position: relative;
+            z-index: 2;
+        }
+        .score-card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .score-card .score-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1;
+        }
+        .score-card .score-value span { font-size: 18px; color: var(--text-light); font-weight: 400; }
+        .score-card .score-label { font-size: 12px; color: var(--text-light); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .score-bar { height: 5px; background: #e9ecef; border-radius: 3px; margin-top: 10px; overflow: hidden; }
+        .score-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+        .fill-high { background: var(--green); }
+        .fill-mid { background: var(--orange); }
+        .fill-low { background: var(--red); }
+
+        /* Sections */
+        section { margin-bottom: 40px; }
+        section.alt { background: var(--bg-alt); padding: 40px 0; margin-left: -9999px; margin-right: -9999px; padding-left: 9999px; padding-right: 9999px; }
+
+        h2 {
+            font-size: 22px;
+            color: var(--navy);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            font-weight: 700;
+        }
+        h3 { font-size: 17px; color: var(--navy); margin: 20px 0 10px; font-weight: 600; }
+        h4 { font-size: 15px; color: var(--navy-light); margin: 14px 0 8px; font-weight: 600; }
+
+        p { margin-bottom: 12px; }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-high { background: #fce4e4; color: var(--red); border: 1px solid #f5c6cb; }
+        .badge-medium { background: #fff3e0; color: #c67100; border: 1px solid #ffd699; }
+        .badge-low { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .badge-positive { background: #e8f5e9; color: var(--green); border: 1px solid #a5d6a7; }
+
+        /* Problem cards */
+        .problem-list { display: flex; flex-direction: column; gap: 14px; }
+        .problem-card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 16px 20px;
+            border-left: 4px solid var(--red);
+            box-shadow: var(--shadow);
+        }
+        .problem-card.medium { border-left-color: var(--orange); }
+        .problem-card.positive { border-left-color: var(--green); }
+        .problem-card .problem-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; }
+        .problem-card .problem-desc { font-size: 13px; color: var(--text-light); margin-bottom: 6px; }
+        .problem-card .problem-fix { font-size: 13px; color: var(--navy); }
+        .problem-card .problem-fix strong { color: var(--navy-dark); }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+        th { background: var(--navy); color: white; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 13px; }
+        td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+        tr:hover td { background: #f0f4f8; }
+        tr:last-child td { border-bottom: none; }
+
+        /* Strengths list */
+        .strengths-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+        .strength-item {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 16px;
+            border-left: 4px solid var(--green);
+            box-shadow: var(--shadow);
+            font-size: 14px;
+        }
+        .strength-item strong { color: var(--navy); }
+
+        /* Detail blocks */
+        .detail-block {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .detail-score {
+            background: var(--navy);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        ul { margin: 8px 0 12px 20px; }
+        li { margin-bottom: 6px; font-size: 14px; }
+
+        /* Wireframe */
+        .wireframe-block {
+            background: #f8f9fc;
+            border: 2px dashed var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 12px 0;
+        }
+        .wireframe-block h4 { color: var(--navy); margin-top: 0; }
+
+        /* Footer */
+        footer {
+            background: var(--navy-dark);
+            color: rgba(255,255,255,0.75);
+            text-align: center;
+            padding: 28px 0;
+            font-size: 13px;
+            margin-top: 40px;
+        }
+        footer strong { color: white; }
+
+        /* Comparison table */
+        .comparison-table td:first-child { font-weight: 600; color: var(--navy); }
+
+        /* Summary box */
+        .summary-box {
+            background: linear-gradient(135deg, #f0f5fa, #e8eef5);
+            border-radius: 10px;
+            padding: 24px;
+            border: 1px solid #cdd8e4;
+            margin: 20px 0;
+        }
+        .summary-box p { margin-bottom: 8px; }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 22px; }
+            .score-overview { grid-template-columns: repeat(2, 1fr); }
+            .strengths-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>UX/UI Анализ — ВВМУ „Н. Й. Вапцаров"</h1>
+        <div class="subtitle">Потребителско изживяване и визуален дизайн на naval-acad.bg</div>
+        <div class="meta">Дата на анализ: Март 2026 | Анализирани страници: 30+ | Benchmark: 18 морски академии</div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- SCORE OVERVIEW -->
+    <div class="score-overview">
+        <div class="score-card">
+            <div class="score-value">5.2<span>/10</span></div>
+            <div class="score-label">Обща оценка</div>
+            <div class="score-bar"><div class="score-bar-fill fill-mid" style="width:52%"></div></div>
+        </div>
+        <div class="score-card">
+            <div class="score-value">5<span>/10</span></div>
+            <div class="score-label">Навигация</div>
+            <div class="score-bar"><div class="score-bar-fill fill-mid" style="width:50%"></div></div>
+        </div>
+        <div class="score-card">
+            <div class="score-value">5<span>/10</span></div>
+            <div class="score-label">Визуална йерархия</div>
+            <div class="score-bar"><div class="score-bar-fill fill-mid" style="width:50%"></div></div>
+        </div>
+        <div class="score-card">
+            <div class="score-value">6<span>/10</span></div>
+            <div class="score-label">Responsive дизайн</div>
+            <div class="score-bar"><div class="score-bar-fill fill-mid" style="width:60%"></div></div>
+        </div>
+        <div class="score-card">
+            <div class="score-value">5<span>/10</span></div>
+            <div class="score-label">Консистентност</div>
+            <div class="score-bar"><div class="score-bar-fill fill-mid" style="width:50%"></div></div>
+        </div>
+        <div class="score-card">
+            <div class="score-value">4<span>/10</span></div>
+            <div class="score-label">Достъпност (a11y)</div>
+            <div class="score-bar"><div class="score-bar-fill fill-low" style="width:40%"></div></div>
+        </div>
+    </div>
+
+    <!-- СИЛНИ СТРАНИ -->
+    <section>
+        <h2>Силни страни</h2>
+        <div class="strengths-grid">
+            <div class="strength-item">
+                <strong>PWA имплементация</strong> — Сайтът използва Service Worker, което е напреднала функционалност, рядко срещана сред конкурентните морски академии. Позволява офлайн достъп и подобрено кеширане.
+            </div>
+            <div class="strength-item">
+                <strong>Интерактивна система за филтриране на специалности</strong> — Страницата /specialties предлага контекстно филтриране по квалификационна степен, форма на обучение, тематика и продължителност. Логиката за скриване на нерелевантни филтри е добро UX решение.
+            </div>
+            <div class="strength-item">
+                <strong>Модерна цветова палитра</strong> — Комбинацията от Navy Blue (#1a488e), зелен акцент (#65bd7d) и циан (#198fd9) е отличима и съвременна, като надгражда над стандартната navy-бяла палитра.
+            </div>
+            <div class="strength-item">
+                <strong>Mega-menu навигация</strong> — Менюто покрива значителен обем от институционалната структура и предоставя бърз достъп до подстраници с иконографика.
+            </div>
+            <div class="strength-item">
+                <strong>Card-based дизайн на програмите</strong> — Програмите са визуализирани в карти с thumbnail, заглавие, описание и тагове (квалификация, форма, език), което е в съответствие с най-добрите практики.
+            </div>
+            <div class="strength-item">
+                <strong>Двуезичност (БГ/EN)</strong> — Наличието на английска версия е важно за международните партньорства и Erasmus+ програмата.
+            </div>
+        </div>
+    </section>
+
+    <!-- КРИТИЧНИ ПРОБЛЕМИ -->
+    <section>
+        <h2>Критични проблеми</h2>
+        <div class="problem-list">
+
+            <div class="problem-card">
+                <div class="problem-title">1. Претоварена навигация с прекомерна когнитивна тежест <span class="badge badge-high">Висок</span></div>
+                <div class="problem-desc">Mega-менюто съдържа над 35 елемента, разпределени в 7+ категории (Университет, Обучение, Прием, Дейности, Структури, Информационни центрове, Кариерни услуги). Потребителите се губят в множеството вложени нива. Няма ясно визуално разграничение между вътрешни и външни линкове (към teacher.naval-acad.bg, ws.naval-acad.bg, nvna.eu и т.н.).</div>
+                <div class="problem-fix"><strong>Препоръка:</strong> Намаляване на менюто до 5-6 основни категории. Групиране на „Информационни центрове" и „Кариерни услуги" като подменюта. Ясно маркиране на външни линкове с икона. Добавяне на mega-menu с описания на всяка категория (по модела на Ecole Navale).</div>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-title">2. Липса на ясна текуща локация в навигацията <span class="badge badge-high">Висок</span></div>
+                <div class="problem-desc">При навигиране из сайта няма breadcrumb навигация на повечето страници и няма визуална индикация за текущата активна секция в менюто. Потребителят лесно се дезориентира, особено при по-дълбоки нива като /university/training-facilities/simulators/.</div>
+                <div class="problem-fix"><strong>Препоръка:</strong> Имплементиране на breadcrumb навигация на всички вътрешни страници. Добавяне на active state стил в менюто. Визуален маркер (подчертаване или фонов цвят) за текущата секция.</div>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-title">3. Дублиране на съдържание на страницата „За нас" <span class="badge badge-high">Висок</span></div>
+                <div class="problem-desc">Идентично съдържание се повтаря двукратно на страницата /university/about-us/. Това е сериозен проблем, който показва CMS грешка и вреди на потребителското доверие.</div>
+                <div class="problem-fix"><strong>Препоръка:</strong> Незабавно отстраняване на дублираното съдържание. Преструктуриране с визуална йерархия — ключови факти в highlight блокове, timeline за историята, статистики с иконографика.</div>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-title">4. Непълни и счупени линкове в специалностите <span class="badge badge-high">Висок</span></div>
+                <div class="problem-desc">Някои бутони „Научи повече" в картите за специалности водят към „#" (напр. „Пристанищни и корабни операции"), което прекъсва потребителския път. Филтрите се нулират при навигация и няма запазване на състоянието.</div>
+                <div class="problem-fix"><strong>Препоръка:</strong> Попълване на всички целеви линкове. Имплементиране на URL-базирано запазване на филтрите (query parameters). Добавяне на текстово търсене на специалности.</div>
+            </div>
+
+            <div class="problem-card medium">
+                <div class="problem-title">5. Типографика с неподходящ избор на шрифтове <span class="badge badge-medium">Среден</span></div>
+                <div class="problem-desc">„Russo One" (заглавия/бутони) и „Poiret One" (навигация/тагове) са display шрифтове с ограничена четливост при по-малки размери. „Poiret One" е с изключително тънки линии, което влошава контраста. Нито един от тях не е проектиран за академична/институционална среда.</div>
+                <div class="problem-fix"><strong>Препоръка:</strong> Замяна с „Inter" или „Source Sans Pro" за основен текст и „Playfair Display" или „DM Serif Display" за заглавия. Алтернативно — използване на системни шрифтове за по-добра производителност.</div>
+            </div>
+
+            <div class="problem-card medium">
+                <div class="problem-title">6. Слаба визуална йерархия на страница „За нас" <span class="badge badge-medium">Среден</span></div>
+                <div class="problem-desc">Страницата е изцяло текстова — дълги параграфи без визуални разделители, инфографики, timeline или акцентни блокове. Минимално използване на изображения. Важни факти (17 зали, 11 симулатора, 116 преподаватели) не са визуално акцентирани.</div>
+                <div class="problem-fix"><strong>Препоръка:</strong> Добавяне на блокове с ключови статистики (animated counters по модела на Escola Naval). Визуален timeline за историята. Галерия със снимки на кампуса. Callout блокове за мисия и визия.</div>
+            </div>
+
+            <div class="problem-card medium">
+                <div class="problem-title">7. Пресцентър без ясна йерархия и претоварена категоризация <span class="badge badge-medium">Среден</span></div>
+                <div class="problem-desc">Три новинарски секции (Featured, News, Student News) без ясно визуално разграничение. Над 40 категории в страничната навигация, смесващи годишни (2022-2026) и тематични (Конференции, Спорт) филтри. Отрязаните откъси завършват с „[...]" без ясен CTA бутон.</div>
+                <div class="problem-fix"><strong>Препоръка:</strong> Визуално разделяне на секциите с заглавия и стилове. Групиране на категориите (по тип и по година отделно). Добавяне на ясен бутон „Прочети повече" вместо „[...]". Пагинация или infinite scroll.</div>
+            </div>
+
+            <div class="problem-card medium">
+                <div class="problem-title">8. Непоследователна мултиезична реализация <span class="badge badge-medium">Среден</span></div>
+                <div class="problem-desc">Несъответстваща терминология в EN версията (напр. „Postgraduate Studies Department" vs „Department of Postgraduate Training and Distance Learning"). Дублирани footer секции с информация и на двата езика. Счупени линкове към социални мрежи (href="#").</div>
+                <div class="problem-fix"><strong>Препоръка:</strong> Одит и унифициране на английските преводи. Премахване на дублирания footer. Поправка на всички „#" линкове. Добавяне на hreflang тагове за SEO.</div>
+            </div>
+
+            <div class="problem-card medium">
+                <div class="problem-title">9. Достъпност — множество нарушения <span class="badge badge-medium">Среден</span></div>
+                <div class="problem-desc">Emoji тагове в картите за специалности без alt-text. Контраст проблеми при тънките линии на „Poiret One" шрифта. Неясна keyboard навигация на слайдера. Липса на skip-to-content линк. Недостатъчни ARIA атрибути.</div>
+                <div class="problem-fix"><strong>Препоръка:</strong> Добавяне на aria-label на всички emoji/иконографски елементи. Подобряване на цветовия контраст до WCAG AA (минимум 4.5:1). Добавяне на skip-to-content линк. Keyboard-достъпна слайдер навигация.</div>
+            </div>
+
+            <div class="problem-card medium">
+                <div class="problem-title">10. Фрагментирана екосистема от поддомейни <span class="badge badge-medium">Среден</span></div>
+                <div class="problem-desc">Потребителите трябва да навигират между множество различни домейни: naval-acad.bg, nvna.eu, fees.nvna.eu, teacher.naval-acad.bg, ws.naval-acad.bg, dlc.naval-acad.bg, career.nvna.eu, pp.naval-acad.bg, projects.nvna.eu, scholar.nvna.eu, studentcouncil.naval-acad.bg, uvsk.nvna.eu. Всеки с различен дизайн и UX.</div>
+                <div class="problem-fix"><strong>Препоръка:</strong> Унификация на поддомейните под единна визуална система. Ясно индикиране при напускане на основния сайт. Обединяване на свързаните системи в единен портал където е възможно.</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ДЕТАЙЛЕН АНАЛИЗ -->
+    <section>
+        <h2>Детайлен анализ</h2>
+
+        <!-- 1. Навигация -->
+        <div class="detail-block">
+            <div class="detail-header">
+                <h3>1. Навигация</h3>
+                <span class="detail-score">5 / 10</span>
+            </div>
+            <p>Mega-менюто осигурява широко покритие на институционалната структура, но страда от прекомерна сложност. Анализ на основните проблеми:</p>
+            <ul>
+                <li><strong>Брой елементи:</strong> 35+ линка в менюто, 7 основни категории. За сравнение, Ecole Navale (Франция, benchmark лидер) използва 5 категории.</li>
+                <li><strong>Дълбочина:</strong> До 3 нива на вложеност (напр. Университет > Учебна база > Симулатори), което е приемливо, но breadcrumb липсва.</li>
+                <li><strong>Външни линкове:</strong> Над 12 линка водят към различни поддомейни без визуално разграничение от вътрешните.</li>
+                <li><strong>Бутон „Прием":</strong> Води към fees.nvna.eu — различен домейн без визуална приемственост. Критичен CTA път за кандидат-студенти е нарушен.</li>
+                <li><strong>Мобилна версия:</strong> Менюто се свива в hamburger бутон с collapse поведение, но сложността се запазва.</li>
+                <li><strong>Breadcrumbs:</strong> Липсват на повечето страници.</li>
+                <li><strong>Търсене:</strong> Наличие на стандартно WordPress търсене, но без autocomplete или full-screen overlay (за разлика от Ecole Navale).</li>
+            </ul>
+
+            <h4>Препоръки за навигацията</h4>
+            <ul>
+                <li>Редуциране до 5 основни категории: Университет, Обучение, Прием, Наука и дейности, Контакти</li>
+                <li>Използване на mega-menu с кратко описание под всяка категория</li>
+                <li>Добавяне на breadcrumb навигация на всички вътрешни страници</li>
+                <li>Full-screen search overlay с autocomplete (по модел на Ecole Navale)</li>
+                <li>Quick-links бар под менюто за студенти (WebStudent, Разписание, e-Преподавател)</li>
+            </ul>
+        </div>
+
+        <!-- 2. Визуална йерархия -->
+        <div class="detail-block">
+            <div class="detail-header">
+                <h3>2. Визуална йерархия</h3>
+                <span class="detail-score">5 / 10</span>
+            </div>
+            <p>Началната страница демонстрира модерна структура с hero слайдер, новинарски карти и секции за програми. Въпреки това, вътрешните страници (особено „За нас", „Традиция и мисия") страдат от монотонна текстова подредба.</p>
+
+            <h4>Положителни аспекти</h4>
+            <ul>
+                <li>Hero секция с LayerSlider — визуално привлекателна, макар и без видео (за разлика от Ecole Navale)</li>
+                <li>Card-based оформление на специалностите с hover анимации (scale 1.05-1.06)</li>
+                <li>Адекватно използване на white space в homepage секциите</li>
+                <li>Бутони с generous padding (20px 40px) и border-radius (25px) — модерен стил</li>
+            </ul>
+
+            <h4>Проблемни области</h4>
+            <ul>
+                <li><strong>Страница „За нас":</strong> Плътни текстови блокове без визуални акценти. Ключови статистики (17 зали, 11 симулатора, 116 преподаватели) не са изведени визуално.</li>
+                <li><strong>Типографска скала:</strong> Размери от 11.25px до 45px, но преходите не следват последователна модуларна скала.</li>
+                <li><strong>Footer:</strong> Информационно претоварен — банкови данни (IBAN/SWIFT), адрес, телефон, email, социални мрежи, структурни линкове — всичко сгъстено.</li>
+                <li><strong>Focal points:</strong> На homepage липсва единен ясен CTA за кандидат-студенти (най-важната аудитория).</li>
+            </ul>
+
+            <h4>Препоръки</h4>
+            <ul>
+                <li>Animated statistics блок на homepage (по модела на Escola Naval — counterUp)</li>
+                <li>Visual timeline за историята на академията</li>
+                <li>Hero видео вместо статичен слайдер (морски симулации, тренировки, Черно море)</li>
+                <li>CTA бутон „Кандидатствай" на видно място в hero секцията</li>
+            </ul>
+        </div>
+
+        <!-- 3. Responsive дизайн -->
+        <div class="detail-block">
+            <div class="detail-header">
+                <h3>3. Responsive дизайн</h3>
+                <span class="detail-score">6 / 10</span>
+            </div>
+            <p>Avada темата предоставя добра основа за responsive дизайн с breakpoints на 480px, 768px, 1024px и 1240px. Въпреки това, изпълнението има пропуски.</p>
+
+            <h4>Положителни аспекти</h4>
+            <ul>
+                <li>Grid-базирано оформление с flexbox за специалностите (3 колони, 350px min-width)</li>
+                <li>Мобилен hamburger menu с collapse поведение</li>
+                <li>Филтрите се трансформират в overlay на мобилни устройства (под 768px)</li>
+                <li>CSS класове за visibility контрол (fusion-no-small-visibility)</li>
+            </ul>
+
+            <h4>Проблемни области</h4>
+            <ul>
+                <li><strong>Не е mobile-first:</strong> Подходът е desktop-down (адаптивен), не mobile-first (прогресивен). Само ~40% от naval academy сайтовете използват mobile-first, но водещите (Норвегия, Швеция) го правят успешно.</li>
+                <li><strong>Touch targets:</strong> Някои линкове в менюто и footer-а са прекалено малки за комфортно мобилно взаимодействие (минимум 44x44px по WCAG).</li>
+                <li><strong>Филтри на мобилни:</strong> Клонирането на филтрите чрез innerHTML при мобилен overlay може да доведе до десинхронизация.</li>
+                <li><strong>Изображения:</strong> Слайдерът използва „rsz_" (resize) версии, но не е ясно дали се използва srcset/sizes за responsive images.</li>
+            </ul>
+
+            <h4>Препоръки</h4>
+            <ul>
+                <li>Преминаване към mobile-first CSS подход</li>
+                <li>Увеличаване на touch targets до минимум 44x44px</li>
+                <li>Използване на srcset и sizes за responsive изображения</li>
+                <li>Тестване с реални устройства (не само resize на браузъра)</li>
+            </ul>
+        </div>
+
+        <!-- 4. Консистентност -->
+        <div class="detail-block">
+            <div class="detail-header">
+                <h3>4. Консистентност</h3>
+                <span class="detail-score">5 / 10</span>
+            </div>
+            <p>Avada темата осигурява базова визуална консистентност, но множеството поддомейни и CMS шаблони нарушават цялостното изживяване.</p>
+
+            <h4>Визуална система</h4>
+            <ul>
+                <li><strong>Цветова палитра:</strong> 11 предефинирани CSS цветови комбинации — добра governance, но твърде много вариации.</li>
+                <li><strong>Бутони:</strong> Консистентен стил (border-radius: 25px, navy фон, бяло текст), но hover ефектите варират.</li>
+                <li><strong>Карти:</strong> Специалностите използват единен шаблон, но новините в пресцентъра имат различен стил.</li>
+                <li><strong>Шрифтове:</strong> Три различни шрифтови семейства (Russo One, Poiret One, системен) създават визуално напрежение.</li>
+            </ul>
+
+            <h4>Екосистемна несъгласуваност</h4>
+            <table>
+                <tr><th>Домейн</th><th>Предназначение</th><th>Визуална съгласуваност</th></tr>
+                <tr><td>naval-acad.bg</td><td>Основен сайт</td><td><span class="badge badge-positive">Добра</span></td></tr>
+                <tr><td>nvna.eu</td><td>Студентски инфо център</td><td><span class="badge badge-high">Различен дизайн</span></td></tr>
+                <tr><td>fees.nvna.eu</td><td>Прием/Такси</td><td><span class="badge badge-high">Различен дизайн</span></td></tr>
+                <tr><td>teacher.naval-acad.bg</td><td>e-Преподавател</td><td><span class="badge badge-high">Различен дизайн</span></td></tr>
+                <tr><td>dlc.naval-acad.bg</td><td>Дистанционно обучение</td><td><span class="badge badge-high">Различен дизайн</span></td></tr>
+                <tr><td>career.nvna.eu</td><td>Кариерен център</td><td><span class="badge badge-medium">Частично съгласуван</span></td></tr>
+                <tr><td>pp.naval-acad.bg</td><td>Обществени поръчки</td><td><span class="badge badge-high">Различен дизайн</span></td></tr>
+            </table>
+
+            <h4>Препоръки</h4>
+            <ul>
+                <li>Създаване на единна Design System (цветове, типография, компоненти, spacing)</li>
+                <li>Споделен header/footer модул за всички поддомейни</li>
+                <li>Максимум 2 шрифтови семейства в цялата екосистема</li>
+            </ul>
+        </div>
+
+        <!-- 5. Достъпност -->
+        <div class="detail-block">
+            <div class="detail-header">
+                <h3>5. Достъпност (a11y)</h3>
+                <span class="detail-score">4 / 10</span>
+            </div>
+            <p>Достъпността е най-слабата област на сайта. Въпреки наличието на страница „Декларация за достъпност", реалното изпълнение е незадоволително.</p>
+
+            <h4>Идентифицирани проблеми</h4>
+            <table>
+                <tr><th>Проблем</th><th>WCAG критерий</th><th>Тежест</th></tr>
+                <tr>
+                    <td>Липса на skip-to-content линк</td>
+                    <td>2.4.1 Bypass Blocks</td>
+                    <td><span class="badge badge-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Emoji тагове без alt-text (специалности)</td>
+                    <td>1.1.1 Non-text Content</td>
+                    <td><span class="badge badge-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>„Poiret One" с нисък контраст (тънки линии)</td>
+                    <td>1.4.3 Contrast (AA)</td>
+                    <td><span class="badge badge-high">Висок</span></td>
+                </tr>
+                <tr>
+                    <td>Слайдер без keyboard навигация</td>
+                    <td>2.1.1 Keyboard</td>
+                    <td><span class="badge badge-medium">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Липса на ARIA landmarks на основните секции</td>
+                    <td>1.3.1 Info and Relationships</td>
+                    <td><span class="badge badge-medium">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Недостатъчни alt текстове на изображения</td>
+                    <td>1.1.1 Non-text Content</td>
+                    <td><span class="badge badge-medium">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Липса на font-resizing контроли</td>
+                    <td>1.4.4 Resize Text</td>
+                    <td><span class="badge badge-medium">Среден</span></td>
+                </tr>
+                <tr>
+                    <td>Липса на high-contrast режим</td>
+                    <td>1.4.6 Contrast (AAA)</td>
+                    <td><span class="badge badge-medium">Среден</span></td>
+                </tr>
+            </table>
+
+            <h4>Сравнение с benchmark</h4>
+            <p>Водещите академии прилагат следните практики, които липсват на naval-acad.bg:</p>
+            <ul>
+                <li><strong>Италия (Accademia Navale):</strong> High-contrast toggle mode</li>
+                <li><strong>Тайван (ROCNA):</strong> Font resizing контроли (S/M/L)</li>
+                <li><strong>Швеция (Sjostridsskolan):</strong> Skip-to-content линкове и ARIA labels</li>
+                <li><strong>Германия (Marineschule):</strong> Privacy-first cookie consent с opt-in</li>
+            </ul>
+
+            <h4>Препоръки</h4>
+            <ul>
+                <li>Пълен WCAG 2.1 AA одит и отстраняване на нарушенията</li>
+                <li>Добавяне на accessibility toolbar (font resize, contrast toggle)</li>
+                <li>Skip-to-content линк на всяка страница</li>
+                <li>ARIA landmarks за header, nav, main, footer</li>
+                <li>Описателни alt текстове за всички изображения</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- СРАВНИТЕЛЕН АНАЛИЗ -->
+    <section>
+        <h2>Сравнителен анализ с водещи морски академии</h2>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Критерий</th>
+                <th>ВВМУ (БГ)</th>
+                <th>Ecole Navale (FR)</th>
+                <th>Royal Canadian Navy</th>
+                <th>Норвегия NDUC</th>
+            </tr>
+            <tr>
+                <td>Визуален дизайн</td>
+                <td>4/5</td>
+                <td>5/5 <span class="badge badge-positive">Лидер</span></td>
+                <td>4/5</td>
+                <td>4/5</td>
+            </tr>
+            <tr>
+                <td>Модерност</td>
+                <td>4/5</td>
+                <td>5/5 <span class="badge badge-positive">Лидер</span></td>
+                <td>4/5</td>
+                <td>4/5</td>
+            </tr>
+            <tr>
+                <td>UX</td>
+                <td>3/5</td>
+                <td>4/5</td>
+                <td>4/5 <span class="badge badge-positive">Лидер</span></td>
+                <td>4/5 <span class="badge badge-positive">Лидер</span></td>
+            </tr>
+            <tr>
+                <td>Функционалност</td>
+                <td>4/5</td>
+                <td>4/5</td>
+                <td>5/5 <span class="badge badge-positive">Лидер</span></td>
+                <td>4/5</td>
+            </tr>
+            <tr>
+                <td>Hero секция</td>
+                <td>Статичен слайдер</td>
+                <td>Видео (2.33:1)</td>
+                <td>Hero банер + CTA</td>
+                <td>Прозрачен header</td>
+            </tr>
+            <tr>
+                <td>Навигация</td>
+                <td>Mega-menu (35+ елемента)</td>
+                <td>Mega-menu + full-screen search</td>
+                <td>Grid-based + табове</td>
+                <td>Sticky + scroll detection</td>
+            </tr>
+            <tr>
+                <td>Типография</td>
+                <td>Russo One / Poiret One</td>
+                <td>Mariane (custom) + Cormorant Garamond</td>
+                <td>Системни sans-serif</td>
+                <td>Системни, responsive scaling</td>
+            </tr>
+            <tr>
+                <td>PWA</td>
+                <td><span class="badge badge-positive">Да</span></td>
+                <td>Не</td>
+                <td>Не</td>
+                <td>Не</td>
+            </tr>
+            <tr>
+                <td>Достъпност</td>
+                <td>Ниска</td>
+                <td>Средна</td>
+                <td>Висока</td>
+                <td>Висока</td>
+            </tr>
+        </table>
+
+        <div class="summary-box">
+            <p><strong>Заключение от сравнението:</strong> ВВМУ се позиционира над средното ниво по визуален дизайн и модерност (благодарение на Avada темата и PWA), но значително изостава по UX, достъпност и навигационна простота. Основният конкурентен пропуск е в потребителското изживяване — претовареното меню, фрагментираната екосистема от поддомейни и липсата на ясен recruitment-focused дизайн.</p>
+        </div>
+    </section>
+
+    <!-- WIREFRAME ПРЕПОРЪКИ -->
+    <section>
+        <h2>Wireframe препоръки</h2>
+
+        <div class="wireframe-block">
+            <h4>Начална страница (Homepage) — Предложена структура</h4>
+            <ul>
+                <li><strong>Header:</strong> Лого (ляво) | 5 категории навигация (центрирано) | Език + Търсене + CTA „Кандидатствай" (дясно)</li>
+                <li><strong>Quick-links бар:</strong> Тесна лента под header с линкове за текущи студенти (WebStudent, Разписание, e-Преподавател)</li>
+                <li><strong>Hero секция:</strong> Full-width видео (Черно море, симулатори, тренировки) с overlay текст на мотото и CTA бутон „Научи повече за приема"</li>
+                <li><strong>Ключови статистики:</strong> 4 animated counters — 145 години история | 40+ специалности | 11 симулатора | 116 преподаватели</li>
+                <li><strong>Featured специалности:</strong> 3-4 highlight карти за най-търсените програми</li>
+                <li><strong>Новини:</strong> 3 последни новини в карти + линк „Всички новини"</li>
+                <li><strong>Testimonials:</strong> Цитати от студенти/алумни в carousel</li>
+                <li><strong>Партньори / Erasmus+:</strong> Лого лента</li>
+                <li><strong>Footer:</strong> 4 колони — За ВВМУ | Бързи линкове | Контакти | Социални мрежи</li>
+            </ul>
+        </div>
+
+        <div class="wireframe-block">
+            <h4>Страница „Специалности" — Подобрения</h4>
+            <ul>
+                <li>Добавяне на текстово търсене (search bar) в горната част</li>
+                <li>Запазване на филтърното състояние в URL (query params)</li>
+                <li>Преглед в grid или list mode (toggle)</li>
+                <li>Попълване на всички „Научи повече" линкове</li>
+                <li>Добавяне на metadata: продължителност, кредити, кариерни възможности</li>
+                <li>Замяна на emoji тагове с SVG икони с aria-label</li>
+            </ul>
+        </div>
+
+        <div class="wireframe-block">
+            <h4>Страница „За нас" — Редизайн</h4>
+            <ul>
+                <li>Hero банер с панорамна снимка на кампуса</li>
+                <li>Кратко въведение (2-3 изречения) + ключови факти в highlight карти</li>
+                <li>Визуален timeline за историята (1881-2026)</li>
+                <li>Секция „Мисия и визия" с иконографика</li>
+                <li>Галерия снимки на съоръженията</li>
+                <li>CTA: „Виж нашите специалности" и „Свържи се с нас"</li>
+            </ul>
+        </div>
+
+        <div class="wireframe-block">
+            <h4>Страница „Пресцентър" — Подобрения</h4>
+            <ul>
+                <li>Ясно визуално разделяне: Featured (голяма карта) | Последни новини (grid) | Студентски живот (отделна секция)</li>
+                <li>Категории: разделяне на „Тип" (Новини, Конференции, Спорт) и „Година" (dropdown)</li>
+                <li>Пагинация с „Load More" бутон</li>
+                <li>Стандартизиран формат на дата (ДД.ММ.ГГГГ)</li>
+                <li>Споделяне в социални мрежи на всяка статия</li>
+            </ul>
+        </div>
+
+        <div class="wireframe-block">
+            <h4>Глобални подобрения</h4>
+            <ul>
+                <li>Breadcrumb навигация на всички вътрешни страници</li>
+                <li>Floating „Кандидатствай" CTA бутон (desktop: горен десен ъгъл; mobile: fixed bottom bar)</li>
+                <li>Accessibility toolbar (font resize, contrast toggle) — горен ляв ъгъл</li>
+                <li>Cookie consent банер, съобразен с GDPR</li>
+                <li>Chatbot или live chat за кандидат-студенти</li>
+                <li>Back-to-top бутон на дълги страници</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ПРИОРИТИЗАЦИЯ -->
+    <section>
+        <h2>Приоритизация на препоръките</h2>
+
+        <h3>Фаза 1 — Спешни корекции (1-2 седмици)</h3>
+        <div class="problem-list">
+            <div class="problem-card">
+                <div class="problem-title">Премахване на дублираното съдържание на „За нас" <span class="badge badge-high">Висок</span></div>
+                <div class="problem-desc">CMS грешка, която подкопава доверието. Коригира се за минути.</div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-title">Поправка на счупените линкове (#) в специалностите <span class="badge badge-high">Висок</span></div>
+                <div class="problem-desc">Критичен проблем за кандидат-студентите — прекъсва потребителския път.</div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-title">Поправка на социалните линкове в EN footer <span class="badge badge-high">Висок</span></div>
+                <div class="problem-desc">Счупени href="#" линкове в английската версия на footer-а.</div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-title">Добавяне на skip-to-content линк <span class="badge badge-high">Висок</span></div>
+                <div class="problem-desc">Базово изискване за достъпност — 1 ред HTML + 3 реда CSS.</div>
+            </div>
+        </div>
+
+        <h3>Фаза 2 — Среднорочни подобрения (1-2 месеца)</h3>
+        <div class="problem-list">
+            <div class="problem-card medium">
+                <div class="problem-title">Breadcrumb навигация на всички вътрешни страници <span class="badge badge-medium">Среден</span></div>
+            </div>
+            <div class="problem-card medium">
+                <div class="problem-title">Преструктуриране на навигацията (35+ → 5-6 категории) <span class="badge badge-medium">Среден</span></div>
+            </div>
+            <div class="problem-card medium">
+                <div class="problem-title">Замяна на шрифтовете Russo One / Poiret One <span class="badge badge-medium">Среден</span></div>
+            </div>
+            <div class="problem-card medium">
+                <div class="problem-title">WCAG AA одит и корекции на контраст <span class="badge badge-medium">Среден</span></div>
+            </div>
+            <div class="problem-card medium">
+                <div class="problem-title">Редизайн на страница „За нас" с визуални елементи <span class="badge badge-medium">Среден</span></div>
+            </div>
+        </div>
+
+        <h3>Фаза 3 — Стратегически подобрения (3-6 месеца)</h3>
+        <div class="problem-list">
+            <div class="problem-card positive">
+                <div class="problem-title">Hero видео на началната страница <span class="badge badge-low">Развитие</span></div>
+            </div>
+            <div class="problem-card positive">
+                <div class="problem-title">Единна Design System за всички поддомейни <span class="badge badge-low">Развитие</span></div>
+            </div>
+            <div class="problem-card positive">
+                <div class="problem-title">Accessibility toolbar (font resize, contrast) <span class="badge badge-low">Развитие</span></div>
+            </div>
+            <div class="problem-card positive">
+                <div class="problem-title">Animated statistics блокове <span class="badge badge-low">Развитие</span></div>
+            </div>
+            <div class="problem-card positive">
+                <div class="problem-title">Виртуален тур на кампуса (AR/360) <span class="badge badge-low">Развитие</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ОБОБЩЕНИЕ -->
+    <section>
+        <h2>Обобщение</h2>
+        <div class="summary-box">
+            <p><strong>Обща оценка: 5.2 / 10</strong></p>
+            <p>Сайтът на ВВМУ „Н. Й. Вапцаров" демонстрира солидна техническа основа (WordPress + Avada, PWA, responsive grid) и модерна визуална естетика на начално ниво. Системата за филтриране на специалности е отличителна функционалност, рядко срещана сред конкурентите.</p>
+            <p>Въпреки това, потребителското изживяване страда от: (1) претоварена навигация с 35+ елемента, (2) фрагментирана екосистема от 12+ поддомейна с несъгласуван дизайн, (3) критични UX грешки (дублирано съдържание, счупени линкове), (4) слаба достъпност, и (5) неподходящ типографски избор.</p>
+            <p>Спрямо benchmark-а от 18 морски академии, ВВМУ се класира над средното ниво по визуален дизайн (4/5), но под средното по UX (3/5). Основните конкуренти за подражание са Ecole Navale (Франция) за визуален дизайн и Royal Canadian Navy за recruitment-focused UX.</p>
+            <p><strong>Ключов извод:</strong> Най-висок ROI ще донесат спешните корекции от Фаза 1 (дублиран контент, счупени линкове, skip-to-content), които изискват минимално усилие, но значително подобряват потребителското доверие и достъпност.</p>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <div class="container">
+        <strong>UX/UI Designer анализ</strong> | Изготвен от Деян Стоянов Стоянов | Факултетен № 001114 | ВВМУ „Н. Й. Вапцаров" | Март 2026
+    </div>
+</footer>
+
+</body>
+</html>

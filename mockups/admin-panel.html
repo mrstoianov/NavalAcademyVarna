@@ -1,0 +1,3034 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Административен панел — ВВМУ „Н. Й. Вапцаров"</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #f0f2f5;
+    color: #2c3e50;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #0f2440 0%, #1a3a5c 40%, #1a3a5c 100%);
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+  .sidebar-header {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+  }
+  .sidebar-header .logo-placeholder {
+    width: 52px;
+    height: 52px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #c9a84c;
+    border: 2px solid #c9a84c;
+  }
+  .sidebar-header h2 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    color: #e8ecf1;
+  }
+  .sidebar-header .subtitle {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 2px;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 12px 0;
+    overflow-y: auto;
+  }
+  .nav-section-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.35);
+    padding: 16px 20px 6px;
+    font-weight: 700;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+    position: relative;
+  }
+  .nav-item:hover {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+  }
+  .nav-item.active {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border-left-color: #c9a84c;
+    font-weight: 600;
+  }
+  .nav-item .nav-icon {
+    width: 20px;
+    text-align: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .nav-item .badge {
+    margin-left: auto;
+    background: #e74c3c;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    min-width: 20px;
+    text-align: center;
+  }
+  .nav-item .badge.info {
+    background: #3498db;
+  }
+
+  .sidebar-user {
+    padding: 14px 18px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sidebar-user .avatar {
+    width: 36px;
+    height: 36px;
+    background: #c9a84c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #1a3a5c;
+    flex-shrink: 0;
+  }
+  .sidebar-user .user-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .sidebar-user .user-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sidebar-user .user-role {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .main {
+    margin-left: 260px;
+    flex: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== TOP BAR ===== */
+  .topbar {
+    background: #fff;
+    padding: 0 28px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .topbar-left h1 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1a3a5c;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #8896a4;
+  }
+  .breadcrumb a {
+    color: #5a6d7e;
+    text-decoration: none;
+  }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .topbar-btn {
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 7px 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #5a6d7e;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .topbar-btn:hover { background: #f4f6f8; color: #1a3a5c; }
+  .topbar-btn .notif-dot {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 8px;
+    height: 8px;
+    background: #e74c3c;
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #1a3a5c;
+    cursor: pointer;
+  }
+
+  /* ===== CONTENT AREA ===== */
+  .content {
+    flex: 1;
+    padding: 24px 28px;
+  }
+
+  /* ===== PAGE SECTIONS (tabs) ===== */
+  .page-section {
+    display: none;
+  }
+  .page-section.active {
+    display: block;
+  }
+
+  /* ===== CARDS ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: box-shadow 0.2s;
+  }
+  .stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .stat-icon.blue { background: #ebf5ff; color: #3498db; }
+  .stat-icon.orange { background: #fff7ed; color: #e67e22; }
+  .stat-icon.green { background: #ecfdf5; color: #27ae60; }
+  .stat-icon.purple { background: #f5f3ff; color: #8e44ad; }
+  .stat-info h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a3a5c;
+    line-height: 1.2;
+  }
+  .stat-info p {
+    font-size: 0.82rem;
+    color: #8896a4;
+    margin-top: 2px;
+  }
+
+  /* ===== PANELS ===== */
+  .panel {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .panel-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .panel-header h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a3a5c;
+  }
+  .panel-body {
+    padding: 16px 20px;
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: #1a3a5c;
+    color: #fff;
+  }
+  .btn-primary:hover { background: #0f2440; }
+  .btn-success {
+    background: #27ae60;
+    color: #fff;
+  }
+  .btn-success:hover { background: #219a52; }
+  .btn-danger {
+    background: #e74c3c;
+    color: #fff;
+  }
+  .btn-danger:hover { background: #c0392b; }
+  .btn-warning {
+    background: #f39c12;
+    color: #fff;
+  }
+  .btn-warning:hover { background: #d68910; }
+  .btn-outline {
+    background: #fff;
+    color: #5a6d7e;
+    border: 1px solid #dce3ea;
+  }
+  .btn-outline:hover { background: #f4f6f8; border-color: #b0bec5; }
+  .btn-sm {
+    padding: 5px 10px;
+    font-size: 0.76rem;
+  }
+  .btn-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* ===== STATUS BADGES ===== */
+  .badge-status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.73rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-green { background: #ecfdf5; color: #166534; }
+  .badge-yellow { background: #fefce8; color: #854d0e; }
+  .badge-red { background: #fef2f2; color: #991b1b; }
+  .badge-gray { background: #f3f4f6; color: #4b5563; }
+  .badge-blue { background: #eff6ff; color: #1e40af; }
+
+  /* ===== TABLES ===== */
+  .table-wrapper {
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  thead th {
+    background: #f8fafc;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    color: #5a6d7e;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f0f2f5;
+    vertical-align: middle;
+  }
+  tbody tr { transition: background 0.15s; }
+  tbody tr:hover { background: #f8fafc; }
+  tbody tr.clickable { cursor: pointer; }
+  tbody tr.clickable:hover { background: #eef4fa; }
+
+  .actions-cell {
+    display: flex;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .action-btn {
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    color: #5a6d7e;
+    transition: all 0.2s;
+  }
+  .action-btn:hover { background: #f0f2f5; color: #1a3a5c; }
+  .action-btn.edit:hover { border-color: #3498db; color: #3498db; }
+  .action-btn.delete:hover { border-color: #e74c3c; color: #e74c3c; }
+  .action-btn.view:hover { border-color: #27ae60; color: #27ae60; }
+
+  /* ===== GRID LAYOUTS ===== */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ===== QUICK ACTIONS ===== */
+  .quick-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .quick-action-card {
+    flex: 1;
+    min-width: 160px;
+    background: #fff;
+    border: 2px dashed #dce3ea;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: #5a6d7e;
+  }
+  .quick-action-card:hover {
+    border-color: #1a3a5c;
+    background: #f8fafc;
+    color: #1a3a5c;
+  }
+  .quick-action-card .qa-icon {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+  .quick-action-card .qa-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  /* ===== ACTIVITY FEED ===== */
+  .activity-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f2f5;
+  }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .activity-dot.blue { background: #3498db; }
+  .activity-dot.green { background: #27ae60; }
+  .activity-dot.orange { background: #e67e22; }
+  .activity-dot.red { background: #e74c3c; }
+  .activity-text {
+    font-size: 0.84rem;
+    color: #4a5568;
+  }
+  .activity-text strong { color: #1a3a5c; }
+  .activity-time {
+    font-size: 0.72rem;
+    color: #a0aec0;
+    margin-top: 2px;
+  }
+
+  /* ===== SEARCH & FILTERS ===== */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .search-input {
+    padding: 8px 14px;
+    border: 1px solid #dce3ea;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 240px;
+    max-width: 100%;
+  }
+  .search-input:focus { border-color: #1a3a5c; }
+  .filter-select {
+    padding: 8px 12px;
+    border: 1px solid #dce3ea;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    outline: none;
+    background: #fff;
+    color: #2c3e50;
+    cursor: pointer;
+  }
+  .filter-select:focus { border-color: #1a3a5c; }
+
+  /* ===== FORM DETAIL VIEW (MODAL STYLE) ===== */
+  .detail-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15,36,64,0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .detail-overlay.show {
+    display: flex;
+  }
+  .detail-modal {
+    background: #fff;
+    border-radius: 16px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+  .detail-modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    z-index: 10;
+  }
+  .detail-modal-header h2 {
+    font-size: 1.1rem;
+    color: #1a3a5c;
+  }
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #8896a4;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  .close-btn:hover { background: #f0f2f5; color: #e74c3c; }
+  .detail-modal-body {
+    padding: 24px;
+  }
+  .detail-section {
+    margin-bottom: 24px;
+  }
+  .detail-section h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #5a6d7e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #f0f2f5;
+  }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .detail-field label {
+    display: block;
+    font-size: 0.74rem;
+    color: #8896a4;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  .detail-field .value {
+    font-size: 0.9rem;
+    color: #2c3e50;
+    font-weight: 500;
+  }
+  .detail-field.full {
+    grid-column: 1 / -1;
+  }
+  .doc-attachment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 8px;
+  }
+  .doc-attachment .doc-icon {
+    color: #e74c3c;
+    font-size: 1.1rem;
+  }
+  .doc-attachment .doc-name {
+    flex: 1;
+    font-size: 0.84rem;
+    font-weight: 500;
+  }
+  .doc-attachment .doc-size {
+    font-size: 0.74rem;
+    color: #8896a4;
+  }
+  .comment-box {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-left: 3px solid #1a3a5c;
+  }
+  .comment-box .comment-author {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #1a3a5c;
+  }
+  .comment-box .comment-date {
+    font-size: 0.7rem;
+    color: #8896a4;
+    margin-left: 8px;
+  }
+  .comment-box .comment-text {
+    font-size: 0.84rem;
+    color: #4a5568;
+    margin-top: 4px;
+  }
+  .textarea-field {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #dce3ea;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 70px;
+    outline: none;
+  }
+  .textarea-field:focus { border-color: #1a3a5c; }
+  .history-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 0.82rem;
+    border-bottom: 1px solid #f0f2f5;
+  }
+  .history-item:last-child { border-bottom: none; }
+  .history-date { color: #8896a4; font-size: 0.74rem; white-space: nowrap; }
+  .history-action { color: #4a5568; }
+
+  /* ===== TABS (sub-navigation) ===== */
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 10px 20px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #8896a4;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: #1a3a5c; }
+  .tab.active {
+    color: #1a3a5c;
+    border-bottom-color: #1a3a5c;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ===== STAFF CARD ===== */
+  .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .staff-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    transition: box-shadow 0.2s;
+  }
+  .staff-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .staff-photo {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #8896a4;
+    flex-shrink: 0;
+  }
+  .staff-info h4 {
+    font-size: 0.88rem;
+    color: #1a3a5c;
+    font-weight: 600;
+  }
+  .staff-info p {
+    font-size: 0.78rem;
+    color: #8896a4;
+  }
+  .staff-info .dept {
+    font-size: 0.76rem;
+    color: #5a6d7e;
+    font-weight: 500;
+  }
+
+  /* ===== FILE MANAGER ===== */
+  .file-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .file-icon {
+    width: 36px;
+    height: 36px;
+    background: #fef2f2;
+    color: #e74c3c;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .file-icon.doc { background: #eff6ff; color: #2563eb; }
+  .file-icon.xls { background: #ecfdf5; color: #16a34a; }
+
+  /* ===== SETTINGS FORM ===== */
+  .form-group {
+    margin-bottom: 18px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 6px;
+  }
+  .form-control {
+    width: 100%;
+    padding: 9px 14px;
+    border: 1px solid #dce3ea;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-control:focus { border-color: #1a3a5c; box-shadow: 0 0 0 3px rgba(26,58,92,0.08); }
+
+  /* ===== PAGINATION ===== */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-top: 1px solid #f0f2f5;
+    font-size: 0.82rem;
+    color: #8896a4;
+  }
+  .pagination-btns {
+    display: flex;
+    gap: 4px;
+  }
+  .pagination-btns button {
+    padding: 5px 10px;
+    border: 1px solid #dce3ea;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: #5a6d7e;
+    transition: all 0.2s;
+  }
+  .pagination-btns button:hover { background: #f4f6f8; }
+  .pagination-btns button.active {
+    background: #1a3a5c;
+    color: #fff;
+    border-color: #1a3a5c;
+  }
+
+  /* ===== FOOTER ===== */
+  .admin-footer {
+    padding: 16px 28px;
+    text-align: center;
+    font-size: 0.74rem;
+    color: #8896a4;
+    border-top: 1px solid #e2e8f0;
+    background: #fff;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+    }
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    .main { margin-left: 0; }
+    .mobile-toggle { display: block; }
+    .content { padding: 16px; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .topbar { padding: 0 16px; }
+    .staff-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== SIDEBAR ==================== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo-placeholder">B</div>
+    <h2>ВВМУ „Н. Й. Вапцаров"</h2>
+    <div class="subtitle">Административен панел</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Основно</div>
+    <a class="nav-item active" onclick="showPage('dashboard')">
+      <span class="nav-icon">&#9711;</span> Табло
+    </a>
+
+    <div class="nav-section-label">Съдържание</div>
+    <a class="nav-item" onclick="showPage('news')">
+      <span class="nav-icon">&#9993;</span> Новини
+      <span class="badge info">47</span>
+    </a>
+    <a class="nav-item" onclick="showPage('events')">
+      <span class="nav-icon">&#9734;</span> Събития
+    </a>
+    <a class="nav-item" onclick="showPage('programs')">
+      <span class="nav-icon">&#9670;</span> Специалности
+    </a>
+    <a class="nav-item" onclick="showPage('courses')">
+      <span class="nav-icon">&#9654;</span> Курсове
+    </a>
+    <a class="nav-item" onclick="showPage('documents')">
+      <span class="nav-icon">&#9782;</span> Документи
+    </a>
+    <a class="nav-item" onclick="showPage('staff')">
+      <span class="nav-icon">&#9775;</span> Персонал
+    </a>
+
+    <div class="nav-section-label">Заявления</div>
+    <a class="nav-item" onclick="showPage('forms')">
+      <span class="nav-icon">&#9997;</span> Всички заявления
+      <span class="badge">12</span>
+    </a>
+
+    <div class="nav-section-label">Система</div>
+    <a class="nav-item" onclick="showPage('settings')">
+      <span class="nav-icon">&#9881;</span> Настройки
+    </a>
+  </nav>
+
+  <div class="sidebar-user">
+    <div class="avatar">ГН</div>
+    <div class="user-info">
+      <div class="user-name">Георги Николов</div>
+      <div class="user-role">Администратор</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ==================== MAIN ==================== -->
+<div class="main">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776;</button>
+      <div>
+        <h1 id="page-title">Табло</h1>
+        <div class="breadcrumb"><a href="#">Начало</a> / <span id="breadcrumb-text">Табло</span></div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn">
+        &#128276;
+        <span class="notif-dot"></span>
+      </button>
+      <button class="topbar-btn">&#9881;</button>
+      <button class="topbar-btn" title="Изход">&#10140;</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ========================================================== -->
+    <!-- ==================== DASHBOARD ==================== -->
+    <!-- ========================================================== -->
+    <div class="page-section active" id="page-dashboard">
+
+      <!-- Welcome -->
+      <div style="margin-bottom: 24px;">
+        <h2 style="font-size: 1.35rem; color: #1a3a5c; font-weight: 700;">Добре дошли, Георги!</h2>
+        <p style="font-size: 0.9rem; color: #8896a4; margin-top: 4px;">Ето обобщение на активността в системата за днес, 23 март 2026 г.</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">&#9993;</div>
+          <div class="stat-info">
+            <h3>47</h3>
+            <p>Публикувани новини</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">&#9997;</div>
+          <div class="stat-info">
+            <h3>12</h3>
+            <p>Чакащи заявления</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">&#9782;</div>
+          <div class="stat-info">
+            <h3>134</h3>
+            <p>Качени документи</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">&#9654;</div>
+          <div class="stat-info">
+            <h3>78</h3>
+            <p>Активни курсове</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <div class="quick-action-card" onclick="showPage('news')">
+          <div class="qa-icon">+&#9993;</div>
+          <div class="qa-label">Нова новина</div>
+        </div>
+        <div class="quick-action-card" onclick="showPage('events')">
+          <div class="qa-icon">+&#9734;</div>
+          <div class="qa-label">Ново събитие</div>
+        </div>
+        <div class="quick-action-card" onclick="showPage('documents')">
+          <div class="qa-icon">+&#9782;</div>
+          <div class="qa-label">Качи документ</div>
+        </div>
+        <div class="quick-action-card" onclick="showPage('forms')">
+          <div class="qa-icon">&#9997;</div>
+          <div class="qa-label">Преглед заявления</div>
+        </div>
+      </div>
+
+      <!-- Activity + Recent -->
+      <div class="grid-2">
+        <!-- Recent Activity -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Последна активност</h2>
+          </div>
+          <div class="panel-body">
+            <div class="activity-item">
+              <div class="activity-dot blue"></div>
+              <div>
+                <div class="activity-text"><strong>Яница Минкова</strong> публикува новина: „Пристигна втората група за обучение по програма BIP"</div>
+                <div class="activity-time">19 март 2026, 14:32</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot green"></div>
+              <div>
+                <div class="activity-text"><strong>Георги Николов</strong> одобри заявление за кандидатстване #2026-0342</div>
+                <div class="activity-time">19 март 2026, 11:18</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot orange"></div>
+              <div>
+                <div class="activity-text">Ново заявление за <strong>Еразъм+</strong> от Петър Иванов</div>
+                <div class="activity-time">18 март 2026, 16:45</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot blue"></div>
+              <div>
+                <div class="activity-text"><strong>Георги Николов</strong> публикува: „Тържествено честване на 145 години"</div>
+                <div class="activity-time">17 март 2026, 09:20</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot red"></div>
+              <div>
+                <div class="activity-text">Документ <strong>„Правилник за обучение"</strong> — изтекла валидност</div>
+                <div class="activity-time">16 март 2026, 08:00</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot green"></div>
+              <div>
+                <div class="activity-text"><strong>Записване за курс</strong> — 3 нови записвания за „Основна подготовка по морска безопасност"</div>
+                <div class="activity-time">15 март 2026, 13:55</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pending submissions -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Чакащи заявления</h2>
+            <a class="btn btn-sm btn-outline" onclick="showPage('forms')">Виж всички</a>
+          </div>
+          <div class="panel-body">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Тип</th>
+                    <th>Подател</th>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Кандидатстване</td>
+                    <td>Мария Петрова</td>
+                    <td>22.03.2026</td>
+                    <td><span class="badge-status badge-yellow">Нова</span></td>
+                  </tr>
+                  <tr>
+                    <td>Записване за курс</td>
+                    <td>Иван Стоянов</td>
+                    <td>21.03.2026</td>
+                    <td><span class="badge-status badge-yellow">Нова</span></td>
+                  </tr>
+                  <tr>
+                    <td>Еразъм+</td>
+                    <td>Петър Иванов</td>
+                    <td>18.03.2026</td>
+                    <td><span class="badge-status badge-blue">В обработка</span></td>
+                  </tr>
+                  <tr>
+                    <td>Общежитие</td>
+                    <td>Стефан Ковачев</td>
+                    <td>17.03.2026</td>
+                    <td><span class="badge-status badge-yellow">Нова</span></td>
+                  </tr>
+                  <tr>
+                    <td>Удостоверение</td>
+                    <td>Десислава Димитрова</td>
+                    <td>16.03.2026</td>
+                    <td><span class="badge-status badge-blue">В обработка</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- ==================== NEWS ==================== -->
+    <!-- ========================================================== -->
+    <div class="page-section" id="page-news">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Управление на новини</h2>
+          <div class="toolbar">
+            <input type="text" class="search-input" placeholder="Търсене по заглавие...">
+            <select class="filter-select">
+              <option>Всички статуси</option>
+              <option>Публикувана</option>
+              <option>Чернова</option>
+            </select>
+            <button class="btn btn-primary">+ Нова новина</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Заглавие</th>
+                <th>Дата</th>
+                <th>Автор</th>
+                <th>Статус</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Пристигна втората група за обучение по програма BIP във ВВМУ</strong></td>
+                <td>19.03.2026</td>
+                <td>Яница Минкова</td>
+                <td><span class="badge-status badge-green">Публикувана</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit" title="Редактирай">&#9998;</button>
+                    <button class="action-btn view" title="Преглед">&#9741;</button>
+                    <button class="action-btn delete" title="Изтрий">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Тържествено честване на 145 години от създаването на ВВМУ</strong></td>
+                <td>17.03.2026</td>
+                <td>Георги Николов</td>
+                <td><span class="badge-status badge-green">Публикувана</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit" title="Редактирай">&#9998;</button>
+                    <button class="action-btn view" title="Преглед">&#9741;</button>
+                    <button class="action-btn delete" title="Изтрий">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Международен ден на моряка — програма 2026</strong></td>
+                <td>15.03.2026</td>
+                <td>Яница Минкова</td>
+                <td><span class="badge-status badge-gray">Чернова</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit" title="Редактирай">&#9998;</button>
+                    <button class="action-btn view" title="Преглед">&#9741;</button>
+                    <button class="action-btn delete" title="Изтрий">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Нови симулатори за морско обучение — официално откриване</strong></td>
+                <td>12.03.2026</td>
+                <td>Георги Николов</td>
+                <td><span class="badge-status badge-green">Публикувана</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit" title="Редактирай">&#9998;</button>
+                    <button class="action-btn view" title="Преглед">&#9741;</button>
+                    <button class="action-btn delete" title="Изтрий">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>ВВМУ домакин на конференция „Морска сигурност 2026"</strong></td>
+                <td>08.03.2026</td>
+                <td>Яница Минкова</td>
+                <td><span class="badge-status badge-green">Публикувана</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit" title="Редактирай">&#9998;</button>
+                    <button class="action-btn view" title="Преглед">&#9741;</button>
+                    <button class="action-btn delete" title="Изтрий">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Посещение на делегация от ВМС на Румъния</strong></td>
+                <td>04.03.2026</td>
+                <td>Георги Николов</td>
+                <td><span class="badge-status badge-green">Публикувана</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit" title="Редактирай">&#9998;</button>
+                    <button class="action-btn view" title="Преглед">&#9741;</button>
+                    <button class="action-btn delete" title="Изтрий">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Ден на отворените врати — април 2026</strong></td>
+                <td>01.03.2026</td>
+                <td>Яница Минкова</td>
+                <td><span class="badge-status badge-gray">Чернова</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit" title="Редактирай">&#9998;</button>
+                    <button class="action-btn view" title="Преглед">&#9741;</button>
+                    <button class="action-btn delete" title="Изтрий">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span>Показани 1-7 от 47</span>
+          <div class="pagination-btns">
+            <button>&laquo;</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>...</button>
+            <button>7</button>
+            <button>&raquo;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- ==================== EVENTS ==================== -->
+    <!-- ========================================================== -->
+    <div class="page-section" id="page-events">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Управление на събития</h2>
+          <div class="toolbar">
+            <input type="text" class="search-input" placeholder="Търсене на събитие...">
+            <select class="filter-select">
+              <option>Всички статуси</option>
+              <option>Предстоящо</option>
+              <option>Приключило</option>
+              <option>Чернова</option>
+            </select>
+            <button class="btn btn-primary">+ Ново събитие</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Заглавие</th>
+                <th>Дата</th>
+                <th>Място</th>
+                <th>Статус</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ден на отворените врати 2026</strong></td>
+                <td>15.04.2026</td>
+                <td>Кампус ВВМУ, Варна</td>
+                <td><span class="badge-status badge-green">Предстоящо</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Конференция „Морска сигурност 2026"</strong></td>
+                <td>08-10.04.2026</td>
+                <td>Аулата, ВВМУ</td>
+                <td><span class="badge-status badge-green">Предстоящо</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Военна клетва — випуск 2026</strong></td>
+                <td>22.05.2026</td>
+                <td>Плац, ВВМУ</td>
+                <td><span class="badge-status badge-gray">Чернова</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>145 години ВВМУ — тържество в Русе</strong></td>
+                <td>17.03.2026</td>
+                <td>Русе</td>
+                <td><span class="badge-status badge-gray">Приключило</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>BIP обучение — Еразъм+ програма</strong></td>
+                <td>10-21.03.2026</td>
+                <td>ВВМУ, Варна</td>
+                <td><span class="badge-status badge-gray">Приключило</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Дипломиране — магистри 2025/2026</strong></td>
+                <td>28.06.2026</td>
+                <td>Аулата, ВВМУ</td>
+                <td><span class="badge-status badge-green">Предстоящо</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span>Показани 1-6 от 23</span>
+          <div class="pagination-btns">
+            <button>&laquo;</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>&raquo;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- ==================== PROGRAMS ==================== -->
+    <!-- ========================================================== -->
+    <div class="page-section" id="page-programs">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Специалности и специализации</h2>
+          <div class="toolbar">
+            <select class="filter-select">
+              <option>Всички нива</option>
+              <option>Бакалавър</option>
+              <option>Магистър</option>
+              <option>Курсант</option>
+            </select>
+            <select class="filter-select">
+              <option>Всички факултети</option>
+              <option>Навигационен</option>
+              <option>Инженерен</option>
+              <option>ДСДКДО</option>
+            </select>
+            <button class="btn btn-primary">+ Нова специалност</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Специалност</th>
+                <th>Факултет</th>
+                <th>ОКС</th>
+                <th>Форма</th>
+                <th>Статус</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Навигация</strong></td>
+                <td>Навигационен</td>
+                <td><span class="badge-status badge-blue">Бакалавър</span></td>
+                <td>Редовна</td>
+                <td><span class="badge-status badge-green">Активна</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Киберсигурност</strong></td>
+                <td>Инженерен</td>
+                <td><span class="badge-status badge-blue">Бакалавър</span></td>
+                <td>Редовна / Задочна</td>
+                <td><span class="badge-status badge-green">Активна</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Софтуерни и мрежови технологии</strong></td>
+                <td>Инженерен</td>
+                <td><span class="badge-status badge-blue">Бакалавър</span></td>
+                <td>Редовна</td>
+                <td><span class="badge-status badge-green">Активна</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Управление на водния транспорт</strong></td>
+                <td>Навигационен</td>
+                <td><span class="badge-status badge-blue">Магистър</span></td>
+                <td>Задочна / Дистанционна</td>
+                <td><span class="badge-status badge-green">Активна</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Изкуствен интелект</strong></td>
+                <td>Инженерен</td>
+                <td><span class="badge-status badge-blue">Магистър</span></td>
+                <td>Редовна</td>
+                <td><span class="badge-status badge-green">Активна</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Кораборемонтни технологии</strong></td>
+                <td>Инженерен</td>
+                <td><span class="badge-status badge-blue">Магистър</span></td>
+                <td>Задочна</td>
+                <td><span class="badge-status badge-gray">Неактивна</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Навигация за ВМС</strong></td>
+                <td>Навигационен</td>
+                <td><span class="badge-status badge-blue">Курсант</span></td>
+                <td>Редовна</td>
+                <td><span class="badge-status badge-green">Активна</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Кибероперации</strong></td>
+                <td>Инженерен</td>
+                <td><span class="badge-status badge-blue">Курсант</span></td>
+                <td>Редовна</td>
+                <td><span class="badge-status badge-green">Активна</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span>Показани 1-8 от 45</span>
+          <div class="pagination-btns">
+            <button>&laquo;</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>...</button>
+            <button>6</button>
+            <button>&raquo;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- ==================== COURSES ==================== -->
+    <!-- ========================================================== -->
+    <div class="page-section" id="page-courses">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Управление на курсове</h2>
+          <div class="toolbar">
+            <input type="text" class="search-input" placeholder="Търсене на курс...">
+            <select class="filter-select">
+              <option>Всички категории</option>
+              <option>Морски курсове</option>
+              <option>ИТ курсове</option>
+              <option>Езикови курсове (LangMar)</option>
+              <option>Йонизиращи лъчения</option>
+            </select>
+            <select class="filter-select">
+              <option>Всички статуси</option>
+              <option>Активен</option>
+              <option>Неактивен</option>
+            </select>
+            <button class="btn btn-primary">+ Нов курс</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Код</th>
+                <th>Наименование</th>
+                <th>Категория</th>
+                <th>Цена</th>
+                <th>Записани</th>
+                <th>Статус</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1101</td>
+                <td><strong>Офицер по сигурността на кораба</strong></td>
+                <td><span class="badge-status badge-blue">Морски</span></td>
+                <td>450 лв.</td>
+                <td>23</td>
+                <td><span class="badge-status badge-green">Активен</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>1202</td>
+                <td><strong>Управление на екипа и ресурсите на мостика</strong></td>
+                <td><span class="badge-status badge-blue">Морски</span></td>
+                <td>520 лв.</td>
+                <td>18</td>
+                <td><span class="badge-status badge-green">Активен</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>1401</td>
+                <td><strong>Основна подготовка по морска безопасност</strong></td>
+                <td><span class="badge-status badge-blue">Морски</span></td>
+                <td>380 лв.</td>
+                <td>42</td>
+                <td><span class="badge-status badge-green">Активен</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>2601</td>
+                <td><strong>CCNA1: Основи на компютърните мрежи</strong></td>
+                <td><span class="badge-status badge-green">ИТ</span></td>
+                <td>690 лв.</td>
+                <td>15</td>
+                <td><span class="badge-status badge-green">Активен</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>2620</td>
+                <td><strong>Киберсигурност за педагогически специалисти</strong></td>
+                <td><span class="badge-status badge-green">ИТ</span></td>
+                <td>480 лв.</td>
+                <td>8</td>
+                <td><span class="badge-status badge-green">Активен</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>LM-01</td>
+                <td><strong>General English Module 1 (Elementary)</strong></td>
+                <td><span class="badge-status badge-yellow">Езикови</span></td>
+                <td>390 лв.</td>
+                <td>12</td>
+                <td><span class="badge-status badge-green">Активен</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>LM-04</td>
+                <td><strong>Specialized Maritime English — Deck Officers</strong></td>
+                <td><span class="badge-status badge-yellow">Езикови</span></td>
+                <td>430 лв.</td>
+                <td>6</td>
+                <td><span class="badge-status badge-green">Активен</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>2101</td>
+                <td><strong>Подготвителен курс за главен механик</strong></td>
+                <td><span class="badge-status badge-blue">Морски</span></td>
+                <td>1 200 лв.</td>
+                <td>0</td>
+                <td><span class="badge-status badge-gray">Неактивен</span></td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn edit">&#9998;</button>
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span>Показани 1-8 от 78</span>
+          <div class="pagination-btns">
+            <button>&laquo;</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>...</button>
+            <button>10</button>
+            <button>&raquo;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- ==================== DOCUMENTS ==================== -->
+    <!-- ========================================================== -->
+    <div class="page-section" id="page-documents">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Управление на документи</h2>
+          <div class="toolbar">
+            <input type="text" class="search-input" placeholder="Търсене на документ...">
+            <select class="filter-select">
+              <option>Всички категории</option>
+              <option>Правилници</option>
+              <option>Акредитация</option>
+              <option>Прием</option>
+              <option>Обществени поръчки</option>
+              <option>Качество</option>
+              <option>СЪБРА</option>
+            </select>
+            <button class="btn btn-primary">+ Качи документ</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Документ</th>
+                <th>Категория</th>
+                <th>Дата на качване</th>
+                <th>Изтегляния</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="file-row">
+                    <div class="file-icon">PDF</div>
+                    <div>
+                      <strong>Кандидатстудентски справочник 2025-2026</strong>
+                      <div style="font-size: 0.74rem; color: #8896a4;">2.4 MB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge-status badge-blue">Прием</span></td>
+                <td>15.01.2026</td>
+                <td>1 247</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn view" title="Преглед">&#9741;</button>
+                    <button class="action-btn edit" title="Замени">&#8635;</button>
+                    <button class="action-btn delete" title="Изтрий">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="file-row">
+                    <div class="file-icon">PDF</div>
+                    <div>
+                      <strong>Сертификат за институционална акредитация</strong>
+                      <div style="font-size: 0.74rem; color: #8896a4;">856 KB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge-status badge-green">Акредитация</span></td>
+                <td>25.04.2024</td>
+                <td>892</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn edit">&#8635;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="file-row">
+                    <div class="file-icon">PDF</div>
+                    <div>
+                      <strong>Стратегия за развитие 2016-2030</strong>
+                      <div style="font-size: 0.74rem; color: #8896a4;">3.1 MB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge-status badge-yellow">Правилници</span></td>
+                <td>10.09.2023</td>
+                <td>534</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn edit">&#8635;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="file-row">
+                    <div class="file-icon">PDF</div>
+                    <div>
+                      <strong>Правилник за дейността на Библиотечно-информационния център</strong>
+                      <div style="font-size: 0.74rem; color: #8896a4;">412 KB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge-status badge-yellow">Правилници</span></td>
+                <td>05.03.2024</td>
+                <td>218</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn edit">&#8635;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="file-row">
+                    <div class="file-icon doc">DOC</div>
+                    <div>
+                      <strong>Извадка всички курсове — Таблица</strong>
+                      <div style="font-size: 0.74rem; color: #8896a4;">1.8 MB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge-status badge-blue">Прием</span></td>
+                <td>20.02.2026</td>
+                <td>376</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn edit">&#8635;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="file-row">
+                    <div class="file-icon xls">XLS</div>
+                    <div>
+                      <strong>СЪБРА — данни 2025</strong>
+                      <div style="font-size: 0.74rem; color: #8896a4;">640 KB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge-status badge-gray">СЪБРА</span></td>
+                <td>12.01.2026</td>
+                <td>145</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn edit">&#8635;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="file-row">
+                    <div class="file-icon">PDF</div>
+                    <div>
+                      <strong>Система за управление на качеството — наръчник</strong>
+                      <div style="font-size: 0.74rem; color: #8896a4;">1.2 MB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge-status badge-green">Качество</span></td>
+                <td>08.11.2025</td>
+                <td>203</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="action-btn view">&#9741;</button>
+                    <button class="action-btn edit">&#8635;</button>
+                    <button class="action-btn delete">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span>Показани 1-7 от 134</span>
+          <div class="pagination-btns">
+            <button>&laquo;</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>...</button>
+            <button>20</button>
+            <button>&raquo;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- ==================== STAFF ==================== -->
+    <!-- ========================================================== -->
+    <div class="page-section" id="page-staff">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Персонал и преподаватели</h2>
+          <div class="toolbar">
+            <input type="text" class="search-input" placeholder="Търсене на служител...">
+            <select class="filter-select">
+              <option>Всички звена</option>
+              <option>Ръководство</option>
+              <option>Факултет Навигационен</option>
+              <option>Факултет Инженерен</option>
+              <option>ДСДКДО</option>
+              <option>Администрация</option>
+            </select>
+            <button class="btn btn-primary">+ Добави профил</button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="staff-grid">
+            <div class="staff-card">
+              <div class="staff-photo">&#9786;</div>
+              <div class="staff-info">
+                <h4>Флотилен адмирал проф. д-р Калин Калинов</h4>
+                <p class="dept">Ръководство</p>
+                <p>Началник на ВВМУ</p>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-photo">&#9786;</div>
+              <div class="staff-info">
+                <h4>Капитан I ранг проф. д-р Мирослав Цветков</h4>
+                <p class="dept">Ръководство</p>
+                <p>Зам.-началник по учебната и научна дейност</p>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-photo">&#9786;</div>
+              <div class="staff-info">
+                <h4>Капитан I ранг проф. д-р Недко Димитров</h4>
+                <p class="dept">Факултет Навигационен</p>
+                <p>Декан</p>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-photo">&#9786;</div>
+              <div class="staff-info">
+                <h4>Капитан I ранг проф. д-р Ивайло Бакалов</h4>
+                <p class="dept">Факултет Инженерен</p>
+                <p>Декан</p>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-photo">&#9786;</div>
+              <div class="staff-info">
+                <h4>Проф. д-р Благовест Белев</h4>
+                <p class="dept">Катедра „Корабоводене"</p>
+                <p>Ръководител катедра</p>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-photo">&#9786;</div>
+              <div class="staff-info">
+                <h4>Проф. д-р Валентина Петрова</h4>
+                <p class="dept">Катедра „Информационни технологии"</p>
+                <p>Ръководител катедра</p>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-photo">&#9786;</div>
+              <div class="staff-info">
+                <h4>Доц. д-р Петина Вичева</h4>
+                <p class="dept">Катедра „Езикова подготовка"</p>
+                <p>Ръководител катедра</p>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-photo">&#9786;</div>
+              <div class="staff-info">
+                <h4>Капитан I ранг доц. д-р Желязко Николов</h4>
+                <p class="dept">ДСДКДО</p>
+                <p>Директор</p>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-photo">&#9786;</div>
+              <div class="staff-info">
+                <h4>Капитан II ранг проф. д-р Йордан Сивков</h4>
+                <p class="dept">Катедра „Електроника" / ЦДО</p>
+                <p>Ръководител катедра / Ръководител ЦДО</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pagination">
+          <span>Показани 1-9 от 86</span>
+          <div class="pagination-btns">
+            <button>&laquo;</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>...</button>
+            <button>10</button>
+            <button>&raquo;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- ==================== FORM SUBMISSIONS ==================== -->
+    <!-- ========================================================== -->
+    <div class="page-section" id="page-forms">
+
+      <!-- Sub-tabs for form types -->
+      <div class="tabs">
+        <div class="tab active" onclick="showFormTab('admission')">Кандидатстване</div>
+        <div class="tab" onclick="showFormTab('course-enroll')">Записване за курс</div>
+        <div class="tab" onclick="showFormTab('inquiry')">Запитвания</div>
+        <div class="tab" onclick="showFormTab('erasmus')">Еразъм+</div>
+        <div class="tab" onclick="showFormTab('dormitory')">Общежитие</div>
+        <div class="tab" onclick="showFormTab('certificate')">Удостоверения</div>
+      </div>
+
+      <!-- ===== Admission Applications ===== -->
+      <div class="tab-content active" id="form-admission">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Заявления за кандидатстване</h2>
+            <div class="toolbar">
+              <input type="text" class="search-input" placeholder="Търсене по име...">
+              <select class="filter-select">
+                <option>Всички статуси</option>
+                <option>Нова</option>
+                <option>В обработка</option>
+                <option>Одобрена</option>
+                <option>Отказана</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Номер</th>
+                  <th>Име на кандидата</th>
+                  <th>Специалност</th>
+                  <th>Дата</th>
+                  <th>Документи</th>
+                  <th>Статус</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="clickable" onclick="openDetail()">
+                  <td>#2026-0348</td>
+                  <td><strong>Мария Георгиева Петрова</strong></td>
+                  <td>Навигация (бакалавър)</td>
+                  <td>22.03.2026</td>
+                  <td>3 файла</td>
+                  <td><span class="badge-status badge-yellow">Нова</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn view" onclick="event.stopPropagation(); openDetail()">&#9741;</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="clickable">
+                  <td>#2026-0347</td>
+                  <td><strong>Александър Николаев Димитров</strong></td>
+                  <td>Киберсигурност (бакалавър)</td>
+                  <td>21.03.2026</td>
+                  <td>4 файла</td>
+                  <td><span class="badge-status badge-yellow">Нова</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn view">&#9741;</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="clickable">
+                  <td>#2026-0342</td>
+                  <td><strong>Елена Стоянова Вълчева</strong></td>
+                  <td>Софтуерни и мрежови технологии</td>
+                  <td>19.03.2026</td>
+                  <td>3 файла</td>
+                  <td><span class="badge-status badge-blue">В обработка</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn view">&#9741;</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="clickable">
+                  <td>#2026-0338</td>
+                  <td><strong>Николай Петров Маринов</strong></td>
+                  <td>Навигация за ВМС (курсант)</td>
+                  <td>16.03.2026</td>
+                  <td>5 файла</td>
+                  <td><span class="badge-status badge-green">Одобрена</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn view">&#9741;</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="clickable">
+                  <td>#2026-0335</td>
+                  <td><strong>Виктория Иванова Колева</strong></td>
+                  <td>Изкуствен интелект (магистър)</td>
+                  <td>14.03.2026</td>
+                  <td>2 файла</td>
+                  <td><span class="badge-status badge-red">Отказана</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn view">&#9741;</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <span>Показани 1-5 от 48</span>
+            <div class="pagination-btns">
+              <button>&laquo;</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>...</button>
+              <button>10</button>
+              <button>&raquo;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Course Enrollment ===== -->
+      <div class="tab-content" id="form-course-enroll">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Записвания за курсове</h2>
+            <div class="toolbar">
+              <input type="text" class="search-input" placeholder="Търсене...">
+              <select class="filter-select">
+                <option>Всички статуси</option>
+                <option>Нова</option>
+                <option>Потвърдена</option>
+                <option>Платена</option>
+                <option>Отменена</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Номер</th>
+                  <th>Име</th>
+                  <th>Курс</th>
+                  <th>Дата</th>
+                  <th>Плащане</th>
+                  <th>Статус</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#К-0112</td>
+                  <td><strong>Иван Стоянов Георгиев</strong></td>
+                  <td>Основна подготовка по морска безопасност</td>
+                  <td>21.03.2026</td>
+                  <td><span class="badge-status badge-yellow">Очаква</span></td>
+                  <td><span class="badge-status badge-yellow">Нова</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#К-0111</td>
+                  <td><strong>Борис Тодоров Янков</strong></td>
+                  <td>CCNA1: Основи на компютърните мрежи</td>
+                  <td>20.03.2026</td>
+                  <td><span class="badge-status badge-green">Платено</span></td>
+                  <td><span class="badge-status badge-green">Потвърдена</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#К-0109</td>
+                  <td><strong>Ана Велчева Колева</strong></td>
+                  <td>General Maritime English Module 3</td>
+                  <td>18.03.2026</td>
+                  <td><span class="badge-status badge-green">Платено</span></td>
+                  <td><span class="badge-status badge-green">Потвърдена</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#К-0107</td>
+                  <td><strong>Димитър Костов Славов</strong></td>
+                  <td>Управление на екипа и ресурсите на мостика</td>
+                  <td>15.03.2026</td>
+                  <td><span class="badge-status badge-red">Неплатено</span></td>
+                  <td><span class="badge-status badge-red">Отменена</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <span>Показани 1-4 от 31</span>
+            <div class="pagination-btns">
+              <button>&laquo;</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>...</button>
+              <button>8</button>
+              <button>&raquo;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Inquiry ===== -->
+      <div class="tab-content" id="form-inquiry">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Запитвания</h2>
+            <div class="toolbar">
+              <input type="text" class="search-input" placeholder="Търсене...">
+              <select class="filter-select">
+                <option>Всички</option>
+                <option>Непрочетени</option>
+                <option>Отговорени</option>
+                <option>Архивирани</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Номер</th>
+                  <th>Име</th>
+                  <th>E-mail</th>
+                  <th>Тема</th>
+                  <th>Дата</th>
+                  <th>Статус</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#З-0089</td>
+                  <td><strong>Красимир Василев</strong></td>
+                  <td>k.vasilev@mail.bg</td>
+                  <td>Въпрос за морски курсове</td>
+                  <td>22.03.2026</td>
+                  <td><span class="badge-status badge-yellow">Непрочетено</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#З-0088</td>
+                  <td><strong>Силвия Маринова</strong></td>
+                  <td>s.marinova@abv.bg</td>
+                  <td>Информация за магистърски програми</td>
+                  <td>20.03.2026</td>
+                  <td><span class="badge-status badge-yellow">Непрочетено</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#З-0086</td>
+                  <td><strong>Георги Тончев</strong></td>
+                  <td>g.tonchev@gmail.com</td>
+                  <td>Планетариум — групова заявка</td>
+                  <td>17.03.2026</td>
+                  <td><span class="badge-status badge-green">Отговорено</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#З-0084</td>
+                  <td><strong>Даниела Петкова</strong></td>
+                  <td>d.petkova@yahoo.com</td>
+                  <td>Еразъм+ — партньорски университети</td>
+                  <td>14.03.2026</td>
+                  <td><span class="badge-status badge-green">Отговорено</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <span>Показани 1-4 от 89</span>
+            <div class="pagination-btns">
+              <button>&laquo;</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>...</button>
+              <button>23</button>
+              <button>&raquo;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Erasmus+ ===== -->
+      <div class="tab-content" id="form-erasmus">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Еразъм+ заявления</h2>
+            <div class="toolbar">
+              <input type="text" class="search-input" placeholder="Търсене...">
+              <select class="filter-select">
+                <option>Всички статуси</option>
+                <option>Нова</option>
+                <option>В обработка</option>
+                <option>Одобрена</option>
+                <option>Отказана</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Номер</th>
+                  <th>Студент</th>
+                  <th>Дестинация</th>
+                  <th>Период</th>
+                  <th>Дата</th>
+                  <th>Статус</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#Е-0034</td>
+                  <td><strong>Петър Атанасов Иванов</strong></td>
+                  <td>Universidade de Lisboa, Португалия</td>
+                  <td>Октомври 2026 — Февруари 2027</td>
+                  <td>18.03.2026</td>
+                  <td><span class="badge-status badge-blue">В обработка</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#Е-0033</td>
+                  <td><strong>Ивана Кръстева Тодорова</strong></td>
+                  <td>Constanta Maritime University, Румъния</td>
+                  <td>Септември — Декември 2026</td>
+                  <td>15.03.2026</td>
+                  <td><span class="badge-status badge-yellow">Нова</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#Е-0031</td>
+                  <td><strong>Стоян Минчев Калчев</strong></td>
+                  <td>Politecnico di Bari, Италия</td>
+                  <td>Март — Юни 2026</td>
+                  <td>08.02.2026</td>
+                  <td><span class="badge-status badge-green">Одобрена</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <span>Показани 1-3 от 34</span>
+            <div class="pagination-btns">
+              <button>&laquo;</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>...</button>
+              <button>12</button>
+              <button>&raquo;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Dormitory ===== -->
+      <div class="tab-content" id="form-dormitory">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Заявления за общежитие</h2>
+            <div class="toolbar">
+              <input type="text" class="search-input" placeholder="Търсене...">
+              <select class="filter-select">
+                <option>Всички статуси</option>
+                <option>Нова</option>
+                <option>Одобрена</option>
+                <option>В списъка на чакащите</option>
+                <option>Отказана</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Номер</th>
+                  <th>Студент</th>
+                  <th>Фак. номер</th>
+                  <th>Курс</th>
+                  <th>Дата</th>
+                  <th>Статус</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#О-0156</td>
+                  <td><strong>Стефан Ковачев Стоянов</strong></td>
+                  <td>001287</td>
+                  <td>II курс</td>
+                  <td>17.03.2026</td>
+                  <td><span class="badge-status badge-yellow">Нова</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#О-0155</td>
+                  <td><strong>Мирела Начева Борисова</strong></td>
+                  <td>001302</td>
+                  <td>I курс</td>
+                  <td>15.03.2026</td>
+                  <td><span class="badge-status badge-green">Одобрена</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#О-0153</td>
+                  <td><strong>Калоян Илиев Проданов</strong></td>
+                  <td>001198</td>
+                  <td>III курс</td>
+                  <td>12.03.2026</td>
+                  <td><span class="badge-status badge-blue">В списъка на чакащите</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#О-0150</td>
+                  <td><strong>Деница Христова Великова</strong></td>
+                  <td>001245</td>
+                  <td>II курс</td>
+                  <td>08.03.2026</td>
+                  <td><span class="badge-status badge-red">Отказана</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <span>Показани 1-4 от 156</span>
+            <div class="pagination-btns">
+              <button>&laquo;</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>...</button>
+              <button>39</button>
+              <button>&raquo;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Certificate Requests ===== -->
+      <div class="tab-content" id="form-certificate">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Заявки за удостоверения</h2>
+            <div class="toolbar">
+              <input type="text" class="search-input" placeholder="Търсене...">
+              <select class="filter-select">
+                <option>Всички статуси</option>
+                <option>Нова</option>
+                <option>В обработка</option>
+                <option>Готово за получаване</option>
+                <option>Получено</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Номер</th>
+                  <th>Студент</th>
+                  <th>Вид удостоверение</th>
+                  <th>Дата</th>
+                  <th>Статус</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#У-0203</td>
+                  <td><strong>Десислава Димитрова Янкова</strong></td>
+                  <td>Уверение за студентско положение</td>
+                  <td>16.03.2026</td>
+                  <td><span class="badge-status badge-blue">В обработка</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#У-0202</td>
+                  <td><strong>Атанас Славчев Петков</strong></td>
+                  <td>Академична справка</td>
+                  <td>14.03.2026</td>
+                  <td><span class="badge-status badge-green">Готово</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#У-0200</td>
+                  <td><strong>Росица Благоева Стефанова</strong></td>
+                  <td>Удостоверение за завършен курс</td>
+                  <td>10.03.2026</td>
+                  <td><span class="badge-status badge-gray">Получено</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+                <tr>
+                  <td>#У-0198</td>
+                  <td><strong>Емил Драгомиров Кунев</strong></td>
+                  <td>Дубликат на диплома</td>
+                  <td>06.03.2026</td>
+                  <td><span class="badge-status badge-green">Готово</span></td>
+                  <td><div class="actions-cell"><button class="action-btn view">&#9741;</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <span>Показани 1-4 от 203</span>
+            <div class="pagination-btns">
+              <button>&laquo;</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>...</button>
+              <button>51</button>
+              <button>&raquo;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- ==================== SETTINGS ==================== -->
+    <!-- ========================================================== -->
+    <div class="page-section" id="page-settings">
+
+      <div class="tabs">
+        <div class="tab active" onclick="showSettingsTab('site')">Настройки на сайта</div>
+        <div class="tab" onclick="showSettingsTab('users')">Потребители</div>
+        <div class="tab" onclick="showSettingsTab('formconfig')">Конфигурация на формите</div>
+      </div>
+
+      <!-- Site Settings -->
+      <div class="tab-content active" id="settings-site">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header"><h2>Основна информация</h2></div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label>Име на институцията</label>
+                <input type="text" class="form-control" value='ВВМУ „Н. Й. Вапцаров"'>
+              </div>
+              <div class="form-group">
+                <label>Пълно наименование</label>
+                <input type="text" class="form-control" value='Висше Военноморско Училище "Никола Йонков Вапцаров"'>
+              </div>
+              <div class="form-group">
+                <label>Мото</label>
+                <input type="text" class="form-control" value="Вековни традиции — Модерен хоризонт">
+              </div>
+              <div class="form-group">
+                <label>Лого (URL)</label>
+                <input type="text" class="form-control" value="https://www.naval-acad.bg/wp-content/uploads/2023/03/logo_NVNA.png">
+              </div>
+              <button class="btn btn-primary">Запази промените</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><h2>Контакти</h2></div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label>Телефон</label>
+                <input type="text" class="form-control" value="+359 52 552-377">
+              </div>
+              <div class="form-group">
+                <label>E-mail</label>
+                <input type="text" class="form-control" value="info@naval-acad.bg">
+              </div>
+              <div class="form-group">
+                <label>Адрес</label>
+                <input type="text" class="form-control" value="ул. Васил Друмев 73, 9026 Варна">
+              </div>
+              <div class="form-group">
+                <label>Facebook</label>
+                <input type="text" class="form-control" value="https://www.facebook.com/NavalAcademyVarna">
+              </div>
+              <div class="form-group">
+                <label>YouTube</label>
+                <input type="text" class="form-control" value="https://www.youtube.com/@nvna_bg">
+              </div>
+              <button class="btn btn-primary">Запази промените</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Management -->
+      <div class="tab-content" id="settings-users">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Управление на потребители</h2>
+            <button class="btn btn-primary">+ Нов потребител</button>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Име</th>
+                  <th>E-mail</th>
+                  <th>Роля</th>
+                  <th>Последен вход</th>
+                  <th>Статус</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Георги Николов</strong></td>
+                  <td>g.nikolov@nvna.eu</td>
+                  <td><span class="badge-status badge-blue">Администратор</span></td>
+                  <td>23.03.2026 08:15</td>
+                  <td><span class="badge-status badge-green">Активен</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn edit">&#9998;</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Яница Минкова</strong></td>
+                  <td>r.koleva@nvna.eu</td>
+                  <td><span class="badge-status badge-yellow">Редактор</span></td>
+                  <td>22.03.2026 16:42</td>
+                  <td><span class="badge-status badge-green">Активен</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn edit">&#9998;</button>
+                      <button class="action-btn delete">&#10005;</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Димитър Димитров</strong></td>
+                  <td>site@nvna.eu</td>
+                  <td><span class="badge-status badge-blue">Администратор</span></td>
+                  <td>21.03.2026 14:08</td>
+                  <td><span class="badge-status badge-green">Активен</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn edit">&#9998;</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Живка Костова</strong></td>
+                  <td>jdk@nvna.eu</td>
+                  <td><span class="badge-status badge-gray">Оператор</span></td>
+                  <td>20.03.2026 09:30</td>
+                  <td><span class="badge-status badge-green">Активен</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn edit">&#9998;</button>
+                      <button class="action-btn delete">&#10005;</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Стела Велинова</strong></td>
+                  <td>st.velinova@naval-acad.bg</td>
+                  <td><span class="badge-status badge-yellow">Редактор</span></td>
+                  <td>15.03.2026 11:22</td>
+                  <td><span class="badge-status badge-gray">Неактивен</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn edit">&#9998;</button>
+                      <button class="action-btn delete">&#10005;</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Configuration -->
+      <div class="tab-content" id="settings-formconfig">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header"><h2>Активни форми</h2></div>
+            <div class="panel-body">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Форма</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Кандидатстване</td>
+                    <td><span class="badge-status badge-green">Активна</span></td>
+                    <td><button class="action-btn edit">&#9998;</button></td>
+                  </tr>
+                  <tr>
+                    <td>Записване за курс</td>
+                    <td><span class="badge-status badge-green">Активна</span></td>
+                    <td><button class="action-btn edit">&#9998;</button></td>
+                  </tr>
+                  <tr>
+                    <td>Запитване</td>
+                    <td><span class="badge-status badge-green">Активна</span></td>
+                    <td><button class="action-btn edit">&#9998;</button></td>
+                  </tr>
+                  <tr>
+                    <td>Еразъм+ заявление</td>
+                    <td><span class="badge-status badge-green">Активна</span></td>
+                    <td><button class="action-btn edit">&#9998;</button></td>
+                  </tr>
+                  <tr>
+                    <td>Заявление за общежитие</td>
+                    <td><span class="badge-status badge-green">Активна</span></td>
+                    <td><button class="action-btn edit">&#9998;</button></td>
+                  </tr>
+                  <tr>
+                    <td>Заявка за удостоверение</td>
+                    <td><span class="badge-status badge-green">Активна</span></td>
+                    <td><button class="action-btn edit">&#9998;</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><h2>Имейл известия</h2></div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label>Получател на нови заявления</label>
+                <input type="text" class="form-control" value="info@naval-acad.bg">
+              </div>
+              <div class="form-group">
+                <label>Получател на записвания за курс</label>
+                <input type="text" class="form-control" value="courses@nvna.eu">
+              </div>
+              <div class="form-group">
+                <label>Получател на Еразъм+ заявления</label>
+                <input type="text" class="form-control" value="erasmus@nvna.eu">
+              </div>
+              <div class="form-group">
+                <label>Изпращай копие до</label>
+                <input type="text" class="form-control" value="g.nikolov@nvna.eu">
+              </div>
+              <button class="btn btn-primary">Запази промените</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="admin-footer">
+    Административен панел — ВВМУ „Н. Й. Вапцаров" | Дизайн концепция | Деян Стоянов Стоянов | Факултетен № 001114 | Март 2026
+  </footer>
+
+</div>
+
+<!-- ==================== DETAIL MODAL (Admission form #2026-0348) ==================== -->
+<div class="detail-overlay" id="detailModal">
+  <div class="detail-modal">
+    <div class="detail-modal-header">
+      <h2>Заявление за кандидатстване #2026-0348</h2>
+      <button class="close-btn" onclick="closeDetail()">&#10005;</button>
+    </div>
+    <div class="detail-modal-body">
+
+      <!-- Status banner -->
+      <div style="background: #fefce8; border: 1px solid #fde68a; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <span style="font-weight: 700; color: #854d0e;">Текущ статус:</span>
+          <span class="badge-status badge-yellow" style="margin-left: 8px; font-size: 0.85rem;">Нова</span>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-success btn-sm">&#10003; Приеми</button>
+          <button class="btn btn-danger btn-sm">&#10007; Отхвърли</button>
+          <button class="btn btn-warning btn-sm">&#8634; Изпрати за корекция</button>
+        </div>
+      </div>
+
+      <!-- Personal Data -->
+      <div class="detail-section">
+        <h3>Лични данни</h3>
+        <div class="detail-grid">
+          <div class="detail-field">
+            <label>Три имена</label>
+            <div class="value">Мария Георгиева Петрова</div>
+          </div>
+          <div class="detail-field">
+            <label>ЕГН</label>
+            <div class="value">0312*****8</div>
+          </div>
+          <div class="detail-field">
+            <label>Телефон</label>
+            <div class="value">+359 888 123 456</div>
+          </div>
+          <div class="detail-field">
+            <label>E-mail</label>
+            <div class="value">m.petrova@gmail.com</div>
+          </div>
+          <div class="detail-field">
+            <label>Адрес</label>
+            <div class="value">гр. Бургас, ул. „Александровска" 45</div>
+          </div>
+          <div class="detail-field">
+            <label>Средно образование</label>
+            <div class="value">ПМГЕ „Акад. Никола Обрешков", Бургас</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Application Data -->
+      <div class="detail-section">
+        <h3>Данни за кандидатстване</h3>
+        <div class="detail-grid">
+          <div class="detail-field">
+            <label>Желана специалност (1-ви избор)</label>
+            <div class="value">Навигация — бакалавър, редовна форма</div>
+          </div>
+          <div class="detail-field">
+            <label>Желана специалност (2-ри избор)</label>
+            <div class="value">Управление на водния транспорт — бакалавър</div>
+          </div>
+          <div class="detail-field">
+            <label>Дата на подаване</label>
+            <div class="value">22.03.2026, 10:34</div>
+          </div>
+          <div class="detail-field">
+            <label>Балообразуващи оценки</label>
+            <div class="value">Математика: 5.85 / Физика: 5.62 / БЕЛ: 5.40</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attached Documents -->
+      <div class="detail-section">
+        <h3>Прикачени документи</h3>
+        <div class="doc-attachment">
+          <span class="doc-icon">PDF</span>
+          <span class="doc-name">diploma_petrova_2025.pdf</span>
+          <span class="doc-size">1.2 MB</span>
+          <button class="btn btn-sm btn-outline">Изтегли</button>
+        </div>
+        <div class="doc-attachment">
+          <span class="doc-icon">PDF</span>
+          <span class="doc-name">meditsinski_dokument.pdf</span>
+          <span class="doc-size">856 KB</span>
+          <button class="btn btn-sm btn-outline">Изтегли</button>
+        </div>
+        <div class="doc-attachment">
+          <span class="doc-icon">JPG</span>
+          <span class="doc-name">snimka_3x4_petrova.jpg</span>
+          <span class="doc-size">340 KB</span>
+          <button class="btn btn-sm btn-outline">Изтегли</button>
+        </div>
+      </div>
+
+      <!-- Staff Notes -->
+      <div class="detail-section">
+        <h3>Бележки и коментари</h3>
+        <div class="comment-box">
+          <span class="comment-author">Живка Костова</span>
+          <span class="comment-date">22.03.2026, 14:12</span>
+          <div class="comment-text">Документите са получени. Необходима е проверка на медицинското удостоверение — да се уточни валидността.</div>
+        </div>
+        <div style="margin-top: 12px;">
+          <textarea class="textarea-field" placeholder="Добави нова бележка..."></textarea>
+          <button class="btn btn-outline btn-sm" style="margin-top: 8px;">Добави бележка</button>
+        </div>
+      </div>
+
+      <!-- Status History -->
+      <div class="detail-section">
+        <h3>История на промените</h3>
+        <div class="history-item">
+          <span class="history-date">22.03.2026 10:34</span>
+          <span class="history-action">Заявлението е подадено от кандидата.</span>
+        </div>
+        <div class="history-item">
+          <span class="history-date">22.03.2026 11:05</span>
+          <span class="history-action">Статус променен на <span class="badge-status badge-yellow">Нова</span> — система (автоматично).</span>
+        </div>
+        <div class="history-item">
+          <span class="history-date">22.03.2026 14:12</span>
+          <span class="history-action"><strong>Живка Костова</strong> добави бележка.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+  // Page navigation
+  const pageNames = {
+    'dashboard': 'Табло',
+    'news': 'Новини',
+    'events': 'Събития',
+    'programs': 'Специалности',
+    'courses': 'Курсове',
+    'documents': 'Документи',
+    'staff': 'Персонал',
+    'forms': 'Заявления',
+    'settings': 'Настройки'
+  };
+
+  function showPage(page) {
+    // Hide all pages
+    document.querySelectorAll('.page-section').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    // Show target page
+    var target = document.getElementById('page-' + page);
+    if (target) target.classList.add('active');
+
+    // Update nav
+    document.querySelectorAll('.nav-item').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    event.currentTarget.classList.add('active');
+
+    // Update topbar
+    document.getElementById('page-title').textContent = pageNames[page] || page;
+    document.getElementById('breadcrumb-text').textContent = pageNames[page] || page;
+
+    // Close sidebar on mobile
+    document.getElementById('sidebar').classList.remove('open');
+  }
+
+  // Form tabs
+  function showFormTab(tabId) {
+    document.querySelectorAll('#page-forms .tab-content').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    document.querySelectorAll('#page-forms .tab').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    var target = document.getElementById('form-' + tabId);
+    if (target) target.classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  // Settings tabs
+  function showSettingsTab(tabId) {
+    document.querySelectorAll('#page-settings .tab-content').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    document.querySelectorAll('#page-settings .tab').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    var target = document.getElementById('settings-' + tabId);
+    if (target) target.classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  // Detail modal
+  function openDetail() {
+    document.getElementById('detailModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDetail() {
+    document.getElementById('detailModal').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  // Close on overlay click
+  document.getElementById('detailModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDetail();
+  });
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeDetail();
+  });
+</script>
+
+</body>
+</html>

@@ -1,28 +1,67 @@
 # Evolution Log — Naval Academy Varna
 
-## Session 1 — 2026-03-22
+## Session 1 — 2026-03-22/23
 
 ### Направено:
-- Създадена проектна структура за improvewww
-- Създадена папка NavalAcademyVarna с analysis/, docs/
-- Настроен CLAUDE.md (reference-only), rules.md, config.md
-- Извършен пълен анализ на текущия сайт naval-acad.bg
-- Документиран анализ в analysis/current-site-analysis.md
+
+#### Фаза 1: Структура и конфигурация
+- Създадена проектна структура improvewww/ с CLAUDE.md (reference-only), rules.md, config.md
+- Създадена папка NavalAcademyVarna/ с analysis/, docs/, mockups/
+- GitHub repo: https://github.com/mrstoianov/NavalAcademyVarna (публично)
+- Дефинирани експертни роли в experts.md (UX/UI, Frontend, SEO, Business)
+
+#### Фаза 2: Анализ на текущия сайт
+- Пълен анализ на naval-acad.bg → analysis/current-site-analysis.html
+- Performance анализ → analysis/performance-analysis.html
+- Benchmark на 18 морски академии по света → analysis/naval-academies-benchmark.html
+- Content scrape pass 1: 26 страници, 36 секции → analysis/extracted-content.md
+- Content scrape pass 2: 80+ подстраници (в процес)
+
+#### Фаза 3: Експертни анализи (4 паралелни)
+- UX/UI Designer: 5.2/10 → analysis/expert-uxui.html
+- Business Analyst: 5/10 → analysis/expert-business.html
+- SEO & Content: 3.5/10 → analysis/expert-seo.html
+- Frontend Architect: 3.5/10 → analysis/expert-frontend.html
+- Средна оценка: **4.3/10**
+
+#### Фаза 4: Информационна архитектура
+- Предложена нова структура → analysis/information-architecture.html
+- 7 секции: карта на сайта, навигация, типове страници, организация, user journeys, i18n, съпоставка старо/ново
+
+#### Фаза 5: Мокъпи и платформа (нощна работа — ЗАВЪРШЕНА)
+- [x] Обобщен доклад от 4 експерта → analysis/consolidated-report-v1.html
+- [x] Мокъп вариант 1: Класическа морска академия → mockups/variant1-classic-naval.html
+- [x] Мокъп вариант 2: Модерен Черноморски → mockups/variant2-modern-teal.html
+- [x] Мокъп вариант 3: Скандинавски минимализъм → mockups/variant3-minimalist.html
+- [x] Административен панел → mockups/admin-panel.html
+- [x] Формуляри и работни процеси (22 форми) → analysis/forms-and-workflows.html
+- [x] Придружително писмо до ректора → docs/proposal-letter-v1.html
+- [x] Пътна карта на проекта → docs/roadmap-v1.html
 
 ### Решения:
 - Tech stack: Next.js
-- Езици фаза 1: Български + Английски
+- Езици фаза 1: Български + Английски (от старта)
 - Хостинг: TBD (вероятно в институцията)
-- GitHub repo: NavalAcademyVarna под mrstoianov
+- Стил: Академичен, институционален — не startup
+- Цветове: Синьо задължително (море)
+- Документи: версионирани (v1, v2...)
+- Платформа = публичен сайт + вътрешен портал (CMS + форми + документи)
+- Вътрешният портал е CMS-ът — служителите управляват всичко оттам
+- Онлайн форми → обработка от служители през вътрешния портал
+- Документи хоствани на платформата, без Google Drive
+- Всичко безвъзмездно — в памет на бащата на Деян, работил дълги години в ВВМУ
 
-### Открития от анализа:
-- Текущ сайт: WordPress 6.9.4 + Avada, обща оценка 3.5/5
-- Основни проблеми: неактуален английски, HTTP линкове, разпръсната инфраструктура
-- Богато съдържание: 2 факултета, 10 катедри, множество програми и курсове
-- 9 външни портала, които трябва да бъдат интегрирани или свързани
+### Ключова информация:
+- Автор: Деян Стоянов Стоянов, Факултетен № 001114
+- Компания (за по-късен етап): Smart4Ops (www.smart4ops.com)
+- Ректор: Флотилен адмирал проф. д-р Калин Калинов
+- 2 факултета, 10 катедри, 45+ специалности, 60+ курса
+- 9+ външни портала за интеграция
 
-### Следващи стъпки:
-- [ ] Създаване на GitHub repo
-- [ ] Дълбок scrape на съдържанието от всички страници
-- [ ] Проектиране на информационна архитектура за новия сайт
-- [ ] Дизайн предложение (wireframes)
+### Следващи стъпки (след нощната работа):
+- [ ] Деян избира предпочитан дизайн вариант
+- [ ] Инициализация на Next.js проект
+- [ ] Изграждане на компонентна библиотека
+- [ ] Миграция на съдържание
+- [ ] Изграждане на админ панел
+- [ ] Финализиране на писмото до ректора

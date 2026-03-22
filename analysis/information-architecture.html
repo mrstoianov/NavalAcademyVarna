@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Информационна архитектура — ВВМУ „Н. Й. Вапцаров" — Нов уебсайт</title>
+<style>
+  :root {
+    --navy: #1a3a5c;
+    --navy-dark: #0f2440;
+    --navy-light: #2a5a8c;
+    --accent: #c9a84c;
+    --accent-light: #f0e4c4;
+    --teal: #1a8a8a;
+    --bg: #ffffff;
+    --bg-alt: #f4f6f8;
+    --bg-card: #ffffff;
+    --text: #2c3e50;
+    --text-light: #5a6d7e;
+    --border: #dce3ea;
+    --success: #2ecc71;
+    --info: #3498db;
+    --new-badge: #e74c3c;
+    --migrated-badge: #27ae60;
+    --shadow: 0 2px 12px rgba(26,58,92,0.08);
+    --shadow-hover: 0 4px 24px rgba(26,58,92,0.14);
+    --radius: 8px;
+    --transition: 0.25s ease;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
+    color: #fff;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 1;
+  }
+  .site-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  .site-header .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    font-weight: 300;
+    position: relative;
+  }
+  .site-header .doc-meta {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    position: relative;
+  }
+  .header-accent {
+    display: inline-block;
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 1rem auto;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  /* ===== TABLE OF CONTENTS ===== */
+  .toc {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .toc-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  .toc a {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: var(--bg-card);
+    color: var(--navy);
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    transition: all var(--transition);
+    white-space: nowrap;
+  }
+  .toc a:hover {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+    transform: translateY(-1px);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* ===== SECTION HEADERS ===== */
+  .section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 80px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--navy);
+  }
+  .section-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-size: 1.5rem;
+    color: var(--navy-dark);
+    font-weight: 700;
+  }
+
+  /* ===== BADGES ===== */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .badge-new {
+    background: var(--new-badge);
+    color: #fff;
+  }
+  .badge-migrated {
+    background: var(--migrated-badge);
+    color: #fff;
+  }
+  .badge-external {
+    background: var(--info);
+    color: #fff;
+  }
+  .badge-legend {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .badge-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+
+  /* ===== TREE STRUCTURE ===== */
+  .tree {
+    padding-left: 0;
+    list-style: none;
+  }
+  .tree ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .tree details {
+    margin: 2px 0;
+  }
+  .tree details > summary {
+    cursor: pointer;
+    padding: 0.6rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-weight: 600;
+    color: var(--navy);
+    transition: all var(--transition);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+  }
+  .tree details > summary::-webkit-details-marker { display: none; }
+  .tree details > summary::before {
+    content: '\25B6';
+    font-size: 0.7rem;
+    transition: transform var(--transition);
+    color: var(--navy-light);
+    flex-shrink: 0;
+  }
+  .tree details[open] > summary::before {
+    transform: rotate(90deg);
+  }
+  .tree details > summary:hover {
+    background: var(--bg-alt);
+    border-color: var(--navy-light);
+  }
+  .tree details[open] > summary {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+  }
+  .tree details[open] > summary::before {
+    color: var(--accent);
+  }
+  .tree details[open] > summary .badge-new { background: #ff6b6b; }
+  .tree details[open] > summary .badge-migrated { background: #69db7c; color: #1a3a5c; }
+  .tree details[open] > summary .badge-external { background: #74c0fc; color: #1a3a5c; }
+
+  .tree .children {
+    margin-left: 1.5rem;
+    padding: 0.5rem 0 0.5rem 1rem;
+    border-left: 2px solid var(--border);
+  }
+  .tree .leaf {
+    padding: 0.4rem 1rem;
+    margin: 2px 0;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    color: var(--text);
+    border: 1px solid transparent;
+    transition: all var(--transition);
+  }
+  .tree .leaf:hover {
+    border-color: var(--border);
+    background: #fff;
+  }
+
+  /* ===== CARDS ===== */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+  }
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  .card h3 {
+    font-size: 1.05rem;
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .card h3 .card-icon {
+    font-size: 1.3rem;
+  }
+  .card p, .card li {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  .card ul {
+    padding-left: 1.2rem;
+    margin-top: 0.5rem;
+  }
+  .card li { margin-bottom: 0.3rem; }
+
+  /* ===== TABLES ===== */
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .info-table th {
+    background: var(--navy);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .info-table td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .info-table tr:last-child td { border-bottom: none; }
+  .info-table tr:nth-child(even) { background: var(--bg-alt); }
+  .info-table tr:hover { background: #eef3f8; }
+
+  /* ===== JOURNEY CARDS ===== */
+  .journey {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .journey summary {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--navy);
+    background: var(--bg-alt);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    list-style: none;
+    transition: all var(--transition);
+  }
+  .journey summary::-webkit-details-marker { display: none; }
+  .journey summary::after {
+    content: '+';
+    margin-left: auto;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--navy-light);
+    transition: transform var(--transition);
+  }
+  .journey[open] summary::after {
+    content: '\2212';
+  }
+  .journey[open] summary {
+    background: var(--navy);
+    color: #fff;
+  }
+  .journey summary:hover { background: #e4eaf0; }
+  .journey[open] summary:hover { background: var(--navy-dark); }
+  .journey .journey-body {
+    padding: 1.5rem;
+  }
+  .journey .persona {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--navy-dark);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .journey .steps {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+  }
+  .journey .steps li {
+    counter-increment: step;
+    padding: 0.6rem 0 0.6rem 3rem;
+    position: relative;
+    font-size: 0.9rem;
+    border-left: 2px solid var(--border);
+    margin-left: 1rem;
+  }
+  .journey .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: -13px;
+    top: 0.5rem;
+    width: 24px;
+    height: 24px;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .journey .steps li:last-child { border-left-color: transparent; }
+  .journey .steps li strong { color: var(--navy); }
+
+  /* ===== FLOW DIAGRAMS ===== */
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+  .flow-item {
+    background: var(--navy);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    color: var(--navy-light);
+    font-size: 1.2rem;
+  }
+
+  /* ===== NAV DESIGN SECTION ===== */
+  .nav-demo {
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border: 1px solid var(--border);
+  }
+  .nav-demo h4 {
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+  }
+  .nav-bar-demo {
+    display: flex;
+    gap: 0;
+    background: var(--navy);
+    border-radius: var(--radius);
+    overflow: hidden;
+    flex-wrap: wrap;
+  }
+  .nav-bar-demo span {
+    padding: 0.6rem 1.1rem;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.82rem;
+    font-weight: 500;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    transition: all var(--transition);
+    cursor: default;
+    white-space: nowrap;
+  }
+  .nav-bar-demo span:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
+  .nav-bar-demo span.active {
+    background: var(--accent);
+    color: var(--navy-dark);
+  }
+  .utility-bar-demo {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.4rem 0;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .utility-bar-demo span {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    cursor: default;
+  }
+  .footer-demo {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    background: var(--navy-dark);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.8rem;
+  }
+  .footer-demo h5 {
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .footer-demo ul {
+    list-style: none;
+    padding: 0;
+  }
+  .footer-demo li {
+    padding: 0.15rem 0;
+    opacity: 0.7;
+  }
+
+  /* ===== BREADCRUMB DEMO ===== */
+  .breadcrumb-demo {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--text-light);
+    padding: 0.6rem 1rem;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    margin: 0.75rem 0;
+    flex-wrap: wrap;
+  }
+  .breadcrumb-demo span { cursor: default; }
+  .breadcrumb-demo .bc-link { color: var(--navy-light); text-decoration: underline; }
+  .breadcrumb-demo .bc-sep { color: var(--border); }
+  .breadcrumb-demo .bc-current { color: var(--text); font-weight: 600; }
+
+  /* ===== i18n TABLE ===== */
+  .url-example {
+    background: var(--navy-dark);
+    color: #a8d8a8;
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius);
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* ===== DESCRIPTIVE BLOCKS ===== */
+  .desc-block {
+    background: var(--bg-alt);
+    border-left: 4px solid var(--navy);
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 0.9rem;
+  }
+  .desc-block.accent {
+    border-left-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .desc-block h4 {
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+
+  /* ===== FOOTER ===== */
+  .site-footer {
+    background: var(--navy-dark);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 2rem;
+    margin-top: 3rem;
+    font-size: 0.85rem;
+    line-height: 1.8;
+  }
+  .site-footer strong {
+    color: var(--accent);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .site-header { padding: 2rem 1rem; }
+    .site-header h1 { font-size: 1.5rem; }
+    .container { padding: 1rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    .section-header h2 { font-size: 1.2rem; }
+    .toc { padding: 1rem; }
+    .toc a { font-size: 0.75rem; padding: 0.3rem 0.7rem; }
+    .footer-demo { grid-template-columns: 1fr 1fr; }
+    .tree .children { margin-left: 0.75rem; padding-left: 0.5rem; }
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    .toc { position: static; }
+    .site-header { background: #fff !important; color: #000 !important; border-bottom: 3px solid var(--navy); }
+    .card, .journey, details { break-inside: avoid; }
+    details { open: true; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <h1>Информационна архитектура</h1>
+  <div class="header-accent"></div>
+  <div class="subtitle">Предложение за нов уебсайт на ВВМУ „Н. Й. Вапцаров"</div>
+  <div class="doc-meta">Версия 1.0 | Март 2026 | Детайлен проект за структура, навигация и организация на съдържанието</div>
+</header>
+
+<!-- ==================== TABLE OF CONTENTS ==================== -->
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#section1">1. Структура на сайта</a>
+    <a href="#section2">2. Навигационен дизайн</a>
+    <a href="#section3">3. Типове страници</a>
+    <a href="#section4">4. Организация на съдържанието</a>
+    <a href="#section5">5. Потребителски пътеки</a>
+    <a href="#section6">6. Стратегия за многоезичност</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ============================================================ -->
+<!-- SECTION 1: SITE STRUCTURE -->
+<!-- ============================================================ -->
+<section class="section" id="section1">
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <h2>Предложена структура на сайта</h2>
+  </div>
+
+  <p style="margin-bottom:1rem; font-size:0.95rem; color:var(--text-light);">
+    Пълна йерархия на страниците в новия сайт. Разгънете всяка секция, за да видите подстраниците. Структурата е изградена върху анализа на текущото съдържание и бенчмарк сравнението с 17 водещи военноморски академии в света.
+  </p>
+
+  <div class="badge-legend">
+    <div class="badge-legend-item"><span class="badge badge-migrated">Мигрирано</span> Страница от текущия сайт</div>
+    <div class="badge-legend-item"><span class="badge badge-new">Ново</span> Нова страница</div>
+    <div class="badge-legend-item"><span class="badge badge-external">Външен</span> Външен портал/линк</div>
+  </div>
+
+  <div class="tree">
+
+    <!-- === НАЧАЛО === -->
+    <details open>
+      <summary>Начало (Homepage) <span class="badge badge-migrated">Мигрирано</span></summary>
+      <div class="children">
+        <div class="leaf">Герой секция с видео от Черно море и тренировки <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Бързи връзки: Прием, Специалности, Курсове, Еразъм+, Кариери <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Последни новини (карусел) <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Ключови числа с анимация (студенти, акредитация, симулатори, години история) <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Предстоящи събития (интеграция с календар) <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Отзиви от студенти и завършили <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Партньори и акредитации (логотипове) <span class="badge badge-new">Ново</span></div>
+      </div>
+    </details>
+
+    <!-- === УНИВЕРСИТЕТ === -->
+    <details>
+      <summary>Университет <span class="badge badge-migrated">Мигрирано</span></summary>
+      <div class="children">
+        <details>
+          <summary>За нас <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">История (от 1881 до днес, времева линия) <span class="badge badge-new">Ново</span></div>
+            <div class="leaf">Мисия и визия <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Стратегия за развитие 2016–2030 <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Академията в числа (инфографика) <span class="badge badge-new">Ново</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>Ръководство и структура <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Ректор / Началник <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Заместник-ректори <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Организационна схема (интерактивна) <span class="badge badge-new">Ново</span></div>
+            <div class="leaf">Академичен съвет <span class="badge badge-new">Ново</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>Факултети и катедри <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <details>
+              <summary>Факултет „Навигационен" <span class="badge badge-migrated">Мигрирано</span></summary>
+              <div class="children">
+                <div class="leaf">Ръководство и контакти <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Кат. „Организация и управление на тактически формирования" <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Кат. „Корабоводене" <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Кат. „Национална сигурност" <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Кат. „Експлоатация и управление на морския транспорт" <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Кат. „Езикова подготовка" <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Специалности на факултета <span class="badge badge-migrated">Мигрирано</span></div>
+              </div>
+            </details>
+            <details>
+              <summary>Факултет „Инженерен" <span class="badge badge-migrated">Мигрирано</span></summary>
+              <div class="children">
+                <div class="leaf">Ръководство и контакти <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Кат. „Корабни машини и механизми" <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Кат. „Електротехника" <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Кат. „Мехатроника" <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Кат. „Електроника" <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Кат. „Информационни технологии" <span class="badge badge-migrated">Мигрирано</span></div>
+                <div class="leaf">Специалности на факултета <span class="badge badge-migrated">Мигрирано</span></div>
+              </div>
+            </details>
+            <div class="leaf">ДСДКДО (Следдипломна квалификация) <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Професионален старшински колеж <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Научна секция <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">УЦ „Кибероперации" <span class="badge badge-migrated">Мигрирано</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>Администрация <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Отдел „Учебна дейност" <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Отдел „Логистика" <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Финансов отдел <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Юридическа служба <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Кадри, протокол и канцелария <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Отдел „Военноморска инфраструктура" <span class="badge badge-migrated">Мигрирано</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>Учебна база и кампус <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Симулатори (11 броя, с галерия и описание) <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Библиотека и информационен център <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Планетариум <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Общежитие и хранене <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Виртуален тур на кампуса <span class="badge badge-new">Ново</span></div>
+            <div class="leaf">Интерактивна карта на кампуса <span class="badge badge-new">Ново</span></div>
+            <div class="leaf">Тренировъчни полигони <span class="badge badge-migrated">Мигрирано</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>Традиции <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Традиции на ВВМУ <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Фото- и видеогалерия <span class="badge badge-new">Ново</span></div>
+            <div class="leaf">Символи и отличия <span class="badge badge-new">Ново</span></div>
+          </div>
+        </details>
+        <div class="leaf">Акредитация <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Система за управление на качеството (ISO 9001:2015) <span class="badge badge-migrated">Мигрирано</span></div>
+      </div>
+    </details>
+
+    <!-- === ОБУЧЕНИЕ === -->
+    <details>
+      <summary>Обучение <span class="badge badge-migrated">Мигрирано</span></summary>
+      <div class="children">
+        <details>
+          <summary>Бакалавърски програми (15 специалности) <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Обзорна страница с филтриране по факултет, област и форма <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Детайлна страница за всяка специалност (15 бр.) <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Сравнение на специалности (side-by-side) <span class="badge badge-new">Ново</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>Магистърски програми (23 специалности) <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Обзорна страница с филтриране <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Детайлна страница за всяка специалност (23 бр.) <span class="badge badge-migrated">Мигрирано</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>Курсантски програми (7 специализации) <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Обзорна страница <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Детайлна страница за всяка специализация (7 бр.) <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Ден от живота на курсант <span class="badge badge-new">Ново</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>Докторантски програми (13 програми) <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Обзорна страница <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Прием на докторанти <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Конкурси <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Процедури <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Защити на дисертации <span class="badge badge-migrated">Мигрирано</span></div>
+          </div>
+        </details>
+        <div class="leaf">Учебни планове и програми <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Академичен календар <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Стипендии <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">STANAG / ALCPT <span class="badge badge-migrated">Мигрирано</span></div>
+      </div>
+    </details>
+
+    <!-- === ПРИЕМ === -->
+    <details>
+      <summary>Прием <span class="badge badge-new">Ново</span></summary>
+      <div class="children">
+        <div class="leaf">Защо ВВМУ? (рекламна лендинг страница) <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Кандидатстудентски справочник 2025/2026 <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Условия за прием — бакалавър <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Условия за прием — магистър <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Условия за прием — курсанти <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Условия за прием — докторанти <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Онлайн кандидатстване <span class="badge badge-external">Външен</span> (fees.nvna.eu)</div>
+        <div class="leaf">Такси и стипендии <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Виза и документи за чуждестранни студенти <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Често задавани въпроси (FAQ) <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Контакти за прием <span class="badge badge-migrated">Мигрирано</span></div>
+      </div>
+    </details>
+
+    <!-- === КУРСОВЕ === -->
+    <details>
+      <summary>Курсове и квалификации <span class="badge badge-migrated">Мигрирано</span></summary>
+      <div class="children">
+        <div class="leaf">Обзорна страница (4 категории) <span class="badge badge-migrated">Мигрирано</span></div>
+        <details>
+          <summary>Курсове за морски лица (60+ курса) <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Каталог с филтриране и търсене <span class="badge badge-new">Ново</span></div>
+            <div class="leaf">Детайлна страница за всеки курс <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Формуляр за запитване <span class="badge badge-migrated">Мигрирано</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>ИТ курсове (CCNA, CCNP, Linux, Киберсигурност) <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Каталог с филтриране <span class="badge badge-new">Ново</span></div>
+            <div class="leaf">Детайлна страница за всеки курс <span class="badge badge-migrated">Мигрирано</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>LangMar — Езикови курсове <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Общ морски английски (модули 1–4) <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Marlins и TOSE тестове <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Корпоративни услуги <span class="badge badge-migrated">Мигрирано</span></div>
+          </div>
+        </details>
+        <div class="leaf">Курс „Йонизиращи лъчения" <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Следдипломна квалификация (ДСДКДО) <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Корпоративно обучение <span class="badge badge-new">Ново</span></div>
+      </div>
+    </details>
+
+    <!-- === НАУКА === -->
+    <details>
+      <summary>Наука и изследвания <span class="badge badge-migrated">Мигрирано</span></summary>
+      <div class="children">
+        <div class="leaf">Научна дейност — обзор <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Научни направления и приоритети <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Публикации и издателски център <span class="badge badge-external">Външен</span> (scholar.nvna.eu)</div>
+        <div class="leaf">Научни проекти <span class="badge badge-external">Външен</span> (projects.nvna.eu)</div>
+        <div class="leaf">Конференции (архив и предстоящи) <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Конкурси за академични длъжности <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Научни партньорства <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Научен профил на преподавател (шаблон) <span class="badge badge-new">Ново</span></div>
+      </div>
+    </details>
+
+    <!-- === МЕЖДУНАРОДНА ДЕЙНОСТ === -->
+    <details>
+      <summary>Международна дейност <span class="badge badge-migrated">Мигрирано</span></summary>
+      <div class="children">
+        <div class="leaf">Международни партньорства и членства <span class="badge badge-migrated">Мигрирано</span></div>
+        <details>
+          <summary>Еразъм+ <span class="badge badge-migrated">Мигрирано</span></summary>
+          <div class="children">
+            <div class="leaf">Описание на програмата <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Студентска мобилност <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Преподавателска мобилност <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Виртуална/смесена мобилност <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Партньорски университети <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Необходими документи <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Стратегия за интернационализация <span class="badge badge-migrated">Мигрирано</span></div>
+            <div class="leaf">Новини Еразъм+ <span class="badge badge-migrated">Мигрирано</span></div>
+          </div>
+        </details>
+        <div class="leaf">Карта на международните партньори (интерактивна) <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Incoming студенти — информация <span class="badge badge-new">Ново</span></div>
+      </div>
+    </details>
+
+    <!-- === СТУДЕНТИ === -->
+    <details>
+      <summary>Студенти <span class="badge badge-new">Ново</span></summary>
+      <div class="children">
+        <div class="leaf">Портал за студенти (hub страница) <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Разписание <span class="badge badge-external">Външен</span> (nvna.eu/wp)</div>
+        <div class="leaf">УебСтудент <span class="badge badge-external">Външен</span> (ws.naval-acad.bg)</div>
+        <div class="leaf">е-Преподавател <span class="badge badge-external">Външен</span> (teacher.naval-acad.bg)</div>
+        <div class="leaf">Дистанционно обучение <span class="badge badge-external">Външен</span> (dlc.naval-acad.bg)</div>
+        <div class="leaf">Информационен център <span class="badge badge-external">Външен</span> (nvna.eu)</div>
+        <div class="leaf">Студентски съвет <span class="badge badge-external">Външен</span> (studentcouncil.naval-acad.bg)</div>
+        <div class="leaf">Спортен клуб <span class="badge badge-external">Външен</span> (uvsk.nvna.eu)</div>
+        <div class="leaf">Общежитие — информация и класиране <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Библиотечен каталог <span class="badge badge-external">Външен</span> (library.naval-acad.bg)</div>
+        <div class="leaf">Студентски живот — галерия <span class="badge badge-new">Ново</span></div>
+      </div>
+    </details>
+
+    <!-- === КАРИЕРИ === -->
+    <details>
+      <summary>Кариери и алумни <span class="badge badge-new">Ново</span></summary>
+      <div class="children">
+        <div class="leaf">Кариерен център <span class="badge badge-external">Външен</span> (career.nvna.eu)</div>
+        <div class="leaf">Стажове и практика <span class="badge badge-external">Външен</span> (career.nvna.eu/job-board)</div>
+        <div class="leaf">Клуб Алумни <span class="badge badge-external">Външен</span> (career.nvna.eu/alumni)</div>
+        <div class="leaf">Истории на успеха <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Кариерни перспективи по специалност <span class="badge badge-new">Ново</span></div>
+      </div>
+    </details>
+
+    <!-- === НОВИНИ И СЪБИТИЯ === -->
+    <details>
+      <summary>Новини и събития <span class="badge badge-migrated">Мигрирано</span></summary>
+      <div class="children">
+        <div class="leaf">Пресцентър — обзор <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Списък новини (с филтриране по година и категория) <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Детайлна страница за новина <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Календар на събитията <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Медийна галерия (снимки и видео) <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Медиен кит за журналисти <span class="badge badge-new">Ново</span></div>
+      </div>
+    </details>
+
+    <!-- === ДОКУМЕНТИ === -->
+    <details>
+      <summary>Документи и прозрачност <span class="badge badge-migrated">Мигрирано</span></summary>
+      <div class="children">
+        <div class="leaf">Нормативни документи <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Обществени поръчки <span class="badge badge-external">Външен</span> (pp.naval-acad.bg)</div>
+        <div class="leaf">Тръжни процедури <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Антикорупция <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Достъп до обществена информация <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">СЕБРА (месечни отчети) <span class="badge badge-migrated">Мигрирано</span></div>
+        <div class="leaf">Декларация за достъпност <span class="badge badge-migrated">Мигрирано</span></div>
+      </div>
+    </details>
+
+    <!-- === КОНТАКТИ === -->
+    <details>
+      <summary>Контакти <span class="badge badge-new">Ново</span></summary>
+      <div class="children">
+        <div class="leaf">Обща контактна страница с карта <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Телефонен указател (търсене по структура) <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Форма за обратна връзка <span class="badge badge-new">Ново</span></div>
+        <div class="leaf">Как да стигнете до нас (маршрути) <span class="badge badge-new">Ново</span></div>
+      </div>
+    </details>
+
+  </div><!-- .tree -->
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 2: NAVIGATION DESIGN -->
+<!-- ============================================================ -->
+<section class="section" id="section2">
+  <div class="section-header">
+    <div class="section-number">2</div>
+    <h2>Навигационен дизайн</h2>
+  </div>
+
+  <!-- Primary Navigation -->
+  <div class="nav-demo">
+    <h4>2.1 Основна навигация (хедър меню)</h4>
+    <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:0.75rem;">
+      Мега-меню с 8 основни елемента. При hover/click се отваря панел с подменюта, описания и бързи връзки. Следва модела на Ecole Navale (Франция) — най-добрият дизайн от бенчмарка.
+    </p>
+    <div class="nav-bar-demo">
+      <span class="active">Университет</span>
+      <span>Обучение</span>
+      <span>Прием</span>
+      <span>Курсове</span>
+      <span>Наука</span>
+      <span>Международна дейност</span>
+      <span>Новини</span>
+      <span>Контакти</span>
+    </div>
+    <div class="desc-block" style="margin-top:1rem;">
+      <h4>Мега-меню подход</h4>
+      <p style="font-size:0.85rem;">Всеки елемент от главната навигация отваря панел на цяла ширина с до 4 колони. Всяка колона съдържа група от подлинкове с кратко описание. Изображение или CTA бутон допълва панела. Анимация: плавно разтваряне (200ms fade-in). Затваряне: при клик извън менюто или натискане на Escape.</p>
+    </div>
+  </div>
+
+  <!-- Utility Navigation -->
+  <div class="nav-demo">
+    <h4>2.2 Помощна навигация (utility bar)</h4>
+    <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:0.75rem;">
+      Тънка лента над основната навигация. Бърз достъп до най-търсените портали и инструменти.
+    </p>
+    <div class="utility-bar-demo">
+      <span>BG | EN</span>
+      <span>УебСтудент</span>
+      <span>е-Преподавател</span>
+      <span>Разписание</span>
+      <span>Дистанционно обучение</span>
+      <span>Търсене</span>
+    </div>
+    <div class="desc-block accent" style="margin-top:0.75rem;">
+      <p style="font-size:0.85rem;">Utility навигацията решава един от основните проблеми на текущия сайт: 9+ външни портала са трудни за намиране. С видимата лента те са на един клик от всяка страница.</p>
+    </div>
+  </div>
+
+  <!-- Footer Navigation -->
+  <div class="nav-demo">
+    <h4>2.3 Футър навигация</h4>
+    <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:0.75rem;">
+      Четириколонен футър с ключови секции, контактна информация, социални мрежи и институционални линкове. Следва модела на USNA (САЩ) и Ecole Navale.
+    </p>
+    <div class="footer-demo">
+      <div>
+        <h5>Обучение</h5>
+        <ul>
+          <li>Бакалавър</li>
+          <li>Магистър</li>
+          <li>Курсант</li>
+          <li>Докторант</li>
+          <li>Курсове</li>
+        </ul>
+      </div>
+      <div>
+        <h5>За студенти</h5>
+        <ul>
+          <li>УебСтудент</li>
+          <li>Разписание</li>
+          <li>Библиотека</li>
+          <li>Общежитие</li>
+          <li>Кариерен център</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Университет</h5>
+        <ul>
+          <li>За нас</li>
+          <li>Структура</li>
+          <li>Акредитация</li>
+          <li>Пресцентър</li>
+          <li>Контакти</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Контакти</h5>
+        <ul>
+          <li>ул. „Васил Друмев" 73</li>
+          <li>Варна 9002, България</li>
+          <li>+359 52 632 015</li>
+          <li>info@naval-acad.bg</li>
+          <li style="margin-top:0.5rem; opacity:1;">FB | X | IG | LI</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:0.78rem; color:var(--text-light); margin-top:0.5rem; text-align:center;">
+      Под футъра: правни линкове (Декларация за достъпност, Защита на лични данни, Обществена информация, Антикорупция) + копирайт
+    </p>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <div class="nav-demo">
+    <h4>2.4 Мобилна навигация</h4>
+    <div class="card-grid" style="margin-top:0.75rem;">
+      <div class="card">
+        <h3>Хамбургер меню</h3>
+        <p>Анимиран хамбургер бутон (CSS rotation, следвайки модела на Escola Naval — Португалия). При отваряне — пълноекранен оверлей с акордеонна навигация. Всяка секция се разтваря, за да покаже подменютата.</p>
+      </div>
+      <div class="card">
+        <h3>Sticky мобилен бар</h3>
+        <p>Фиксирана долна лента с 4 бутона: Начало, Прием, Студенти, Меню. Осигурява бърз достъп до ключовите действия без скролване нагоре. Вдъхновение: Royal Canadian Navy.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumb Strategy -->
+  <div class="nav-demo">
+    <h4>2.5 Стратегия за хлебни трохи (Breadcrumbs)</h4>
+    <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:0.75rem;">
+      Присъстват на всички вътрешни страници (не на началната). Използват Schema.org BreadcrumbList markup за SEO. Примери:
+    </p>
+    <div class="breadcrumb-demo">
+      <span class="bc-link">Начало</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-link">Обучение</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-link">Бакалавър</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">Навигация</span>
+    </div>
+    <div class="breadcrumb-demo">
+      <span class="bc-link">Начало</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-link">Университет</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-link">Учебна база</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">Симулатори</span>
+    </div>
+    <div class="breadcrumb-demo">
+      <span class="bc-link">Начало</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-link">Курсове</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-link">Морски курсове</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">1401: Основна подготовка по морска безопасност</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 3: PAGE TYPES -->
+<!-- ============================================================ -->
+<section class="section" id="section3">
+  <div class="section-header">
+    <div class="section-number">3</div>
+    <h2>Типове страници (шаблони)</h2>
+  </div>
+
+  <p style="font-size:0.9rem; color:var(--text-light); margin-bottom:1.5rem;">
+    Определени са 8 типа шаблони, които покриват всички нужди на сайта. Всеки шаблон е проектиран за преизползване в множество контексти.
+  </p>
+
+  <div class="card-grid">
+
+    <div class="card">
+      <h3><span class="card-icon">01</span> Начална страница (Homepage)</h3>
+      <p><strong>Използва се за:</strong> Единствено за началната страница</p>
+      <ul>
+        <li>Герой секция с видео/слайдер</li>
+        <li>Бързи връзки (CTA карти)</li>
+        <li>Последни новини (3 бр. карусел)</li>
+        <li>Ключови числа (animated counters)</li>
+        <li>Предстоящи събития</li>
+        <li>Отзиви на студенти</li>
+        <li>Партньори и акредитации</li>
+        <li>Призив за действие (CTA секция)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="card-icon">02</span> Лендинг страница (Landing)</h3>
+      <p><strong>Използва се за:</strong> Факултети, „Защо ВВМУ?", секция „Студенти", секция „Прием"</p>
+      <ul>
+        <li>Герой банер с изображение</li>
+        <li>Въведителен текст</li>
+        <li>Карти с подстраници (grid)</li>
+        <li>CTA секция или формуляр</li>
+        <li>Свързано съдържание (sidebar или bottom)</li>
+        <li>Възможност за табове/акордеон</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="card-icon">03</span> Съдържателна страница (Content)</h3>
+      <p><strong>Използва се за:</strong> За нас, История, Мисия, Акредитация, Традиции, Администрация</p>
+      <ul>
+        <li>Заглавие с breadcrumbs</li>
+        <li>Основен текстов блок (rich content)</li>
+        <li>Странична навигация (in-page TOC)</li>
+        <li>Изображения и галерии (inline)</li>
+        <li>Файлове за изтегляне</li>
+        <li>Свързани страници (Related)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="card-icon">04</span> Каталог / Списък (Listing)</h3>
+      <p><strong>Използва се за:</strong> Специалности, Новини, Курсове, Конкурси, Конференции</p>
+      <ul>
+        <li>Филтриране (по категория, година, тип)</li>
+        <li>Търсене в списъка</li>
+        <li>Превключване: карти / таблица</li>
+        <li>Пагинация или безкрайно скролване</li>
+        <li>Сортиране (по дата, име, популярност)</li>
+        <li>Резултати: число намерени елементи</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="card-icon">05</span> Детайлна страница (Detail)</h3>
+      <p><strong>Използва се за:</strong> Отделна специалност, отделна новина, отделен курс, конференция</p>
+      <ul>
+        <li>Герой с изображение и мета (дата, автор)</li>
+        <li>Основно съдържание (rich text)</li>
+        <li>Информационен панел (sidebar): такси, продължителност, контакт</li>
+        <li>CTA бутон: „Кандидатствай" / „Запиши се"</li>
+        <li>Галерия</li>
+        <li>Свързани елементи (Още специалности / Още новини)</li>
+        <li>Споделяне в социални мрежи</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="card-icon">06</span> Контактна страница (Contact)</h3>
+      <p><strong>Използва се за:</strong> Основни контакти, контакти по отдели</p>
+      <ul>
+        <li>Интерактивна карта (Google Maps / OSM)</li>
+        <li>Контактна информация (адрес, телефон, имейл)</li>
+        <li>Формуляр за обратна връзка</li>
+        <li>Телефонен указател (търсене)</li>
+        <li>Работно време</li>
+        <li>Маршрути: кола, градски транспорт</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="card-icon">07</span> Резултати от търсене (Search)</h3>
+      <p><strong>Използва се за:</strong> Глобално търсене в сайта</p>
+      <ul>
+        <li>Пълноекранен оверлей за търсене (като Ecole Navale)</li>
+        <li>Автодовършване при въвеждане</li>
+        <li>Филтриране на резултати по тип (новини, специалности, курсове, документи)</li>
+        <li>Подчертаване на намерения текст</li>
+        <li>Популярни търсения (подсказки)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="card-icon">08</span> Профил на преподавател (Staff Profile)</h3>
+      <p><strong>Използва се за:</strong> Страници на академичния състав <span class="badge badge-new">Ново</span></p>
+      <ul>
+        <li>Снимка и титла</li>
+        <li>Академична позиция и катедра</li>
+        <li>Научни интереси</li>
+        <li>Публикации (списък, линк към scholar.nvna.eu)</li>
+        <li>Контактна информация</li>
+        <li>Курсове, които преподава</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 4: CONTENT ORGANIZATION -->
+<!-- ============================================================ -->
+<section class="section" id="section4">
+  <div class="section-header">
+    <div class="section-number">4</div>
+    <h2>Философия на организация на съдържанието</h2>
+  </div>
+
+  <!-- News Organization -->
+  <details class="journey" open>
+    <summary>4.1 Организация на новини</summary>
+    <div class="journey-body">
+      <table class="info-table">
+        <thead>
+          <tr>
+            <th>Аспект</th>
+            <th>Подход</th>
+            <th>Обосновка</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Основна таксономия</strong></td>
+            <td>Категории (единичен избор)</td>
+            <td>Празненства, Делегации, Еразъм+, Конференции, Курсанти, Курсове, Магистри, Международни проекти, Морско образование, Научни проекти, Събития, Спорт, Стажове, Студентски съвет, Форуми</td>
+          </tr>
+          <tr>
+            <td><strong>Допълнителна таксономия</strong></td>
+            <td>Тагове (множествен избор)</td>
+            <td>Свободни тагове за по-прецизно търсене: „145 години", „BIP програма", „Черно море" и др.</td>
+          </tr>
+          <tr>
+            <td><strong>Хронология</strong></td>
+            <td>Автоматично групиране по година</td>
+            <td>Запазване на текущата практика (2019–2026), архив преди 2019</td>
+          </tr>
+          <tr>
+            <td><strong>URL структура</strong></td>
+            <td><code>/novini/2026/slag-na-statia</code></td>
+            <td>SEO-friendly, ясна хронология, лесно за споделяне</td>
+          </tr>
+          <tr>
+            <td><strong>RSS емисия</strong></td>
+            <td>Автоматична RSS лента</td>
+            <td>За медии и агрегатори <span class="badge badge-new">Ново</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- Programs Organization -->
+  <details class="journey">
+    <summary>4.2 Организация на програми и специалности</summary>
+    <div class="journey-body">
+      <table class="info-table">
+        <thead>
+          <tr>
+            <th>Измерение за филтриране</th>
+            <th>Стойности</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Образователно-квалификационна степен (ОКС)</strong></td>
+            <td>Бакалавър | Магистър | Курсант | Докторант</td>
+          </tr>
+          <tr>
+            <td><strong>Факултет</strong></td>
+            <td>Навигационен | Инженерен | ДСДКДО</td>
+          </tr>
+          <tr>
+            <td><strong>Форма на обучение</strong></td>
+            <td>Редовна | Задочна | Дистанционна</td>
+          </tr>
+          <tr>
+            <td><strong>Област на знание</strong></td>
+            <td>Инженерни науки | ИТ | Морски науки | Управление и логистика | Сигурност и отбрана | Медицина | Транспорт | Космическо инженерство | Право и криминология</td>
+          </tr>
+          <tr>
+            <td><strong>Продължителност</strong></td>
+            <td>2 | 3 | 4 | 5 семестъра</td>
+          </tr>
+          <tr>
+            <td><strong>Език на обучение</strong></td>
+            <td>Български | Английски</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="desc-block" style="margin-top:1rem;">
+        <h4>URL структура на специалности</h4>
+        <div class="url-example">/obuchenie/bakalavar/navigatsia</div>
+        <div class="url-example">/obuchenie/magistar/kibersigurnost</div>
+        <div class="url-example">/obuchenie/kursant/kiberoperatsii</div>
+        <div class="url-example">/obuchenie/doktorant/korabni-energetichni-sistemi</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- Courses Organization -->
+  <details class="journey">
+    <summary>4.3 Организация на курсове</summary>
+    <div class="journey-body">
+      <table class="info-table">
+        <thead>
+          <tr>
+            <th>Измерение</th>
+            <th>Стойности</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Категория</strong></td>
+            <td>Морски курсове (60+) | ИТ курсове (CCNA/CCNP) | Езикови курсове (LangMar) | Специализирани (Йонизиращи лъчения)</td>
+          </tr>
+          <tr>
+            <td><strong>Тип сертификация</strong></td>
+            <td>IMO/STCW | Cisco (CCNA/CCNP) | Marlins/TOSE | ISO лиценз | Вътрешна квалификация</td>
+          </tr>
+          <tr>
+            <td><strong>Целева аудитория</strong></td>
+            <td>Морски лица | ИТ специалисти | Офицери/Старшини | Корпоративни клиенти | Педагогически специалисти</td>
+          </tr>
+          <tr>
+            <td><strong>Продължителност</strong></td>
+            <td>1 ден | 2–3 дни | 1 седмица | 50 часа | Индивидуално</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="desc-block" style="margin-top:1rem;">
+        <h4>URL структура на курсове</h4>
+        <div class="url-example">/kursove/morski/1401-osnovna-podgotovka-morska-bezopasnost</div>
+        <div class="url-example">/kursove/it/ccna1-osnovi-kompyutarni-mrezhi</div>
+        <div class="url-example">/kursove/ezikovi/langmar-modul-3</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- Documents Organization -->
+  <details class="journey">
+    <summary>4.4 Организация на документи</summary>
+    <div class="journey-body">
+      <div class="desc-block">
+        <h4>Централизиран документен хъб</h4>
+        <p>Вместо разпръснати Google Drive линкове, всички документи се качват в медийната библиотека на CMS-а и се организират чрез единен документен каталог с категоризация.</p>
+      </div>
+      <table class="info-table" style="margin-top:1rem;">
+        <thead>
+          <tr>
+            <th>Категория документи</th>
+            <th>Примери</th>
+            <th>Текущо състояние</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Нормативни актове</strong></td>
+            <td>Правилници, наредби, стратегии</td>
+            <td>Google Drive (разпръснати)</td>
+          </tr>
+          <tr>
+            <td><strong>Акредитационни</strong></td>
+            <td>Сертификати, оценки, капацитет</td>
+            <td>Google Drive</td>
+          </tr>
+          <tr>
+            <td><strong>Студентски</strong></td>
+            <td>Справочници, класирания, формуляри</td>
+            <td>Google Drive</td>
+          </tr>
+          <tr>
+            <td><strong>Еразъм+</strong></td>
+            <td>Формуляри за мобилност, правила, харта</td>
+            <td>Google Drive</td>
+          </tr>
+          <tr>
+            <td><strong>Финансови</strong></td>
+            <td>СЕБРА отчети, бюджети</td>
+            <td>Google Drive (по месеци)</td>
+          </tr>
+          <tr>
+            <td><strong>Конкурсни</strong></td>
+            <td>Академични конкурси, обяви</td>
+            <td>Google Drive</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- External Portals -->
+  <details class="journey">
+    <summary>4.5 Интеграция на 14+ външни портала</summary>
+    <div class="journey-body">
+      <p style="font-size:0.9rem; color:var(--text-light); margin-bottom:1rem;">
+        Текущият сайт използва 14+ отделни поддомейна и външни системи. Стратегията е: <strong>не ги елиминираме, а ги правим лесно достъпни</strong> чрез три механизма:
+      </p>
+      <table class="info-table">
+        <thead>
+          <tr>
+            <th>Портал</th>
+            <th>URL</th>
+            <th>Достъп</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Онлайн кандидатстване</td>
+            <td>fees.nvna.eu</td>
+            <td>Utility bar + CTA бутони на Прием страниците</td>
+          </tr>
+          <tr>
+            <td>УебСтудент</td>
+            <td>ws.naval-acad.bg</td>
+            <td>Utility bar + Студентски портал</td>
+          </tr>
+          <tr>
+            <td>е-Преподавател</td>
+            <td>teacher.naval-acad.bg</td>
+            <td>Utility bar</td>
+          </tr>
+          <tr>
+            <td>Дистанционно обучение</td>
+            <td>dlc.naval-acad.bg</td>
+            <td>Utility bar + Студентски портал</td>
+          </tr>
+          <tr>
+            <td>Информационен център</td>
+            <td>nvna.eu</td>
+            <td>Студентски портал</td>
+          </tr>
+          <tr>
+            <td>Разписание</td>
+            <td>nvna.eu/wp</td>
+            <td>Utility bar + Студентски портал</td>
+          </tr>
+          <tr>
+            <td>Кариерен център</td>
+            <td>career.nvna.eu</td>
+            <td>Главно меню „Кариери и алумни"</td>
+          </tr>
+          <tr>
+            <td>Обяви за работа</td>
+            <td>career.nvna.eu/job-board</td>
+            <td>Секция „Кариери"</td>
+          </tr>
+          <tr>
+            <td>Алумни клуб</td>
+            <td>career.nvna.eu/alumni</td>
+            <td>Секция „Кариери"</td>
+          </tr>
+          <tr>
+            <td>Научни проекти</td>
+            <td>projects.nvna.eu</td>
+            <td>Секция „Наука"</td>
+          </tr>
+          <tr>
+            <td>Издателски център</td>
+            <td>scholar.nvna.eu</td>
+            <td>Секция „Наука"</td>
+          </tr>
+          <tr>
+            <td>Обществени поръчки</td>
+            <td>pp.naval-acad.bg</td>
+            <td>Футър + Секция „Документи"</td>
+          </tr>
+          <tr>
+            <td>Студентски съвет</td>
+            <td>studentcouncil.naval-acad.bg</td>
+            <td>Студентски портал</td>
+          </tr>
+          <tr>
+            <td>Спортен клуб</td>
+            <td>uvsk.nvna.eu</td>
+            <td>Студентски портал</td>
+          </tr>
+          <tr>
+            <td>Библиотечен каталог</td>
+            <td>library.naval-acad.bg</td>
+            <td>Секция „Библиотека" + Студентски портал</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="desc-block accent" style="margin-top:1rem;">
+        <h4>Единен вход (Single Sign-On) — дългосрочна препоръка</h4>
+        <p>В бъдеще: интеграция на УебСтудент, е-Преподавател, DLC и Информационен център чрез SSO (SAML/OAuth2). Потребителят влиза веднъж и има достъп до всички системи. Това е извън обхвата на текущия проект за уебсайта, но е стратегически важно.</p>
+      </div>
+    </div>
+  </details>
+
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 5: USER JOURNEYS -->
+<!-- ============================================================ -->
+<section class="section" id="section5">
+  <div class="section-header">
+    <div class="section-number">5</div>
+    <h2>Потребителски пътеки (User Journeys)</h2>
+  </div>
+
+  <p style="font-size:0.9rem; color:var(--text-light); margin-bottom:1.5rem;">
+    Шест ключови сценария, моделирани върху реални потребители на сайта. Всяка пътека показва стъпките, които потребителят извършва, за да постигне целта си.
+  </p>
+
+  <!-- Journey 1 -->
+  <details class="journey">
+    <summary>
+      <span style="font-size:1.2rem;">1</span>
+      Бъдещ студент търси програма за обучение
+    </summary>
+    <div class="journey-body">
+      <div class="persona">Персона: Георги, 18 г., завършва гимназия, интересува се от ИТ и морски науки</div>
+      <ol class="steps">
+        <li><strong>Начална страница:</strong> Вижда герой секция с впечатляващо видео и бутон „Кандидатствай". Скролва до „Ключови числа" — 145 години история, 9.07 акредитация.</li>
+        <li><strong>Кликва „Обучение" в менюто</strong> — отваря се мега-меню с 4 колони: Бакалавър, Магистър, Курсант, Докторант. Избира „Бакалавър".</li>
+        <li><strong>Каталог на специалности:</strong> Вижда 15 специалности с филтри. Избира област „Информационни технологии" — остават 4 специалности. Сравнява „Киберсигурност" и „Изкуствен интелект".</li>
+        <li><strong>Детайлна страница „Киберсигурност":</strong> Чете описание, учебен план, кариерни перспективи. В страничния панел вижда: продължителност 4 години, форма: редовна, такса, акредитация.</li>
+        <li><strong>Кликва CTA „Кандидатствай"</strong> — пренасочва се към fees.nvna.eu с предварително избрана специалност.</li>
+        <li><strong>Алтернативен път:</strong> Кликва „Защо ВВМУ?" от секция „Прием" — лендинг страница с отзиви на студенти, статистики за реализация и виртуален тур.</li>
+      </ol>
+      <div class="flow">
+        <span class="flow-item">Начало</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Обучение &gt; Бакалавър</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Филтър: ИТ</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Киберсигурност</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Кандидатствай</span>
+      </div>
+    </div>
+  </details>
+
+  <!-- Journey 2 -->
+  <details class="journey">
+    <summary>
+      <span style="font-size:1.2rem;">2</span>
+      Настоящ студент проверява разписание и оценки
+    </summary>
+    <div class="journey-body">
+      <div class="persona">Персона: Мария, 2-ри курс, Навигация, редовно обучение</div>
+      <ol class="steps">
+        <li><strong>Начална страница:</strong> В utility bar вижда „Разписание" и „УебСтудент" — двата най-търсени линка.</li>
+        <li><strong>Кликва „Разписание":</strong> Директно се отваря nvna.eu/wp в нов таб. Намира разписанието си по група.</li>
+        <li><strong>За оценки:</strong> Кликва „УебСтудент" от utility bar — отваря се ws.naval-acad.bg. Влиза с потребителско име и парола.</li>
+        <li><strong>Алтернативен път:</strong> Кликва „Студенти" в главното меню — отваря се hub страница с карти към всички студентски ресурси: Разписание, УебСтудент, Библиотека, Общежитие, Спортен клуб.</li>
+      </ol>
+      <div class="flow">
+        <span class="flow-item">Начало</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Utility: Разписание</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">nvna.eu/wp</span>
+      </div>
+    </div>
+  </details>
+
+  <!-- Journey 3 -->
+  <details class="journey">
+    <summary>
+      <span style="font-size:1.2rem;">3</span>
+      Чуждестранен студент проучва Еразъм+
+    </summary>
+    <div class="journey-body">
+      <div class="persona">Персона: Alessandro, 3-ти курс, Навигация, университет в Генуа, Италия</div>
+      <ol class="steps">
+        <li><strong>Начална страница (EN):</strong> Превключва на английски от utility bar „BG | EN". Вижда Erasmus+ лого и линк в секция бързи връзки.</li>
+        <li><strong>Международна дейност &gt; Еразъм+:</strong> Кликва в менюто. Достига до Еразъм+ лендинг страница с ясна навигация: Student Mobility, Required Documents, Partner Universities.</li>
+        <li><strong>Student Mobility:</strong> Чете условия за incoming студенти, календар на семестрите, необходими документи.</li>
+        <li><strong>Partner Universities:</strong> Интерактивна карта — намира своя университет и вижда активните споразумения.</li>
+        <li><strong>Contacts:</strong> Изпраща запитване чрез формуляра или директно на erasmus@nvna.eu.</li>
+      </ol>
+      <div class="flow">
+        <span class="flow-item">Homepage (EN)</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">International &gt; Erasmus+</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Student Mobility</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Documents</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Contact</span>
+      </div>
+    </div>
+  </details>
+
+  <!-- Journey 4 -->
+  <details class="journey">
+    <summary>
+      <span style="font-size:1.2rem;">4</span>
+      Изследовател търси публикации
+    </summary>
+    <div class="journey-body">
+      <div class="persona">Персона: Проф. д-р Иванов, изследовател в областта на морските технологии</div>
+      <ol class="steps">
+        <li><strong>Начална страница:</strong> Кликва „Наука" в главното меню.</li>
+        <li><strong>Наука и изследвания:</strong> Лендинг страница с карти: Научни направления, Публикации, Проекти, Конференции, Конкурси.</li>
+        <li><strong>Публикации:</strong> Линк към scholar.nvna.eu (Издателски център). Отваря се в нов таб с каталог на публикации, DOI линкове, възможност за търсене по автор/тема.</li>
+        <li><strong>Конференции:</strong> Списък с предстоящи и минали конференции. Вижда Black Sea Maritime Security Conference 2026 — кликва за детайли и регистрация (bssc.nvna.eu).</li>
+        <li><strong>Профил на преподавател:</strong> От секция „Факултети" намира конкретен преподавател, вижда неговите публикации и контакт.</li>
+      </ol>
+      <div class="flow">
+        <span class="flow-item">Начало</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Наука</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Публикации (scholar.nvna.eu)</span>
+      </div>
+    </div>
+  </details>
+
+  <!-- Journey 5 -->
+  <details class="journey">
+    <summary>
+      <span style="font-size:1.2rem;">5</span>
+      Завършил студент (алумни) се свързва отново
+    </summary>
+    <div class="journey-body">
+      <div class="persona">Персона: Капитан Петров, завършил ВВМУ 2005 г., работи в международен корабен мениджмънт</div>
+      <ol class="steps">
+        <li><strong>Начална страница:</strong> Скролва до секция „Предстоящи събития" — вижда 145-годишнината. Кликва „Кариери и алумни" в менюто.</li>
+        <li><strong>Кариери и алумни:</strong> Лендинг страница с карти: Клуб Алумни, Истории на успеха, Стажове.</li>
+        <li><strong>Клуб Алумни:</strong> Пренасочва към career.nvna.eu/alumni — регистрира се, попълва профил, вижда предстоящи алумни събития.</li>
+        <li><strong>Истории на успеха:</strong> Чете интервюта с други завършили — вдъхновява се да предложи менторство.</li>
+        <li><strong>Курсове:</strong> Интересува се от курс за повишаване на квалификацията — навигира към „Курсове &gt; Морски курсове" и намира „Подготвителен курс за главен механик".</li>
+      </ol>
+      <div class="flow">
+        <span class="flow-item">Начало</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Кариери и алумни</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Клуб Алумни (career.nvna.eu)</span>
+      </div>
+    </div>
+  </details>
+
+  <!-- Journey 6 -->
+  <details class="journey">
+    <summary>
+      <span style="font-size:1.2rem;">6</span>
+      Журналист / медия търси новини
+    </summary>
+    <div class="journey-body">
+      <div class="persona">Персона: Елена Маринова, журналист в регионален медиен портал, Варна</div>
+      <ol class="steps">
+        <li><strong>Начална страница:</strong> Вижда последните новини в карусела. Кликва „Новини" в менюто.</li>
+        <li><strong>Пресцентър:</strong> Каталог с всички новини. Филтрира по категория „Празненства" и година „2026".</li>
+        <li><strong>Детайлна новина:</strong> Отваря статията за 145-та годишнина. Изтегля снимки от галерията за публикация.</li>
+        <li><strong>Медиен кит:</strong> От „Новини и събития &gt; Медиен кит" изтегля логотипове, официални снимки, факт лист за ВВМУ.</li>
+        <li><strong>Контакт с пресцентъра:</strong> Намира телефон и имейл на пресцентъра: r.koleva@nvna.eu, g.nikolov@nvna.eu.</li>
+      </ol>
+      <div class="flow">
+        <span class="flow-item">Начало</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Новини</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Филтър: 2026</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Статия</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-item">Медиен кит</span>
+      </div>
+    </div>
+  </details>
+
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 6: i18n STRATEGY -->
+<!-- ============================================================ -->
+<section class="section" id="section6">
+  <div class="section-header">
+    <div class="section-number">6</div>
+    <h2>Стратегия за многоезичност (i18n)</h2>
+  </div>
+
+  <!-- URL Structure -->
+  <details class="journey" open>
+    <summary>6.1 URL структура за езици</summary>
+    <div class="journey-body">
+      <div class="desc-block">
+        <h4>Подход: Префикс в URL пътя</h4>
+        <p>Българската версия е основна (без префикс). Английската версия получава <code>/en/</code> префикс. Това е най-разпространеният подход сред анализираните военноморски академии (14/18) и е SEO-оптимален.</p>
+      </div>
+      <table class="info-table" style="margin-top:1rem;">
+        <thead>
+          <tr>
+            <th>Страница</th>
+            <th>Български (основен)</th>
+            <th>Английски</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Начална</td>
+            <td><code>naval-acad.bg/</code></td>
+            <td><code>naval-acad.bg/en/</code></td>
+          </tr>
+          <tr>
+            <td>За нас</td>
+            <td><code>naval-acad.bg/universitet/za-nas</code></td>
+            <td><code>naval-acad.bg/en/university/about-us</code></td>
+          </tr>
+          <tr>
+            <td>Бакалавър</td>
+            <td><code>naval-acad.bg/obuchenie/bakalavar</code></td>
+            <td><code>naval-acad.bg/en/programs/bachelor</code></td>
+          </tr>
+          <tr>
+            <td>Специалност</td>
+            <td><code>naval-acad.bg/obuchenie/bakalavar/navigatsia</code></td>
+            <td><code>naval-acad.bg/en/programs/bachelor/navigation</code></td>
+          </tr>
+          <tr>
+            <td>Морски курсове</td>
+            <td><code>naval-acad.bg/kursove/morski</code></td>
+            <td><code>naval-acad.bg/en/courses/maritime</code></td>
+          </tr>
+          <tr>
+            <td>Новини</td>
+            <td><code>naval-acad.bg/novini/2026/slug</code></td>
+            <td><code>naval-acad.bg/en/news/2026/slug</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="desc-block accent" style="margin-top:1rem;">
+        <h4>Технически детайли</h4>
+        <p>Използва се <code>hreflang</code> атрибут за SEO връзка между езиковите версии. В <code>&lt;head&gt;</code>: <code>&lt;link rel="alternate" hreflang="bg" href="..." /&gt;</code> и <code>&lt;link rel="alternate" hreflang="en" href="..." /&gt;</code>. URL slug-ове се транслитерират на съответния език.</p>
+      </div>
+    </div>
+  </details>
+
+  <!-- What to translate -->
+  <details class="journey">
+    <summary>6.2 Какво трябва да се преведе vs. какво остава само на български</summary>
+    <div class="journey-body">
+      <table class="info-table">
+        <thead>
+          <tr>
+            <th>Съдържание</th>
+            <th>Език</th>
+            <th>Приоритет</th>
+            <th>Обосновка</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Навигация и интерфейс</strong></td>
+            <td>BG + EN</td>
+            <td style="color:var(--new-badge); font-weight:700;">Задължително</td>
+            <td>Менюта, бутони, етикети, footer — всичко се превежда</td>
+          </tr>
+          <tr>
+            <td><strong>Начална страница</strong></td>
+            <td>BG + EN</td>
+            <td style="color:var(--new-badge); font-weight:700;">Задължително</td>
+            <td>Пълен превод вкл. герой секция, CTA, числа</td>
+          </tr>
+          <tr>
+            <td><strong>За нас / Мисия / История</strong></td>
+            <td>BG + EN</td>
+            <td style="color:var(--new-badge); font-weight:700;">Задължително</td>
+            <td>Основна институционална идентичност</td>
+          </tr>
+          <tr>
+            <td><strong>Специалности (описание)</strong></td>
+            <td>BG + EN</td>
+            <td style="color:var(--new-badge); font-weight:700;">Задължително</td>
+            <td>Критично за привличане на чуждестранни студенти</td>
+          </tr>
+          <tr>
+            <td><strong>Прием (условия, FAQ, визи)</strong></td>
+            <td>BG + EN</td>
+            <td style="color:var(--new-badge); font-weight:700;">Задължително</td>
+            <td>Необходимо за международен прием</td>
+          </tr>
+          <tr>
+            <td><strong>Еразъм+ (пълна секция)</strong></td>
+            <td>BG + EN</td>
+            <td style="color:var(--new-badge); font-weight:700;">Задължително</td>
+            <td>Изискване на програмата</td>
+          </tr>
+          <tr>
+            <td><strong>Международна дейност</strong></td>
+            <td>BG + EN</td>
+            <td style="color:var(--new-badge); font-weight:700;">Задължително</td>
+            <td>Целева аудитория: чуждестранни партньори</td>
+          </tr>
+          <tr>
+            <td><strong>Акредитация</strong></td>
+            <td>BG + EN</td>
+            <td style="color:orange; font-weight:700;">Висок</td>
+            <td>Важно за международна валидация</td>
+          </tr>
+          <tr>
+            <td><strong>Структура / Контакти</strong></td>
+            <td>BG + EN</td>
+            <td style="color:orange; font-weight:700;">Висок</td>
+            <td>Делегации и чуждестранни партньори</td>
+          </tr>
+          <tr>
+            <td><strong>Курсове (морски, ИТ)</strong></td>
+            <td>BG + EN</td>
+            <td style="color:orange; font-weight:700;">Висок</td>
+            <td>Международни клиенти (морски компании)</td>
+          </tr>
+          <tr>
+            <td><strong>Конференции</strong></td>
+            <td>BG + EN</td>
+            <td style="color:orange; font-weight:700;">Висок</td>
+            <td>Международни участници</td>
+          </tr>
+          <tr>
+            <td><strong>Новини (избрани)</strong></td>
+            <td>BG задължително, EN по избор</td>
+            <td style="color:var(--teal); font-weight:700;">Среден</td>
+            <td>Превод на международно значими новини (Еразъм+, делегации, конференции). Вътрешни новини остават само на BG.</td>
+          </tr>
+          <tr>
+            <td><strong>Докторанти</strong></td>
+            <td>BG + EN (резюме)</td>
+            <td style="color:var(--teal); font-weight:700;">Среден</td>
+            <td>Обзорна страница на EN, детайли по процедури само на BG</td>
+          </tr>
+          <tr>
+            <td><strong>СЕБРА / Обществени поръчки</strong></td>
+            <td>Само BG</td>
+            <td style="color:var(--text-light);">Нисък</td>
+            <td>Нормативно изискуемо само на български</td>
+          </tr>
+          <tr>
+            <td><strong>Антикорупция / Тръжни процедури</strong></td>
+            <td>Само BG</td>
+            <td style="color:var(--text-light);">Нисък</td>
+            <td>Вътрешни регулаторни документи</td>
+          </tr>
+          <tr>
+            <td><strong>Конкурси за академични длъжности</strong></td>
+            <td>Само BG</td>
+            <td style="color:var(--text-light);">Нисък</td>
+            <td>Национална процедура</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- Language Switcher -->
+  <details class="journey">
+    <summary>6.3 Поведение на езиковия превключвател</summary>
+    <div class="journey-body">
+      <div class="card-grid">
+        <div class="card">
+          <h3>Контекстно превключване</h3>
+          <p>При натискане на „EN" потребителят се пренасочва към <strong>английската версия на същата страница</strong>, ако такава съществува. Ако не съществува — пренасочва към английската начална страница с информационно съобщение: „Тази страница не е налична на английски."</p>
+        </div>
+        <div class="card">
+          <h3>Запомняне на избора</h3>
+          <p>Езиковата предпочитание се записва в бисквитка (<code>lang=en</code>). При следващо посещение сайтът автоматично зарежда избрания език. Допълнително: разпознаване на <code>Accept-Language</code> хедъра за първо посещение.</p>
+        </div>
+        <div class="card">
+          <h3>Визуална индикация</h3>
+          <p>В utility bar: активният език е с удебелен шрифт и подчертаване. Формат: <strong>BG</strong> | EN (при български), BG | <strong>EN</strong> (при английски). Флагчета не се използват (следвайки best practice на W3C).</p>
+        </div>
+        <div class="card">
+          <h3>Бъдещо разширение</h3>
+          <p>Архитектурата поддържа добавяне на трети език (напр. руски или немски) без промяна на структурата. URL модел: <code>/ru/</code>, <code>/de/</code>. Приоритет: руски поради регионалната аудитория (препоръка от бенчмарка).</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- EN Site Scope -->
+  <details class="journey">
+    <summary>6.4 Обхват на английската версия</summary>
+    <div class="journey-body">
+      <div class="desc-block">
+        <h4>Текущо състояние vs. предложение</h4>
+        <p>В момента английската версия е силно ограничена — 4 менюта (University, Activities, Admission, Students) с частично съдържание и само 2 новини на английски. Предложението е за значително разширяване:</p>
+      </div>
+      <table class="info-table" style="margin-top:1rem;">
+        <thead>
+          <tr>
+            <th>Секция</th>
+            <th>Текущо (EN)</th>
+            <th>Предложение (EN)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Менюта</td>
+            <td>4 от 8</td>
+            <td>Всички 8</td>
+          </tr>
+          <tr>
+            <td>Специалности</td>
+            <td>Частично</td>
+            <td>Всички 45+</td>
+          </tr>
+          <tr>
+            <td>Курсове</td>
+            <td>Няма</td>
+            <td>Всички морски + ИТ</td>
+          </tr>
+          <tr>
+            <td>Новини</td>
+            <td>2 статии</td>
+            <td>Международни новини (~30%)</td>
+          </tr>
+          <tr>
+            <td>Еразъм+</td>
+            <td>Частично</td>
+            <td>Пълна секция</td>
+          </tr>
+          <tr>
+            <td>Контакти</td>
+            <td>Частично</td>
+            <td>Пълна страница</td>
+          </tr>
+          <tr>
+            <td>Студентски портал</td>
+            <td>Частично</td>
+            <td>Hub страница с линкове</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+</section>
+
+</main>
+
+<!-- ==================== SECTION 7: COMPARISON ==================== -->
+<section class="section" id="comparison">
+  <h2>7. Съпоставка: Текущ сайт vs Предложена архитектура</h2>
+  <p style="margin-bottom:1.5rem;color:var(--text-light)">Детайлно сравнение на текущата структура с предложената — какво се запазва, какво се подобрява и какво е ново.</p>
+
+  <details open>
+    <summary>7.1 Навигация и структура</summary>
+    <div class="details-content">
+      <table>
+        <thead>
+          <tr><th style="width:25%">Област</th><th style="width:35%">Текущ сайт (naval-acad.bg)</th><th style="width:35%">Предложена архитектура</th><th style="width:5%"></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Главно меню</strong></td>
+            <td>15 елемента на едно ниво, смесени категории (Университет, Обучение, Курсове, Кибероперации)</td>
+            <td>8 логически групирани елемента с mega-menu и второ/трето ниво</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Външни портали</strong></td>
+            <td>9+ линка разпръснати из footer-а, трудни за намиране</td>
+            <td>Utility bar с бърз достъп + Hub страница "Студенти" с всички системи</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Breadcrumbs</strong></td>
+            <td>Липсват на повечето страници</td>
+            <td>На всяка вътрешна страница, с Schema.org markup</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Мобилна навигация</strong></td>
+            <td>Hamburger меню, collapse/expand</td>
+            <td>Hamburger + sticky bottom bar за бърз достъп (Прием, Студенти, Контакти)</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Footer</strong></td>
+            <td>Голям, с банкова информация, социални мрежи, портали — неструктуриран</td>
+            <td>4 колони: Университет, Обучение, Ресурси, Контакти. Чист и организиран</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Търсачка</strong></td>
+            <td>Стандартна WordPress търсачка</td>
+            <td>Full-screen търсачка с филтри по тип съдържание</td>
+            <td style="color:var(--new-badge);font-weight:700">NEW</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details open>
+    <summary>7.2 Съдържание и организация</summary>
+    <div class="details-content">
+      <table>
+        <thead>
+          <tr><th style="width:25%">Секция</th><th style="width:35%">Текущ сайт</th><th style="width:35%">Предложена архитектура</th><th style="width:5%"></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Специалности</strong></td>
+            <td>Една страница с филтри (добре направена)</td>
+            <td>Каталог с филтри + индивидуални детайлни страници за всяка специалност с кариерни пътеки</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Курсове</strong></td>
+            <td>4 отделни страници (морски, ИТ, езикови, йонизиращи лъчения)</td>
+            <td>Единен каталог с категории + детайлни страници с цени, продължителност, сертификати</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Новини</strong></td>
+            <td>Пресцентър с 4 lightSlider карусела, без ясна категоризация</td>
+            <td>Listing с филтри (категория, година, тагове), отделни детайлни страници, SEO-friendly URL-и</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Катедри</strong></td>
+            <td>Обща страница "Структура" — минимална информация</td>
+            <td>Landing page за всяка катедра с преподаватели, публикации, програми</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Документи</strong></td>
+            <td>Разпръснати Google Drive линкове из различни страници</td>
+            <td>Централизиран документен хъб с категории (Правилници, Акредитация, Прием, Наука)</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Кариери и алумни</strong></td>
+            <td>Кариерен център — отделен портал (career.nvna.eu)</td>
+            <td>Вградена секция "Кариери и алумни" + линк към портала. Нова алумни мрежа</td>
+            <td style="color:var(--new-badge);font-weight:700">NEW</td>
+          </tr>
+          <tr>
+            <td><strong>Преподавателски профили</strong></td>
+            <td>Не съществуват</td>
+            <td>Индивидуални профилни страници за всеки преподавател</td>
+            <td style="color:var(--new-badge);font-weight:700">NEW</td>
+          </tr>
+          <tr>
+            <td><strong>Контакти</strong></td>
+            <td>Разпръснати из различни страници</td>
+            <td>Единна контактна страница + контактна информация във footer-а на всяка страница</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details open>
+    <summary>7.3 Технологично сравнение</summary>
+    <div class="details-content">
+      <table>
+        <thead>
+          <tr><th style="width:25%">Аспект</th><th style="width:35%">Текущ сайт</th><th style="width:35%">Нов сайт</th><th style="width:5%"></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Платформа</strong></td>
+            <td>WordPress 6.9.4 + Avada 7.11.13</td>
+            <td>Next.js (React) — собствена разработка</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Тегло на страница</strong></td>
+            <td>3-5 MB, 50-80 заявки</td>
+            <td>&lt;800 KB, 15-25 заявки</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Първо зареждане</strong></td>
+            <td>3-5 секунди</td>
+            <td>&lt;1.5 секунди</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Слайдер</strong></td>
+            <td>LayerSlider + Revolution Slider (~800KB)</td>
+            <td>CSS hero секция или лек компонент (~40KB)</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Изображения</strong></td>
+            <td>JPEG/PNG, без lazy loading, 136KB лого</td>
+            <td>WebP/AVIF автоматично, lazy loading, SVG лого (~5KB)</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>CSS</strong></td>
+            <td>~20KB inline, некеширан, 40+ page-specific стила</td>
+            <td>CSS Modules — само използваните стилове, автоматично кеширане</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Многоезичност</strong></td>
+            <td>WPML (~50-100KB overhead)</td>
+            <td>Next.js i18n routing — вградено, без overhead</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Достъпност</strong></td>
+            <td>Частична ARIA, без WCAG 2.1</td>
+            <td>Пълна WCAG 2.1 имплементация</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Сигурност</strong></td>
+            <td>3 портала на HTTP</td>
+            <td>HTTPS навсякъде</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>SEO</strong></td>
+            <td>Основен WordPress SEO</td>
+            <td>SSR, Schema.org markup, Open Graph, автоматичен sitemap</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details open>
+    <summary>7.4 Потребителско изживяване</summary>
+    <div class="details-content">
+      <table>
+        <thead>
+          <tr><th style="width:25%">Сценарий</th><th style="width:35%">Текущ сайт</th><th style="width:35%">Нов сайт</th><th style="width:5%"></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Кандидат-студент търси специалност</strong></td>
+            <td>Намери "Специалности" в менюто → филтрирай → няма детайлна страница с кариерни пътеки</td>
+            <td>Начало → Обучение → Каталог с филтри → Детайлна страница с кариерни пътеки, изисквания, отзиви</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Студент проверява разписание</strong></td>
+            <td>Скролни до footer-а → намери линк към nvna.eu/wp/ → отделна платформа</td>
+            <td>Utility bar "Студенти" → Hub страница с всички системи на едно място</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Чуждестранен студент (Erasmus)</strong></td>
+            <td>Превключи на EN → ограничено съдържание → изоставащи новини</td>
+            <td>EN версия с пълна Erasmus+ секция, FAQ, визова информация, контакти</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Журналист търси новина</strong></td>
+            <td>Пресцентър → 4 карусела → трудно за навигиране</td>
+            <td>Новини → Listing с филтри + медийна галерия + прес-контакт</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+          <tr>
+            <td><strong>Възпитаник търси връзка</strong></td>
+            <td>Няма алумни секция</td>
+            <td>Кариери и алумни → Алумни мрежа, успешни истории, събития</td>
+            <td style="color:var(--new-badge);font-weight:700">NEW</td>
+          </tr>
+          <tr>
+            <td><strong>Мобилен потребител</strong></td>
+            <td>Responsive, но тежко зареждане (3-5MB), бавни анимации</td>
+            <td>Mobile-first, &lt;800KB, sticky bottom bar за бърз достъп</td>
+            <td style="color:var(--success);font-weight:700">&#9650;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="site-footer">
+  <p><strong>Изготвен от Деян Стоянов Стоянов</strong></p>
+  <p>Факултетен № 001114 | ВВМУ „Н. Й. Вапцаров" | Март 2026</p>
+</footer>
+
+</body>
+</html>
